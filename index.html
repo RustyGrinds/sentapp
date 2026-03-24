@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sent — Never Miss a Moment</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-50: #1A1410;
+    --warm-100: #221C16;
+    --amber: #c8832a;
+    --amber-light: #f5a84b;
+    --amber-pale: #2A1F0E;
+    --ink: #FAF7F4;
+    --ink-60: #C5B8AC;
+    --ink-30: #6B5C4D;
+    --surface: #221C16;
+    --surface-2: #1A1410;
+    --border: #3A2F25;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-50);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .header {
+    background: #110E0A;
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber-light);
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #FAF7F4;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-tag {
+    font-size: 12px;
+    color: var(--ink-60);
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.15;
+    color: #FAF7F4;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-60);
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+  }
+
+  .field-group:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+  }
+
+  input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,131,42,0.12);
+    background: #2A2018;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .voice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .voice-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    background: var(--surface-2);
+    position: relative;
+  }
+
+  .voice-card:hover {
+    border-color: var(--amber-light);
+    background: #2A1F0E;
+  }
+
+  .voice-card.selected {
+    border-color: var(--amber);
+    background: #2A1F0E;
+    box-shadow: 0 0 0 3px rgba(200,131,42,0.12);
+  }
+
+  .voice-card .v-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .voice-card .v-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .voice-card .v-desc {
+    font-size: 11px;
+    color: var(--ink-60);
+    line-height: 1.4;
+  }
+
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .channel-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    background: var(--surface-2);
+  }
+
+  .channel-card:hover { border-color: var(--amber-light); background: #2A1F0E; }
+  .channel-card.selected { border-color: var(--amber); background: #2A1F0E; box-shadow: 0 0 0 3px rgba(200,131,42,0.12); }
+
+  .channel-card .c-icon { font-size: 20px; margin-bottom: 4px; }
+  .channel-card .c-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+
+  .generate-btn {
+    width: 100%;
+    background: var(--amber);
+    color: var(--amber-light);
+    border: none;
+    border-radius: var(--radius);
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .generate-btn:hover { background: #f5a84b; box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .generate-btn:active { transform: translateY(0); }
+  .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .output-section {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .output-section.visible { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .output-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .output-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .copy-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { border-color: var(--amber); color: var(--amber); background: #2A1F0E; }
+  .copy-btn.copied { color: #2d7a3a; border-color: #2d7a3a; background: #edf7ee; }
+
+  .message-bubble {
+    background: #2A2018;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .message-bubble.sms {
+    background: #e8f3ff;
+    border-color: #c5dff7;
+    border-radius: 18px 18px 4px 18px;
+    max-width: 85%;
+    margin-left: auto;
+  }
+
+  .message-bubble.email {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.8;
+    border-left: 3px solid var(--amber);
+  }
+
+  .sms-wrapper { background: #f0f0f0; border-radius: var(--radius); padding: 20px; }
+  .sms-header { font-size: 12px; color: #888; text-align: center; margin-bottom: 12px; font-weight: 500; }
+
+  .regenerate-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .regen-btn {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .regen-btn:hover { border-color: var(--amber); color: var(--amber); background: #2A1F0E; }
+
+  .loading-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .loading-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber-light);
+    animation: dot-bounce 1.2s ease-in-out infinite;
+  }
+
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes dot-bounce {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+    40% % { transform: scale(1); opacity: 1; }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .error-msg {
+    background: #fff0f0;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #c0392b;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-msg.visible { display: block; }
+
+  .tagline-badge {
+    display: inline-block;
+    background: #2A1F0E;
+    border: 1px solid #5A3A10;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 520px) {
+    .row-2 { grid-template-columns: 1fr; }
+    .channel-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 32px; }
+    .app { padding: 24px 16px 60px; }
+    .card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-mark">S</div>
+  <span class="logo-text">Sent</span>
+  <span class="logo-tag">— prototype</span>
+</div>
+
+<div class="app">
+
+  <div class="hero">
+    <div class="tagline-badge">✦ Relationships, remembered. <em style="font-style:italic">Sent.</em></div>
+    <h1>Every occasion.<br><em>Perfectly personal.</em></h1>
+    <p>Sent turns life's moments — birthdays, graduations, promotions, new babies, and more — into messages that feel like you actually remembered. Because you did.</p>
+  </div>
+
+  <!-- Step 1: Who is it? -->
+  <div class="card">
+    <div class="section-label">Step 1 — The person & occasion</div>
+    <div class="row-2">
+      <div class="field-group">
+        <label>Their name</label>
+        <input type="text" id="person-name" placeholder="e.g. Marcus" />
+      </div>
+      <div class="field-group">
+        <label>Your relationship</label>
+        <input type="text" id="relationship" placeholder="e.g. college roommate, coworker" />
+      </div>
+      <div class="field-group">
+        <label>Occasion</label>
+        <select id="occasion">
+          <option value="birthday">🎂 Birthday</option>
+          <option value="graduation">🎓 Graduation</option>
+          <option value="promotion">🏆 Promotion / New job</option>
+          <option value="new baby">👶 New baby</option>
+          <option value="anniversary">💍 Anniversary</option>
+          <option value="retirement">🌅 Retirement</option>
+          <option value="condolences">🕊️ Condolences</option>
+          <option value="just because">✨ Just because</option>
+          <option value="holiday">🎄 Holiday</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>What's going on with them lately? <span style="font-weight:400; color:var(--ink-30)">(Sent would pull this automatically — try it manually for now)</span></label>
+      <textarea id="context" placeholder="e.g. Just got promoted at work, moved to Austin last month, obsessed with pickleball, been posting a lot about their new dog Biscuit..."></textarea>
+    </div>
+  </div>
+
+  <!-- Step 2: Your voice -->
+  <div class="card">
+    <div class="section-label">Step 2 — Your voice</div>
+    <div class="voice-grid">
+      <div class="voice-card selected" data-voice="warm">
+        <div class="v-icon">🤗</div>
+        <div class="v-name">The Nurturer</div>
+        <div class="v-desc">Warm, expressive, big-hearted</div>
+      </div>
+      <div class="voice-card" data-voice="witty">
+        <div class="v-icon">😏</div>
+        <div class="v-name">The Wit</div>
+        <div class="v-desc">Dry humor, sharp, playful</div>
+      </div>
+      <div class="voice-card" data-voice="sincere">
+        <div class="v-icon">🌿</div>
+        <div class="v-name">The Sage</div>
+        <div class="v-desc">Thoughtful, genuine, grounded</div>
+      </div>
+      <div class="voice-card" data-voice="hype">
+        <div class="v-icon">🎉</div>
+        <div class="v-name">The Hype</div>
+        <div class="v-desc">Energetic, enthusiastic, loud</div>
+      </div>
+      <div class="voice-card" data-voice="brief">
+        <div class="v-icon">🎯</div>
+        <div class="v-name">The Minimalist</div>
+        <div class="v-desc">Short, clean, no fluff</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Channel -->
+  <div class="card">
+    <div class="section-label">Step 3 — Send it via</div>
+    <div class="channel-grid">
+      <div class="channel-card selected" data-channel="text" data-label="Text message">
+        <div class="c-icon">💬</div>
+        <div class="c-name">Text</div>
+      </div>
+      <div class="channel-card" data-channel="email" data-label="Email">
+        <div class="c-icon">✉️</div>
+        <div class="c-name">Email</div>
+      </div>
+      <div class="channel-card" data-channel="linkedin" data-label="LinkedIn message">
+        <div class="c-icon">💼</div>
+        <div class="c-name">LinkedIn</div>
+      </div>
+      <div class="channel-card" data-channel="instagram" data-label="Instagram DM">
+        <div class="c-icon">📸</div>
+        <div class="c-name">Instagram</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Step 4: Media Suite -->
+  <div class="card">
+    <div class="section-label">Step 4 — Add media <span style="font-size:10px;background:rgba(200,131,42,0.12);color:var(--amber);padding:2px 8px;border-radius:10px;margin-left:6px;letter-spacing:0.5px;">Optional</span></div>
+    <div class="media-suite">
+      <div class="media-tabs">
+        <div class="media-tab active" onclick="switchTab('photos', this)">📸 Photos</div>
+        <div class="media-tab" onclick="switchTab('gifs', this)">🎭 GIF / Meme</div>
+        <div class="media-tab" onclick="switchTab('video', this)">🎬 Video</div>
+        <div class="media-tab" onclick="switchTab('gift', this)">💸 Gift</div>
+      </div>
+
+      <!-- Photos panel -->
+      <div class="media-panel active" id="panel-photos">
+        <div class="photo-upload-area" onclick="document.getElementById('photo-input').click()">
+          <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)">
+          <span class="photo-upload-icon">📷</span>
+          <div class="photo-upload-text">Click to add photos</div>
+          <div class="photo-upload-sub">Up to 3 photos on free tier · JPG, PNG, GIF</div>
+        </div>
+        <div class="photo-previews" id="photo-previews"></div>
+        <div class="media-tier-note">Free: 3 photos &nbsp;·&nbsp; <span>Sent+</span>: 10 photos &nbsp;·&nbsp; <span>Pro</span>: Unlimited</div>
+      </div>
+
+      <!-- GIF panel -->
+      <div class="media-panel" id="panel-gifs">
+        <div class="gif-search-bar">
+          <input class="gif-search-input" id="gif-search" placeholder="Search GIFs and memes..." onkeydown="if(event.key==='Enter') searchGifs()">
+          <button class="gif-suggest-btn" onclick="suggestGif()">✦ AI Suggest</button>
+        </div>
+        <div class="gif-grid" id="gif-grid">
+          <div class="gif-placeholder">Search above or hit ✦ AI Suggest to get contextual picks based on who you're messaging.</div>
+        </div>
+        <div class="media-tier-note">Free: 1 GIF &nbsp;·&nbsp; <span>Sent+</span>: Unlimited &nbsp;·&nbsp; <span>Pro</span>: Full AI suite</div>
+      </div>
+
+      <!-- Video panel -->
+      <div class="media-panel" id="panel-video">
+        <div class="video-note">✦ AI will draft a script based on your context — you record in your own voice. The most personal message you can send.</div>
+        <div class="video-upload-area" style="margin-top:12px;" onclick="document.getElementById('video-input').click()">
+          <input type="file" id="video-input" accept="video/*" onchange="handleVideo(this)">
+          <span class="photo-upload-icon">🎬</span>
+          <div class="photo-upload-text">Click to attach a video</div>
+          <div class="photo-upload-sub">Free: 15 sec &nbsp;·&nbsp; Sent+: 60 sec &nbsp;·&nbsp; Pro: 3 min</div>
+        </div>
+        <div class="media-tier-note">Free: 15 sec &nbsp;·&nbsp; <span>Sent+</span>: 60 sec &nbsp;·&nbsp; <span>Pro</span>: 3 min + voice notes</div>
+      </div>
+
+      <!-- Gift panel -->
+      <div class="media-panel" id="panel-gift">
+        <div class="video-note">💸 Remember the birthday card your uncle slipped a $20 into? The gift is part of the message — no Venmo link, no forgetting.</div>
+        <div style="margin-top:16px;">
+          <div style="margin-bottom:10px;font-size:12px;font-weight:500;color:var(--ink-60);">Choose an amount</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;" id="gift-presets">
+            <button onclick="selectGiftAmount(this, 5)"  class="gift-preset-btn">$5</button>
+            <button onclick="selectGiftAmount(this, 10)" class="gift-preset-btn">$10</button>
+            <button onclick="selectGiftAmount(this, 20)" class="gift-preset-btn active">$20</button>
+            <button onclick="selectGiftAmount(this, 50)" class="gift-preset-btn">$50</button>
+            <button onclick="selectGiftAmount(this, 100)" class="gift-preset-btn">$100</button>
+            <button onclick="selectGiftAmount(this, 0)"  class="gift-preset-btn" data-custom="true">Custom</button>
+          </div>
+          <div id="gift-custom-wrap" style="display:none;margin-bottom:14px;">
+            <input id="gift-custom-input" class="gif-search-input" type="number" placeholder="Enter amount..." min="1" max="500" oninput="giftAmount=parseInt(this.value)||0">
+          </div>
+          <div style="background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--ink-60);line-height:1.65;">
+            Recipient gets a tap-to-claim button in their message. They can send to Apple Pay, Google Pay, or their bank. Powered by Stripe.
+          </div>
+          <div class="media-tier-note" style="margin-top:12px;">Free: up to $25 &nbsp;·&nbsp; <span>Sent+</span>: up to $100 &nbsp;·&nbsp; <span>Pro</span>: up to $500</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="gen-btn" onclick="generateMessage()">
+    <span id="btn-label">Generate Message ✦</span>
+  </button>
+
+  <div class="error-msg" id="error-msg"></div>
+
+  <hr class="divider" id="output-divider" style="display:none;">
+
+  <!-- Output -->
+  <div class="output-section" id="output-section">
+    <div class="card">
+      <div class="output-header">
+        <div class="output-label" id="output-label">Your message</div>
+        <button class="copy-btn" id="copy-btn" onclick="copyMessage()">Copy</button>
+      </div>
+      <div id="message-container"></div>
+      <div class="regenerate-row">
+        <button class="regen-btn" onclick="generateMessage()">↻ Regenerate</button>
+        <button class="regen-btn" onclick="tryDifferentVoice()">Try a different voice</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let selectedVoice = 'warm';
+  let selectedChannel = 'text';
+  let currentMessage = '';
+
+  const voiceDescriptions = {
+    warm: 'warm, affectionate, and expressive — like a big hug in words',
+    witty: 'dry, playful, and a little cheeky — charming without being over the top',
+    sincere: 'thoughtful, grounded, and genuinely meaningful — no fluff',
+    hype: 'high energy, enthusiastic, and celebratory — turn it up',
+    brief: 'short, clean, and to the point — says a lot with very little'
+  };
+
+  const channelInstructions = {
+    text: 'Write a text message. Keep it casual and conversational. 2-4 sentences max. No subject line.',
+    email: 'Write an email. Include a subject line on the first line (format: "Subject: ..."), then a blank line, then the email body. Keep it personal and not too long.',
+    linkedin: 'Write a LinkedIn message. Professional yet warm. 2-3 sentences. No subject line.',
+    instagram: 'Write an Instagram DM. Casual, fun, emoji-friendly. 1-3 sentences.'
+  };
+
+  document.querySelectorAll('.voice-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedVoice = card.dataset.voice;
+    });
+  });
+
+  document.querySelectorAll('.channel-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedChannel = card.dataset.channel;
+    });
+  });
+
+  async function generateMessage() {
+    const name = document.getElementById('person-name').value.trim();
+    const relationship = document.getElementById('relationship').value.trim();
+    const context = document.getElementById('context').value.trim();
+
+    if (!name) {
+      showError("Give them a name — they deserve at least that.");
+      return;
+    }
+
+    hideError();
+    setLoading(true);
+
+    const occasion = document.getElementById('occasion')?.value || 'birthday';
+    const prompt = `You are writing a personalized ${occasion} message for someone.
+
+Here's the situation:
+- Person's name: ${name}
+- Occasion: ${occasion}
+- My relationship with them: ${relationship || 'friend'}
+- What's going on in their life lately: ${context || 'not much specific info available, keep it personal but general'}
+- My voice/personality style: ${voiceDescriptions[selectedVoice]}
+- Channel: ${channelInstructions[selectedChannel]}
+
+Write the occasion message now. Make it feel genuinely personal — reference what's going on in their life if context was provided. Do NOT use generic clichés. Sound like a real person who actually knows them.
+
+Output only the message itself, nothing else. No explanations, no quotes around it.`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        showError("API error: " + (data.error.message || "Something went wrong."));
+        setLoading(false);
+        return;
+      }
+
+      currentMessage = data.content[0].text.trim();
+      renderMessage(currentMessage);
+      setLoading(false);
+
+    } catch (err) {
+      showError("Couldn't connect to the API. Check your connection and try again.");
+      setLoading(false);
+    }
+  }
+
+  function renderMessage(message) {
+    const container = document.getElementById('message-container');
+    const label = document.getElementById('output-label');
+    const channelNames = { text: 'Text message', email: 'Email', linkedin: 'LinkedIn message', instagram: 'Instagram DM' };
+    label.textContent = channelNames[selectedChannel];
+
+    if (selectedChannel === 'text') {
+      container.innerHTML = `
+        <div class="sms-wrapper">
+          <div class="sms-header">iMessage</div>
+          <div class="message-bubble sms">${escapeHtml(message)}</div>
+        </div>`;
+    } else if (selectedChannel === 'email') {
+      const lines = message.split('\n');
+      let subject = '';
+      let body = message;
+      if (lines[0].toLowerCase().startsWith('subject:')) {
+        subject = lines[0].replace(/^subject:\s*/i, '');
+        body = lines.slice(2).join('\n').trim();
+      }
+      container.innerHTML = `
+        ${subject ? `<div style="font-size:13px;color:var(--ink-60);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);"><strong style="color:var(--ink)">Subject:</strong> ${escapeHtml(subject)}</div>` : ''}
+        <div class="message-bubble email">${escapeHtml(body)}</div>`;
+    } else {
+      container.innerHTML = `<div class="message-bubble">${escapeHtml(message)}</div>`;
+    }
+
+    document.getElementById('output-divider').style.display = 'block';
+    document.getElementById('output-section').classList.add('visible');
+    document.getElementById('copy-btn').textContent = 'Copy';
+    document.getElementById('copy-btn').classList.remove('copied');
+
+    setTimeout(() => {
+      document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function copyMessage() {
+    navigator.clipboard.writeText(currentMessage).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function tryDifferentVoice() {
+    const voices = ['warm', 'witty', 'sincere', 'hype', 'brief'];
+    const currentIndex = voices.indexOf(selectedVoice);
+    const nextVoice = voices[(currentIndex + 1) % voices.length];
+    document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('selected'));
+    document.querySelector(`[data-voice="${nextVoice}"]`).classList.add('selected');
+    selectedVoice = nextVoice;
+    generateMessage();
+  }
+
+  function setLoading(isLoading) {
+    const btn = document.getElementById('gen-btn');
+    const label = document.getElementById('btn-label');
+    btn.disabled = isLoading;
+    if (isLoading) {
+      label.innerHTML = 'Writing something good&nbsp;<span class="loading-dots"><span></span><span></span><span></span></span>';
+    } else {
+      label.textContent = 'Generate Message ✦';
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  function hideError() {
+    document.getElementById('error-msg').classList.remove('visible');
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  // ── Media suite ─────────────────────────────────────────────────
+  let uploadedPhotos = [];
+  let selectedGif = null;
+  let uploadedVideo = null;
+
+  function switchTab(panel, el) {
+    document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.media-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + panel).classList.add('active');
+  }
+
+  function handlePhotos(input) {
+    const files = Array.from(input.files).slice(0, 3); // free tier limit
+    uploadedPhotos = files;
+    const previews = document.getElementById('photo-previews');
+    previews.innerHTML = '';
+    files.forEach((file, i) => {
+      const url = URL.createObjectURL(file);
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-preview-wrap';
+      wrap.innerHTML = \`<img class="photo-preview" src="\${url}">
+        <button class="photo-remove" onclick="removePhoto(\${i})">✕</button>\`;
+      previews.appendChild(wrap);
+    });
+  }
+
+  function removePhoto(i) {
+    uploadedPhotos.splice(i, 1);
+    const dt = new DataTransfer();
+    uploadedPhotos.forEach(f => dt.items.add(f));
+    document.getElementById('photo-input').files = dt.files;
+    handlePhotos(document.getElementById('photo-input'));
+  }
+
+  // Emoji GIF placeholders (Giphy API would replace these in production)
+  const gifSuggestions = {
+    default: ['🎂','🎉','🥳','🎊','🎈','🎁'],
+    warm:    ['🤗','💝','🌸','✨','💫','🥂'],
+    witty:   ['😏','🤌','👀','💅','🙃','😂'],
+    sincere: ['🌿','💙','🙏','✨','🫶','🌟'],
+    hype:    ['🔥','🎉','💥','🚀','⚡','🏆'],
+    brief:   ['✓','👍','🤝','💯','🎯','🫡'],
+  };
+
+  function suggestGif() {
+    const grid = document.getElementById('gif-grid');
+    const voice = selectedVoice || 'default';
+    const emojis = gifSuggestions[voice] || gifSuggestions.default;
+    grid.innerHTML = emojis.map((e, i) =>
+      \`<div class="gif-item" onclick="selectGif(this, '\${e}')" title="Click to select">\${e}</div>\`
+    ).join('');
+  }
+
+  function searchGifs() {
+    const q = document.getElementById('gif-search').value;
+    if (!q) return;
+    const grid = document.getElementById('gif-grid');
+    // In production this calls Giphy/Tenor API — for demo, show themed emojis
+    const themed = ['🎂','🎉','🥳','🎊','🎈','🎁','😄','🌟','💫','🔥','✨','🎶'];
+    grid.innerHTML = themed.map((e, i) =>
+      \`<div class="gif-item" onclick="selectGif(this, '\${e}')">\${e}</div>\`
+    ).join('');
+  }
+
+  function selectGif(el, gif) {
+    document.querySelectorAll('.gif-item').forEach(g => g.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedGif = gif;
+  }
+
+  function handleVideo(input) {
+    if (input.files[0]) {
+      uploadedVideo = input.files[0];
+      const area = input.closest('.video-upload-area');
+      area.innerHTML = \`<input type="file" id="video-input" accept="video/*" style="display:none" onchange="handleVideo(this)">
+        <span class="photo-upload-icon">✅</span>
+        <div class="photo-upload-text">\${uploadedVideo.name}</div>
+        <div class="photo-upload-sub" style="color:var(--amber);cursor:pointer" onclick="document.getElementById('video-input').click()">Change video</div>\`;
+    }
+  }
+
+
+
+  // ── Gift ─────────────────────────────────────────────────────────
+  let giftAmount = 20;
+
+  function selectGiftAmount(btn, amount) {
+    document.querySelectorAll('.gift-preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const customWrap = document.getElementById('gift-custom-wrap');
+    if (btn.dataset.custom) {
+      customWrap.style.display = 'block';
+      giftAmount = 0;
+    } else {
+      customWrap.style.display = 'none';
+      giftAmount = amount;
+    }
+  }
+
+</script>
+</body>
+</html>

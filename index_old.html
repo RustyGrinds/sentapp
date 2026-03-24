@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sent — Relationships, remembered.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       #1A1410;
+  --ink-80:    #3A2F25;
+  --ink-60:    #6B5C4D;
+  --ink-30:    #C5B8AC;
+  --amber:     #C8832A;
+  --amber-lt:  #F5A84B;
+  --amber-pal: #FFF4E0;
+  --cream:     #FAF7F4;
+  --border:    #EDE5DB;
+  --white:     #FFFFFF;
+  --serif:     'DM Serif Display', Georgia, serif;
+  --sans:      'DM Sans', Trebuchet MS, sans-serif;
+  --radius:    12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(26,20,16,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,131,42,0.15);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.stamp-mark {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.stamp-mark svg { width: 100%; height: 100%; }
+
+.nav-wordmark {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: -0.2px;
+}
+
+.nav-wordmark em {
+  font-style: italic;
+  color: var(--amber-lt);
+}
+
+.nav-cta {
+  background: var(--amber);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 22px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.3px;
+}
+
+.nav-cta:hover { background: var(--amber-lt); transform: translateY(-1px); }
+
+/* ─── HERO ────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--amber);
+}
+
+.hero-content {
+  max-width: 560px;
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,131,42,0.12);
+  border: 1px solid rgba(200,131,42,0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--amber-lt);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.1;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.hero h1 .closer {
+  display: block;
+  font-style: italic;
+  color: var(--amber-lt);
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--ink-30);
+  line-height: 1.65;
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--amber);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover { background: var(--amber-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,131,42,0.3); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover { border-color: var(--amber); color: var(--amber-lt); }
+
+/* Hero stamp — right side */
+.hero-stamp {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(420px, 45vw);
+  opacity: 0.9;
+  animation: fadeUp 1s ease 0.2s both;
+}
+
+/* ─── SECTION BASE ────────────────────────────────────────────── */
+section {
+  padding: 96px 48px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  margin-bottom: 20px;
+}
+
+.section-sub {
+  font-size: 17px;
+  color: var(--ink-60);
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+/* ─── PROBLEM ─────────────────────────────────────────────────── */
+.problem {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.problem-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.problem-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.problem-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,20,16,0.08); }
+
+.problem-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.problem-card h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.problem-card p {
+  font-size: 14px;
+  color: var(--ink-60);
+  line-height: 1.65;
+}
+
+.problem-stat {
+  margin-top: 48px;
+  background: var(--amber-pal);
+  border: 1px solid #f0d5a8;
+  border-radius: var(--radius);
+  padding: 20px 28px;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--amber);
+  text-align: center;
+}
+
+/* ─── HOW IT WORKS ────────────────────────────────────────────── */
+.how {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.how::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--amber);
+  opacity: 0.3;
+}
+
+.how .section-title { color: var(--white); }
+.how .section-sub { color: var(--ink-30); }
+
+.how-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+}
+
+.step {
+  background: #221C16;
+  border: 1px solid #3A2F25;
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.step:hover { border-color: var(--amber); }
+
+.step-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--amber);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.step h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.step p {
+  font-size: 13px;
+  color: var(--ink-30);
+  line-height: 1.65;
+}
+
+.step-connector {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--amber);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--ink);
+  z-index: 2;
+  font-weight: 700;
+}
+
+.step:last-child .step-connector { display: none; }
+
+/* ─── THE MAGIC ───────────────────────────────────────────────── */
+.magic {
+  background: var(--cream);
+}
+
+.magic-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+  margin-top: 56px;
+}
+
+.comparison-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.comparison-card.sent-card {
+  background: var(--amber-pal);
+  border-color: var(--amber);
+  border-width: 2px;
+}
+
+.comparison-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-30);
+  margin-bottom: 16px;
+}
+
+.comparison-card.sent-card .comparison-label {
+  color: var(--amber);
+}
+
+.comparison-quote {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-60);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.comparison-card.sent-card .comparison-quote {
+  color: var(--ink);
+}
+
+.comparison-note {
+  font-size: 12px;
+  color: var(--ink-30);
+}
+
+.comparison-card.sent-card .comparison-note {
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.comparison-arrow {
+  font-size: 28px;
+  color: var(--amber);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ─── VOICES ──────────────────────────────────────────────────── */
+.voices {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.voices-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.voices-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.voice-card {
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voice-card:hover, .voice-card.active {
+  border-color: var(--amber);
+  background: var(--amber-pal);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(200,131,42,0.12);
+}
+
+.voice-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+
+.voice-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.voice-desc {
+  font-size: 12px;
+  color: var(--ink-60);
+  line-height: 1.5;
+}
+
+.voice-example {
+  margin-top: 40px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: none;
+}
+
+.voice-example.visible { display: block; animation: fadeUp 0.3s ease; }
+
+.voice-example-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 16px;
+}
+
+.voice-example-msg {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* ─── WAITLIST ────────────────────────────────────────────────── */
+.waitlist {
+  background: var(--ink);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.waitlist::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--amber);
+}
+
+.waitlist .section-title { color: var(--white); }
+
+.waitlist-sub {
+  font-size: 17px;
+  color: var(--ink-30);
+  margin: 0 auto 48px;
+  max-width: 480px;
+  line-height: 1.65;
+}
+
+.waitlist-form {
+  display: flex;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto 24px;
+  justify-content: center;
+}
+
+.waitlist-input {
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.waitlist-input::placeholder { color: rgba(255,255,255,0.35); }
+.waitlist-input:focus { border-color: var(--amber); }
+
+.waitlist-submit {
+  background: var(--amber);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.waitlist-submit:hover { background: var(--amber-lt); transform: translateY(-1px); }
+
+.waitlist-note {
+  font-size: 12px;
+  color: var(--ink-30);
+}
+
+.waitlist-closing {
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.waitlist-tagline {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.waitlist-tagline em {
+  font-style: italic;
+  color: var(--amber-lt);
+}
+
+/* ─── FOOTER ──────────────────────────────────────────────────── */
+footer {
+  background: #110E0A;
+  padding: 32px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink-60);
+}
+
+.footer-logo em { font-style: italic; color: var(--amber); }
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--ink-60);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--amber); }
+
+.footer-copy {
+  font-size: 12px;
+  color: #3A3028;
+}
+
+/* ─── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── STAMP SVG ───────────────────────────────────────────────── */
+.hero-stamp svg { width: 100%; height: auto; }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 14px 24px; }
+  section { padding: 72px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .hero-stamp { display: none; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step-connector { display: none; }
+  .voices-grid { grid-template-columns: repeat(3, 1fr); }
+  .comparison { grid-template-columns: 1fr; }
+  .comparison-arrow { transform: rotate(90deg); }
+  .waitlist-form { flex-direction: column; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .steps { grid-template-columns: 1fr; }
+  .voices-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-ctas { flex-direction: column; }
+  .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+}
+
+/* Success state */
+.success-msg {
+  display: none;
+  color: var(--amber-lt);
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="stamp-mark">
+      <svg viewBox="0 0 40 44" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="40" height="44" rx="2" fill="#C8832A"/>
+        <rect x="3" y="3" width="34" height="38" rx="1" fill="#1A1410"/>
+        <!-- perfs top -->
+        <circle cx="0" cy="0" r="3" fill="#FAF7F4"/>
+        <circle cx="10" cy="0" r="3" fill="#FAF7F4"/>
+        <circle cx="20" cy="0" r="3" fill="#FAF7F4"/>
+        <circle cx="30" cy="0" r="3" fill="#FAF7F4"/>
+        <circle cx="40" cy="0" r="3" fill="#FAF7F4"/>
+        <!-- perfs bottom -->
+        <circle cx="0" cy="44" r="3" fill="#FAF7F4"/>
+        <circle cx="10" cy="44" r="3" fill="#FAF7F4"/>
+        <circle cx="20" cy="44" r="3" fill="#FAF7F4"/>
+        <circle cx="30" cy="44" r="3" fill="#FAF7F4"/>
+        <circle cx="40" cy="44" r="3" fill="#FAF7F4"/>
+        <!-- perfs left -->
+        <circle cx="0" cy="11" r="3" fill="#FAF7F4"/>
+        <circle cx="0" cy="22" r="3" fill="#FAF7F4"/>
+        <circle cx="0" cy="33" r="3" fill="#FAF7F4"/>
+        <!-- perfs right -->
+        <circle cx="40" cy="11" r="3" fill="#FAF7F4"/>
+        <circle cx="40" cy="22" r="3" fill="#FAF7F4"/>
+        <circle cx="40" cy="33" r="3" fill="#FAF7F4"/>
+        <!-- motion lines -->
+        <line x1="5" y1="14" x2="35" y2="14" stroke="#C8832A" stroke-width="3" stroke-linecap="round" opacity="0.72"/>
+        <line x1="5" y1="20" x2="35" y2="20" stroke="#C8832A" stroke-width="2.4" stroke-linecap="round" opacity="0.55"/>
+        <line x1="5" y1="26" x2="35" y2="26" stroke="#C8832A" stroke-width="1.8" stroke-linecap="round" opacity="0.38"/>
+        <line x1="5" y1="32" x2="35" y2="32" stroke="#C8832A" stroke-width="1.2" stroke-linecap="round" opacity="0.22"/>
+        <line x1="5" y1="38" x2="35" y2="38" stroke="#C8832A" stroke-width="0.6" stroke-linecap="round" opacity="0.10"/>
+        <!-- S outline -->
+        <text x="20" y="36" font-family="Georgia, serif" font-size="34" font-style="italic" fill="none" stroke="#C8832A" stroke-width="1.2" text-anchor="middle">S</text>
+      </svg>
+    </div>
+    <span class="nav-wordmark"><em>S</em>ent</span>
+  </a>
+  <a href="#waitlist" class="nav-cta">Join the waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Coming soon</div>
+    <h1>
+      Relationships,<br>remembered.
+      <span class="closer">Sent.</span>
+    </h1>
+    <p class="hero-sub">The people you care about deserve more than a generic wall post. Sent remembers every birthday — and makes sure your message actually sounds like you.</p>
+    <div class="hero-ctas">
+      <a href="#waitlist" class="btn-primary">Join the waitlist ✦</a>
+      <a href="#demo" class="btn-secondary">Try the demo →</a>
+    </div>
+  </div>
+
+  <!-- Hero stamp -->
+  <div class="hero-stamp">
+    <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="440" rx="6" fill="#C8832A"/>
+      <rect x="26" y="26" width="348" height="388" rx="4" fill="#1A1410"/>
+      <!-- perfs top -->
+      <circle cx="0"   cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="40"  cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="80"  cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="120" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="160" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="200" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="240" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="280" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="320" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="360" cy="0"   r="16" fill="#1A1410"/>
+      <circle cx="400" cy="0"   r="16" fill="#1A1410"/>
+      <!-- perfs bottom -->
+      <circle cx="0"   cy="440" r="16" fill="#1A1410"/>
+      <circle cx="40"  cy="440" r="16" fill="#1A1410"/>
+      <circle cx="80"  cy="440" r="16" fill="#1A1410"/>
+      <circle cx="120" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="160" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="200" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="240" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="280" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="320" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="360" cy="440" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="440" r="16" fill="#1A1410"/>
+      <!-- perfs left -->
+      <circle cx="0" cy="44"  r="16" fill="#1A1410"/>
+      <circle cx="0" cy="88"  r="16" fill="#1A1410"/>
+      <circle cx="0" cy="132" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="176" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="220" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="264" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="308" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="352" r="16" fill="#1A1410"/>
+      <circle cx="0" cy="396" r="16" fill="#1A1410"/>
+      <!-- perfs right -->
+      <circle cx="400" cy="44"  r="16" fill="#1A1410"/>
+      <circle cx="400" cy="88"  r="16" fill="#1A1410"/>
+      <circle cx="400" cy="132" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="176" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="220" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="264" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="308" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="352" r="16" fill="#1A1410"/>
+      <circle cx="400" cy="396" r="16" fill="#1A1410"/>
+      <!-- Motion lines -->
+      <line x1="32" y1="156" x2="368" y2="156" stroke="#C8832A" stroke-width="12" stroke-linecap="round" opacity="0.72"/>
+      <line x1="32" y1="192" x2="368" y2="192" stroke="#C8832A" stroke-width="9.5" stroke-linecap="round" opacity="0.55"/>
+      <line x1="32" y1="228" x2="368" y2="228" stroke="#C8832A" stroke-width="7.5" stroke-linecap="round" opacity="0.38"/>
+      <line x1="32" y1="264" x2="368" y2="264" stroke="#C8832A" stroke-width="5"   stroke-linecap="round" opacity="0.22"/>
+      <line x1="32" y1="300" x2="368" y2="300" stroke="#C8832A" stroke-width="2.5" stroke-linecap="round" opacity="0.10"/>
+      <!-- S -->
+      <text x="200" y="348" font-family="Georgia, serif" font-size="340" font-style="italic" fill="none" stroke="#C8832A" stroke-width="5" text-anchor="middle">S</text>
+      <!-- SENT label -->
+      <text x="200" y="396" font-family="Trebuchet MS, sans-serif" font-size="18" fill="#6B5C4D" text-anchor="middle" letter-spacing="12">SENT</text>
+    </svg>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="problem-inner">
+    <div class="reveal">
+      <p class="section-label">The problem</p>
+      <h2 class="section-title">We care about people.<br>We're just bad at showing it.</h2>
+      <p class="section-sub">Life gets busy. The people we love deserve more than a late text or a wall post that looks exactly like the 52 others they got that day.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <span class="problem-icon">😶</span>
+        <h3>Generic messages</h3>
+        <p>"Happy birthday! Hope your day is as special as you are!" — sent by 52 other people. Nobody feels seen.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="problem-icon">⏰</span>
+        <h3>Missed entirely</h3>
+        <p>Life gets busy. Important people slip through. The silence says more than any message could.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="problem-icon">🕸️</span>
+        <h3>Scattered data</h3>
+        <p>Birthdays live across Facebook, LinkedIn, Google, and iCloud. No single place to keep track.</p>
+      </div>
+    </div>
+
+    <div class="problem-stat reveal">
+      Over 4.9 billion people use social media — and every single one has a birthday.
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="reveal">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">Sent remembers<br>so you can show up.</h2>
+      <p class="section-sub">Four simple steps — all automatic. You set it up once and never miss another birthday.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-num">01</span>
+        <h3>Aggregate</h3>
+        <p>Pulls birthday data from every social network and calendar into one unified feed. OAuth-based — no sketchy scraping.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">02</span>
+        <h3>Research</h3>
+        <p>Before each birthday, Sent scans their recent activity to understand what's going on in their life right now.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">03</span>
+        <h3>Generate</h3>
+        <p>Writes a message in your voice — one of five personality archetypes — that references their actual life. Not a template.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">04</span>
+        <h3>Deliver</h3>
+        <p>Sends it on time, through the right channel — text, email, LinkedIn, Instagram — while you sleep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MAGIC -->
+<section class="magic">
+  <div class="magic-inner">
+    <div class="reveal">
+      <p class="section-label">The magic</p>
+      <h2 class="section-title">The gap between caring<br>and showing up — closed.</h2>
+    </div>
+
+    <div class="comparison reveal">
+      <div class="comparison-card">
+        <p class="comparison-label">Without Sent</p>
+        <p class="comparison-quote">"Happy birthday! Hope your day is as special as you are! 🎂"</p>
+        <p class="comparison-note">Sent by 52 other people. Word for word.</p>
+      </div>
+
+      <div class="comparison-arrow">→</div>
+
+      <div class="comparison-card sent-card">
+        <p class="comparison-label">With Sent</p>
+        <p class="comparison-quote">"Marcus! Dude, happy birthday — hope you're celebrating in Austin now that the move is done. And give Biscuit a birthday scratch from me 🐶"</p>
+        <p class="comparison-note">Sounds like you. Feels like you remembered.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="voices">
+  <div class="voices-inner">
+    <div class="reveal">
+      <p class="section-label">Your voice</p>
+      <h2 class="section-title">Five personalities.<br>One that sounds like you.</h2>
+      <p class="section-sub">Choose your archetype and Sent writes in your natural style. No two messages feel the same. Click one to see an example.</p>
+    </div>
+
+    <div class="voices-grid">
+      <div class="voice-card reveal" data-voice="warm" onclick="selectVoice(this)">
+        <span class="voice-icon">🤗</span>
+        <p class="voice-name">The Nurturer</p>
+        <p class="voice-desc">Warm, expressive, big-hearted</p>
+      </div>
+      <div class="voice-card reveal" data-voice="witty" onclick="selectVoice(this)">
+        <span class="voice-icon">😏</span>
+        <p class="voice-name">The Wit</p>
+        <p class="voice-desc">Dry humor, sharp, playful</p>
+      </div>
+      <div class="voice-card reveal" data-voice="sincere" onclick="selectVoice(this)">
+        <span class="voice-icon">🌿</span>
+        <p class="voice-name">The Sage</p>
+        <p class="voice-desc">Thoughtful, genuine, grounded</p>
+      </div>
+      <div class="voice-card reveal" data-voice="hype" onclick="selectVoice(this)">
+        <span class="voice-icon">🎉</span>
+        <p class="voice-name">The Hype</p>
+        <p class="voice-desc">Energetic, enthusiastic, loud</p>
+      </div>
+      <div class="voice-card reveal" data-voice="brief" onclick="selectVoice(this)">
+        <span class="voice-icon">🎯</span>
+        <p class="voice-name">The Minimalist</p>
+        <p class="voice-desc">Short, clean, no fluff</p>
+      </div>
+    </div>
+
+    <div class="voice-example" id="voice-example">
+      <p class="voice-example-label" id="voice-label">THE NURTURER</p>
+      <p class="voice-example-msg" id="voice-msg">"Sarah!! Happy birthday to one of the most genuinely kind humans I know. I hope today wraps you up like the warmest hug — you absolutely deserve it. So glad you moved back to the city. Let's actually celebrate this week! 🥂"</p>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;" class="reveal">
+      <a href="#demo" class="btn-primary" style="display:inline-flex;">Try it yourself — generate a real message →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <p class="section-label" style="text-align:center;">Early access</p>
+  <h2 class="section-title reveal" style="color:var(--white);">Be the first to<br>never miss a birthday.</h2>
+  <p class="waitlist-sub reveal">We're opening to a small group of early users first. Drop your email and we'll reach out when it's your turn.</p>
+
+  <div class="waitlist-form reveal">
+    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="your@email.com" />
+    <button class="waitlist-submit" onclick="submitWaitlist()">Join waitlist</button>
+  </div>
+  <p class="waitlist-note reveal">No spam. No noise. Just one email when you're in.</p>
+  <p class="success-msg" id="success-msg">You're on the list. We'll be in touch. ✦</p>
+
+  <div class="waitlist-closing reveal">
+    <p class="waitlist-tagline">
+      Relationships, remembered.<br><em>Sent.</em>
+    </p>
+  </div>
+</section>
+
+<!-- DEMO ANCHOR -->
+<div id="demo"></div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo"><em>S</em>ent — sentapp.net</p>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Sent. All rights reserved.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Voice examples
+const voices = {
+  warm:    { label: 'THE NURTURER', msg: '"Sarah!! Happy birthday to one of the most genuinely kind humans I know. I hope today wraps you up like the warmest hug — you deserve every bit of it. So glad you moved back to the city. Let\'s actually celebrate this week! 🥂"' },
+  witty:   { label: 'THE WIT',      msg: '"Happy birthday, Marcus. I\'d say you don\'t look a day older, but I\'ve seen your LinkedIn photo. Give Biscuit a birthday biscuit from me and try not to Yelp every restaurant in Austin in one week."' },
+  sincere: { label: 'THE SAGE',     msg: '"Happy birthday. I\'ve been thinking about how much you\'ve taken on this year — the move, the new chapter. I hope today feels like a genuine exhale. Really glad you\'re in my corner."' },
+  hype:    { label: 'THE HYPE',     msg: '"MARCUS!!! IT\'S YOUR BIRTHDAY AND I AM SCREAMING!!! 🎉🎉🎉 Austin gained the GOAT. Biscuit is the luckiest dog ALIVE. CELEBRATE EVERYTHING TODAY!!!"' },
+  brief:   { label: 'THE MINIMALIST', msg: '"Happy birthday, Marcus. Hope Austin\'s treating you well."' },
+};
+
+function selectVoice(el) {
+  document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const v = voices[el.dataset.voice];
+  document.getElementById('voice-label').textContent = v.label;
+  document.getElementById('voice-msg').textContent = v.msg;
+  const example = document.getElementById('voice-example');
+  example.classList.add('visible');
+  example.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Waitlist
+function submitWaitlist() {
+  const email = document.getElementById('waitlist-email').value;
+  if (!email || !email.includes('@')) {
+    document.getElementById('waitlist-email').style.borderColor = '#E24B4A';
+    return;
+  }
+  document.querySelector('.waitlist-form').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+
+// Smooth nav on scroll
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.style.borderBottomColor = 'rgba(200,131,42,0.25)';
+  } else {
+    nav.style.borderBottomColor = 'rgba(200,131,42,0.15)';
+  }
+});
+</script>
+</body>
+</html>
