@@ -3,1274 +3,897 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sent — Every occasion. Every person. Remembered.</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<title>Sent — Never Miss a Moment</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --ink:       #1A1410;
-  --ink-80:    #3A2F25;
-  --ink-60:    #6B5C4D;
-  --ink-30:    #C5B8AC;
-  --amber:     #C8832A;
-  --amber-lt:  #F5A84B;
-  --amber-pal: #FFF4E0;
-  --cream:     #FAF7F4;
-  --border:    #EDE5DB;
-  --white:     #FFFFFF;
-  --serif:     'DM Serif Display', Georgia, serif;
-  --sans:      'DM Sans', Trebuchet MS, sans-serif;
-  --radius:    12px;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--sans);
-  background: var(--cream);
-  color: var(--ink);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ─── NAV ─────────────────────────────────────────────────────── */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 48px;
-  background: rgba(26,20,16,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(200,131,42,0.15);
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.stamp-mark {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.stamp-mark svg { width: 100%; height: 100%; }
-
-.nav-wordmark {
-  font-family: var(--serif);
-  font-size: 20px;
-  color: var(--white);
-  letter-spacing: -0.2px;
-}
-
-.nav-wordmark em {
-  font-style: italic;
-  color: var(--amber-lt);
-}
-
-.nav-cta {
-  background: var(--amber);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 22px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-  letter-spacing: 0.3px;
-}
-
-.nav-cta:hover { background: var(--amber-lt); transform: translateY(-1px); }
-
-/* ─── HERO ────────────────────────────────────────────────────── */
-.hero {
-  min-height: 100vh;
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  padding: 120px 48px 80px;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--amber);
-}
-
-.hero-content {
-  max-width: 560px;
-  position: relative;
-  z-index: 2;
-  animation: fadeUp 0.8s ease both;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(200,131,42,0.12);
-  border: 1px solid rgba(200,131,42,0.3);
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 12px;
-  color: var(--amber-lt);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 32px;
-}
-
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: 1.1;
-  color: var(--white);
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
-}
-
-.hero h1 .closer {
-  display: block;
-  font-style: italic;
-  color: var(--amber-lt);
-}
-
-.hero-sub {
-  font-size: 17px;
-  color: var(--ink-30);
-  line-height: 1.65;
-  margin-bottom: 40px;
-  max-width: 440px;
-}
-
-.hero-ctas {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background: var(--amber);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  padding: 14px 32px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-primary:hover { background: var(--amber-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,131,42,0.3); }
-
-.btn-secondary {
-  background: transparent;
-  color: var(--white);
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 400;
-  padding: 14px 32px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-secondary:hover { border-color: var(--amber); color: var(--amber-lt); }
-
-/* Hero stamp — right side */
-.hero-stamp {
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(420px, 45vw);
-  opacity: 0.9;
-  animation: fadeUp 1s ease 0.2s both;
-}
-
-/* ─── SECTION BASE ────────────────────────────────────────────── */
-section {
-  padding: 96px 48px;
-}
-
-.section-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.15;
-  letter-spacing: -0.3px;
-  margin-bottom: 20px;
-}
-
-.section-sub {
-  font-size: 17px;
-  color: var(--ink-60);
-  line-height: 1.65;
-  max-width: 520px;
-}
-
-/* ─── PROBLEM ─────────────────────────────────────────────────── */
-.problem {
-  background: var(--white);
-  border-top: 1px solid var(--border);
-}
-
-.problem-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.problem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
-  margin-top: 56px;
-}
-
-.problem-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px 28px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.problem-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,20,16,0.08); }
-
-.problem-icon {
-  font-size: 32px;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.problem-card h3 {
-  font-family: var(--serif);
-  font-size: 20px;
-  color: var(--ink);
-  margin-bottom: 10px;
-}
-
-.problem-card p {
-  font-size: 14px;
-  color: var(--ink-60);
-  line-height: 1.65;
-}
-
-.problem-stat {
-  margin-top: 48px;
-  background: var(--amber-pal);
-  border: 1px solid #f0d5a8;
-  border-radius: var(--radius);
-  padding: 20px 28px;
-  font-family: var(--serif);
-  font-size: 17px;
-  font-style: italic;
-  color: var(--amber);
-  text-align: center;
-}
-
-/* ─── HOW IT WORKS ────────────────────────────────────────────── */
-.how {
-  background: var(--ink);
-  position: relative;
-  overflow: hidden;
-}
-
-.how::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--amber);
-  opacity: 0.3;
-}
-
-.how .section-title { color: var(--white); }
-.how .section-sub { color: var(--ink-30); }
-
-.how-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 56px;
-}
-
-.step {
-  background: #221C16;
-  border: 1px solid #3A2F25;
-  border-radius: var(--radius);
-  padding: 32px 24px;
-  position: relative;
-  transition: border-color 0.2s;
-}
-
-.step:hover { border-color: var(--amber); }
-
-.step-num {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: var(--amber);
-  margin-bottom: 20px;
-  display: block;
-}
-
-.step h3 {
-  font-family: var(--serif);
-  font-size: 22px;
-  color: var(--white);
-  margin-bottom: 12px;
-}
-
-.step p {
-  font-size: 13px;
-  color: var(--ink-30);
-  line-height: 1.65;
-}
-
-.step-connector {
-  position: absolute;
-  right: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  background: var(--amber);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: var(--ink);
-  z-index: 2;
-  font-weight: 700;
-}
-
-.step:last-child .step-connector { display: none; }
-
-/* ─── THE MAGIC ───────────────────────────────────────────────── */
-.magic {
-  background: var(--cream);
-}
-
-.magic-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.comparison {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 24px;
-  align-items: center;
-  margin-top: 56px;
-}
-
-.comparison-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-}
-
-.comparison-card.sent-card {
-  background: var(--amber-pal);
-  border-color: var(--amber);
-  border-width: 2px;
-}
-
-.comparison-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-30);
-  margin-bottom: 16px;
-}
-
-.comparison-card.sent-card .comparison-label {
-  color: var(--amber);
-}
-
-.comparison-quote {
-  font-family: var(--serif);
-  font-size: 16px;
-  font-style: italic;
-  color: var(--ink-60);
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-
-.comparison-card.sent-card .comparison-quote {
-  color: var(--ink);
-}
-
-.comparison-note {
-  font-size: 12px;
-  color: var(--ink-30);
-}
-
-.comparison-card.sent-card .comparison-note {
-  color: var(--amber);
-  font-weight: 500;
-}
-
-.comparison-arrow {
-  font-size: 28px;
-  color: var(--amber);
-  text-align: center;
-  flex-shrink: 0;
-}
-
-/* ─── VOICES ──────────────────────────────────────────────────── */
-.voices {
-  background: var(--white);
-  border-top: 1px solid var(--border);
-}
-
-.voices-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.voices-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-  margin-top: 56px;
-}
-
-.voice-card {
-  background: var(--cream);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px 18px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.voice-card:hover, .voice-card.active {
-  border-color: var(--amber);
-  background: var(--amber-pal);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(200,131,42,0.12);
-}
-
-.voice-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-
-.voice-name {
-  font-family: var(--serif);
-  font-size: 15px;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-
-.voice-desc {
-  font-size: 12px;
-  color: var(--ink-60);
-  line-height: 1.5;
-}
-
-.voice-example {
-  margin-top: 40px;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-  display: none;
-}
-
-.voice-example.visible { display: block; animation: fadeUp 0.3s ease; }
-
-.voice-example-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 16px;
-}
-
-.voice-example-msg {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-style: italic;
-  color: var(--ink);
-  line-height: 1.65;
-}
-
-/* ─── WAITLIST ────────────────────────────────────────────────── */
-.waitlist {
-  background: var(--ink);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.waitlist::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--amber);
-}
-
-.waitlist .section-title { color: var(--white); }
-
-.waitlist-sub {
-  font-size: 17px;
-  color: var(--ink-30);
-  margin: 0 auto 48px;
-  max-width: 480px;
-  line-height: 1.65;
-}
-
-.waitlist-form {
-  display: flex;
-  gap: 12px;
-  max-width: 480px;
-  margin: 0 auto 24px;
-  justify-content: center;
-}
-
-.waitlist-input {
-  flex: 1;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 14px 20px;
-  font-family: var(--sans);
-  font-size: 15px;
-  color: var(--white);
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.waitlist-input::placeholder { color: rgba(255,255,255,0.35); }
-.waitlist-input:focus { border-color: var(--amber); }
-
-.waitlist-submit {
-  background: var(--amber);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  padding: 14px 28px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.waitlist-submit:hover { background: var(--amber-lt); transform: translateY(-1px); }
-
-.waitlist-note {
-  font-size: 12px;
-  color: var(--ink-30);
-}
-
-.waitlist-closing {
-  margin-top: 72px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-.waitlist-tagline {
-  font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 44px);
-  color: var(--white);
-  line-height: 1.2;
-}
-
-.waitlist-tagline em {
-  font-style: italic;
-  color: var(--amber-lt);
-}
-
-/* ─── FOOTER ──────────────────────────────────────────────────── */
-footer {
-  background: #110E0A;
-  padding: 32px 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.footer-logo {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--ink-60);
-}
-
-.footer-logo em { font-style: italic; color: var(--amber); }
-
-.footer-links {
-  display: flex;
-  gap: 24px;
-}
-
-.footer-links a {
-  font-size: 13px;
-  color: var(--ink-60);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover { color: var(--amber); }
-
-.footer-copy {
-  font-size: 12px;
-  color: #3A3028;
-}
-
-
-/* ─── MEDIA SUITE ─────────────────────────────────────────────── */
-.media {
-  background: var(--ink);
-  position: relative;
-}
-
-.media-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.media .section-title { color: var(--white); }
-.media .section-sub { color: var(--ink-30); }
-
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 56px;
-}
-
-.media-card {
-  background: #221C16;
-  border: 1px solid #3A2F25;
-  border-radius: var(--radius);
-  padding: 28px 24px;
-  position: relative;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.media-card:hover {
-  border-color: var(--amber);
-  transform: translateY(-3px);
-}
-
-.media-card.featured {
-  border-color: var(--amber);
-  grid-column: span 1;
-}
-
-.media-card-icon {
-  font-size: 32px;
-  margin-bottom: 14px;
-  display: block;
-}
-
-.media-card h3 {
-  font-family: var(--serif);
-  font-size: 20px;
-  color: var(--white);
-  margin-bottom: 8px;
-}
-
-.media-card p {
-  font-size: 13px;
-  color: var(--ink-30);
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-
-.media-tiers {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.media-tier {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-}
-
-.tier-badge {
-  font-size: 10px;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 10px;
-  white-space: nowrap;
-  letter-spacing: 0.5px;
-}
-
-.tier-badge.free { background: rgba(200,131,42,0.12); color: var(--amber); }
-.tier-badge.plus { background: rgba(200,131,42,0.25); color: var(--amber-lt); }
-.tier-badge.pro  { background: var(--amber); color: var(--ink); font-weight: 700; }
-
-.tier-desc { color: var(--ink-30); font-size: 12px; }
-
-.media-new-badge {
-  position: absolute;
-  top: -10px;
-  right: 16px;
-  background: var(--amber);
-  color: var(--ink);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 3px 10px;
-  border-radius: 10px;
-  text-transform: uppercase;
-}
-
-@media (max-width: 900px) {
-  .media-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 600px) {
-  .media-grid { grid-template-columns: 1fr; }
-}
-
-/* ─── ANIMATIONS ──────────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ─── STAMP SVG ───────────────────────────────────────────────── */
-.hero-stamp svg { width: 100%; height: auto; }
-
-/* ─── RESPONSIVE ──────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  nav { padding: 14px 24px; }
-  section { padding: 72px 24px; }
-  .hero { padding: 100px 24px 60px; }
-  .hero-stamp { display: none; }
-  .problem-grid { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr 1fr; }
-  .step-connector { display: none; }
-  .voices-grid { grid-template-columns: repeat(3, 1fr); }
-  .comparison { grid-template-columns: 1fr; }
-  .comparison-arrow { transform: rotate(90deg); }
-  .waitlist-form { flex-direction: column; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
-}
-
-@media (max-width: 600px) {
-  .steps { grid-template-columns: 1fr; }
-  .voices-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-ctas { flex-direction: column; }
-  .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
-}
-
-/* Success state */
-.success-msg {
-  display: none;
-  color: var(--amber-lt);
-  font-family: var(--serif);
-  font-size: 18px;
-  font-style: italic;
-  margin-top: 16px;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-50: #1A1410;
+    --warm-100: #221C16;
+    --amber: #c8832a;
+    --amber-light: #f5a84b;
+    --amber-pale: #2A1F0E;
+    --ink: #FAF7F4;
+    --ink-60: #C5B8AC;
+    --ink-30: #6B5C4D;
+    --surface: #221C16;
+    --surface-2: #1A1410;
+    --border: #3A2F25;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-50);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .header {
+    background: #110E0A;
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber-light);
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #FAF7F4;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-tag {
+    font-size: 12px;
+    color: var(--ink-60);
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.15;
+    color: #FAF7F4;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-60);
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+  }
+
+  .field-group:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+  }
+
+  input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,131,42,0.12);
+    background: #2A2018;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .voice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .voice-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    background: var(--surface-2);
+    position: relative;
+  }
+
+  .voice-card:hover {
+    border-color: var(--amber-light);
+    background: #2A1F0E;
+  }
+
+  .voice-card.selected {
+    border-color: var(--amber);
+    background: #2A1F0E;
+    box-shadow: 0 0 0 3px rgba(200,131,42,0.12);
+  }
+
+  .voice-card .v-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .voice-card .v-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .voice-card .v-desc {
+    font-size: 11px;
+    color: var(--ink-60);
+    line-height: 1.4;
+  }
+
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .channel-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    background: var(--surface-2);
+  }
+
+  .channel-card:hover { border-color: var(--amber-light); background: #2A1F0E; }
+  .channel-card.selected { border-color: var(--amber); background: #2A1F0E; box-shadow: 0 0 0 3px rgba(200,131,42,0.12); }
+
+  .channel-card .c-icon { font-size: 20px; margin-bottom: 4px; }
+  .channel-card .c-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+
+  .generate-btn {
+    width: 100%;
+    background: var(--amber);
+    color: var(--amber-light);
+    border: none;
+    border-radius: var(--radius);
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .generate-btn:hover { background: #f5a84b; box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .generate-btn:active { transform: translateY(0); }
+  .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .output-section {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .output-section.visible { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .output-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .output-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .copy-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { border-color: var(--amber); color: var(--amber); background: #2A1F0E; }
+  .copy-btn.copied { color: #2d7a3a; border-color: #2d7a3a; background: #edf7ee; }
+
+  .message-bubble {
+    background: #2A2018;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .message-bubble.sms {
+    background: #e8f3ff;
+    border-color: #c5dff7;
+    border-radius: 18px 18px 4px 18px;
+    max-width: 85%;
+    margin-left: auto;
+  }
+
+  .message-bubble.email {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.8;
+    border-left: 3px solid var(--amber);
+  }
+
+  .sms-wrapper { background: #f0f0f0; border-radius: var(--radius); padding: 20px; }
+  .sms-header { font-size: 12px; color: #888; text-align: center; margin-bottom: 12px; font-weight: 500; }
+
+  .regenerate-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .regen-btn {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .regen-btn:hover { border-color: var(--amber); color: var(--amber); background: #2A1F0E; }
+
+  .loading-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .loading-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber-light);
+    animation: dot-bounce 1.2s ease-in-out infinite;
+  }
+
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes dot-bounce {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+    40% % { transform: scale(1); opacity: 1; }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .error-msg {
+    background: #fff0f0;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #c0392b;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-msg.visible { display: block; }
+
+  .tagline-badge {
+    display: inline-block;
+    background: #2A1F0E;
+    border: 1px solid #5A3A10;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 520px) {
+    .row-2 { grid-template-columns: 1fr; }
+    .channel-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 32px; }
+    .app { padding: 24px 16px 60px; }
+    .card { padding: 20px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="stamp-mark">
-      <svg viewBox="0 0 40 44" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="40" height="44" rx="2" fill="#C8832A"/>
-        <rect x="3" y="3" width="34" height="38" rx="1" fill="#1A1410"/>
-        <!-- perfs top -->
-        <circle cx="0" cy="0" r="3" fill="#FAF7F4"/>
-        <circle cx="10" cy="0" r="3" fill="#FAF7F4"/>
-        <circle cx="20" cy="0" r="3" fill="#FAF7F4"/>
-        <circle cx="30" cy="0" r="3" fill="#FAF7F4"/>
-        <circle cx="40" cy="0" r="3" fill="#FAF7F4"/>
-        <!-- perfs bottom -->
-        <circle cx="0" cy="44" r="3" fill="#FAF7F4"/>
-        <circle cx="10" cy="44" r="3" fill="#FAF7F4"/>
-        <circle cx="20" cy="44" r="3" fill="#FAF7F4"/>
-        <circle cx="30" cy="44" r="3" fill="#FAF7F4"/>
-        <circle cx="40" cy="44" r="3" fill="#FAF7F4"/>
-        <!-- perfs left -->
-        <circle cx="0" cy="11" r="3" fill="#FAF7F4"/>
-        <circle cx="0" cy="22" r="3" fill="#FAF7F4"/>
-        <circle cx="0" cy="33" r="3" fill="#FAF7F4"/>
-        <!-- perfs right -->
-        <circle cx="40" cy="11" r="3" fill="#FAF7F4"/>
-        <circle cx="40" cy="22" r="3" fill="#FAF7F4"/>
-        <circle cx="40" cy="33" r="3" fill="#FAF7F4"/>
-        <!-- motion lines -->
-        <line x1="5" y1="14" x2="35" y2="14" stroke="#C8832A" stroke-width="3" stroke-linecap="round" opacity="0.72"/>
-        <line x1="5" y1="20" x2="35" y2="20" stroke="#C8832A" stroke-width="2.4" stroke-linecap="round" opacity="0.55"/>
-        <line x1="5" y1="26" x2="35" y2="26" stroke="#C8832A" stroke-width="1.8" stroke-linecap="round" opacity="0.38"/>
-        <line x1="5" y1="32" x2="35" y2="32" stroke="#C8832A" stroke-width="1.2" stroke-linecap="round" opacity="0.22"/>
-        <line x1="5" y1="38" x2="35" y2="38" stroke="#C8832A" stroke-width="0.6" stroke-linecap="round" opacity="0.10"/>
-        <!-- S outline -->
-        <text x="20" y="36" font-family="Georgia, serif" font-size="34" font-style="italic" fill="none" stroke="#C8832A" stroke-width="1.2" text-anchor="middle">S</text>
-      </svg>
-    </div>
-    <span class="nav-wordmark"><em>S</em>ent</span>
-  </a>
-  <a href="#waitlist" class="nav-cta">Join the waitlist</a>
-</nav>
+<div class="header">
+  <div class="logo-mark">S</div>
+  <span class="logo-text">Sent</span>
+  <span class="logo-tag">— prototype</span>
+</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">✦ Now in development</div>
-    <h1>
-      Every occasion.<br>Every person.<br>Remembered.
-      <span class="closer">Sent.</span>
-    </h1>
-    <p class="hero-sub">Birthdays. Graduations. New babies. Promotions. Retirements. The people you care about deserve more than a generic message — for every moment that matters.</p>
-    <div class="hero-ctas">
-      <a href="#waitlist" class="btn-primary">Join the waitlist ✦</a>
-      <a href="#demo" class="btn-secondary">Try the demo →</a>
+<div class="app">
+
+  <div class="hero">
+    <div class="tagline-badge">✦ Relationships, remembered. <em style="font-style:italic">Sent.</em></div>
+    <h1>Every occasion.<br><em>Perfectly personal.</em></h1>
+    <p>Sent turns life's moments — birthdays, graduations, promotions, new babies, and more — into messages that feel like you actually remembered. Because you did.</p>
+  </div>
+
+  <!-- Step 1: Who is it? -->
+  <div class="card">
+    <div class="section-label">Step 1 — The person & occasion</div>
+    <div class="row-2">
+      <div class="field-group">
+        <label>Their name</label>
+        <input type="text" id="person-name" placeholder="e.g. Marcus" />
+      </div>
+      <div class="field-group">
+        <label>Your relationship</label>
+        <input type="text" id="relationship" placeholder="e.g. college roommate, coworker" />
+      </div>
+      <div class="field-group">
+        <label>Occasion</label>
+        <select id="occasion">
+          <option value="birthday">🎂 Birthday</option>
+          <option value="graduation">🎓 Graduation</option>
+          <option value="promotion">🏆 Promotion / New job</option>
+          <option value="new baby">👶 New baby</option>
+          <option value="anniversary">💍 Anniversary</option>
+          <option value="retirement">🌅 Retirement</option>
+          <option value="condolences">🕊️ Condolences</option>
+          <option value="just because">✨ Just because</option>
+          <option value="holiday">🎄 Holiday</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>What's going on with them lately? <span style="font-weight:400; color:var(--ink-30)">(Sent would pull this automatically — try it manually for now)</span></label>
+      <textarea id="context" placeholder="e.g. Just got promoted at work, moved to Austin last month, obsessed with pickleball, been posting a lot about their new dog Biscuit..."></textarea>
     </div>
   </div>
 
-  <!-- Hero stamp -->
-  <div class="hero-stamp">
-    <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="400" height="440" rx="6" fill="#C8832A"/>
-      <rect x="26" y="26" width="348" height="388" rx="4" fill="#1A1410"/>
-      <!-- perfs top -->
-      <circle cx="0"   cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="40"  cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="80"  cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="120" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="160" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="200" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="240" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="280" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="320" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="360" cy="0"   r="16" fill="#1A1410"/>
-      <circle cx="400" cy="0"   r="16" fill="#1A1410"/>
-      <!-- perfs bottom -->
-      <circle cx="0"   cy="440" r="16" fill="#1A1410"/>
-      <circle cx="40"  cy="440" r="16" fill="#1A1410"/>
-      <circle cx="80"  cy="440" r="16" fill="#1A1410"/>
-      <circle cx="120" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="160" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="200" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="240" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="280" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="320" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="360" cy="440" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="440" r="16" fill="#1A1410"/>
-      <!-- perfs left -->
-      <circle cx="0" cy="44"  r="16" fill="#1A1410"/>
-      <circle cx="0" cy="88"  r="16" fill="#1A1410"/>
-      <circle cx="0" cy="132" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="176" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="220" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="264" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="308" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="352" r="16" fill="#1A1410"/>
-      <circle cx="0" cy="396" r="16" fill="#1A1410"/>
-      <!-- perfs right -->
-      <circle cx="400" cy="44"  r="16" fill="#1A1410"/>
-      <circle cx="400" cy="88"  r="16" fill="#1A1410"/>
-      <circle cx="400" cy="132" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="176" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="220" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="264" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="308" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="352" r="16" fill="#1A1410"/>
-      <circle cx="400" cy="396" r="16" fill="#1A1410"/>
-      <!-- Motion lines -->
-      <line x1="32" y1="156" x2="368" y2="156" stroke="#C8832A" stroke-width="12" stroke-linecap="round" opacity="0.72"/>
-      <line x1="32" y1="192" x2="368" y2="192" stroke="#C8832A" stroke-width="9.5" stroke-linecap="round" opacity="0.55"/>
-      <line x1="32" y1="228" x2="368" y2="228" stroke="#C8832A" stroke-width="7.5" stroke-linecap="round" opacity="0.38"/>
-      <line x1="32" y1="264" x2="368" y2="264" stroke="#C8832A" stroke-width="5"   stroke-linecap="round" opacity="0.22"/>
-      <line x1="32" y1="300" x2="368" y2="300" stroke="#C8832A" stroke-width="2.5" stroke-linecap="round" opacity="0.10"/>
-      <!-- S -->
-      <text x="200" y="348" font-family="Georgia, serif" font-size="340" font-style="italic" fill="none" stroke="#C8832A" stroke-width="5" text-anchor="middle">S</text>
-      <!-- SENT label -->
-      <text x="200" y="396" font-family="Trebuchet MS, sans-serif" font-size="18" fill="#6B5C4D" text-anchor="middle" letter-spacing="12">SENT</text>
-    </svg>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section class="problem">
-  <div class="problem-inner">
-    <div class="reveal">
-      <p class="section-label">The problem</p>
-      <h2 class="section-title">Every occasion is a chance<br>to show someone they matter.</h2>
-      <p class="section-sub">Life gets busy. Birthdays, graduations, new babies, promotions — the moments that matter most are the ones we most often fumble.</p>
-    </div>
-
-    <div class="problem-grid">
-      <div class="problem-card reveal">
-        <span class="problem-icon">😶</span>
-        <h3>Generic messages</h3>
-        <p>"Happy birthday! Hope it's great!" Sent by 52 other people. For every occasion. Nobody feels seen.</p>
+  <!-- Step 2: Your voice -->
+  <div class="card">
+    <div class="section-label">Step 2 — Your voice</div>
+    <div class="voice-grid">
+      <div class="voice-card selected" data-voice="warm">
+        <div class="v-icon">🤗</div>
+        <div class="v-name">The Nurturer</div>
+        <div class="v-desc">Warm, expressive, big-hearted</div>
       </div>
-      <div class="problem-card reveal">
-        <span class="problem-icon">⏰</span>
-        <h3>Missed entirely</h3>
-        <p>Life gets busy. Important people slip through. The silence says more than any message could.</p>
+      <div class="voice-card" data-voice="witty">
+        <div class="v-icon">😏</div>
+        <div class="v-name">The Wit</div>
+        <div class="v-desc">Dry humor, sharp, playful</div>
       </div>
-      <div class="problem-card reveal">
-        <span class="problem-icon">🕸️</span>
-        <h3>Scattered data</h3>
-        <p>Life moments live across Facebook, LinkedIn, Google, and iCloud. No single place to keep track.</p>
+      <div class="voice-card" data-voice="sincere">
+        <div class="v-icon">🌿</div>
+        <div class="v-name">The Sage</div>
+        <div class="v-desc">Thoughtful, genuine, grounded</div>
       </div>
-    </div>
-
-    <div class="problem-stat reveal">
-      Birthdays. Graduations. New babies. Promotions. Retirements. Every person you love has moments worth celebrating — Sent makes sure you never miss one.
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how">
-  <div class="how-inner">
-    <div class="reveal">
-      <p class="section-label">How it works</p>
-      <h2 class="section-title">Every occasion, remembered.<br>Every message, personal.</h2>
-      <p class="section-sub">Four simple steps — all automatic. Set it up once and never miss another moment that matters.</p>
-    </div>
-
-    <div class="steps">
-      <div class="step reveal">
-        <span class="step-num">01</span>
-        <h3>Aggregate</h3>
-        <p>Pulls life occasions — birthdays, graduations, milestones — from every social network and calendar. OAuth-based, no scraping.</p>
-        <div class="step-connector">→</div>
+      <div class="voice-card" data-voice="hype">
+        <div class="v-icon">🎉</div>
+        <div class="v-name">The Hype</div>
+        <div class="v-desc">Energetic, enthusiastic, loud</div>
       </div>
-      <div class="step reveal">
-        <span class="step-num">02</span>
-        <h3>Research</h3>
-        <p>Before each occasion, Sent scans their recent activity to understand what's actually going on in their life right now.</p>
-        <div class="step-connector">→</div>
-      </div>
-      <div class="step reveal">
-        <span class="step-num">03</span>
-        <h3>Generate</h3>
-        <p>Writes a message in your voice — one of five personality archetypes — that references their actual life. Not a template.</p>
-        <div class="step-connector">→</div>
-      </div>
-      <div class="step reveal">
-        <span class="step-num">04</span>
-        <h3>Deliver</h3>
-        <p>Sends on time, through the right channel — text, email, LinkedIn, Instagram — for every occasion, while you sleep.</p>
+      <div class="voice-card" data-voice="brief">
+        <div class="v-icon">🎯</div>
+        <div class="v-name">The Minimalist</div>
+        <div class="v-desc">Short, clean, no fluff</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- THE MAGIC -->
-<section class="magic">
-  <div class="magic-inner">
-    <div class="reveal">
-      <p class="section-label">The magic</p>
-      <h2 class="section-title">The gap between caring<br>and showing up — finally closed.</h2>
-    </div>
-
-    <div class="comparison reveal">
-      <div class="comparison-card">
-        <p class="comparison-label">Without Sent</p>
-        <p class="comparison-quote">"Happy birthday! Hope your day is as special as you are! 🎂"</p>
-        <p class="comparison-note">Sent by 52 other people. Word for word.</p>
+  <!-- Step 3: Channel -->
+  <div class="card">
+    <div class="section-label">Step 3 — Send it via</div>
+    <div class="channel-grid">
+      <div class="channel-card selected" data-channel="text" data-label="Text message">
+        <div class="c-icon">💬</div>
+        <div class="c-name">Text</div>
       </div>
-
-      <div class="comparison-arrow">→</div>
-
-      <div class="comparison-card sent-card">
-        <p class="comparison-label">With Sent</p>
-        <p class="comparison-quote">"Marcus! Dude, happy birthday — hope you're celebrating in Austin now that the move is done. And give Biscuit a birthday scratch from me 🐶"</p>
-        <p class="comparison-note">Sounds like you. Feels like you remembered.</p>
+      <div class="channel-card" data-channel="email" data-label="Email">
+        <div class="c-icon">✉️</div>
+        <div class="c-name">Email</div>
+      </div>
+      <div class="channel-card" data-channel="linkedin" data-label="LinkedIn message">
+        <div class="c-icon">💼</div>
+        <div class="c-name">LinkedIn</div>
+      </div>
+      <div class="channel-card" data-channel="instagram" data-label="Instagram DM">
+        <div class="c-icon">📸</div>
+        <div class="c-name">Instagram</div>
       </div>
     </div>
   </div>
-</section>
 
 
-<!-- MEDIA SUITE -->
-<section class="media">
-  <div class="media-inner">
-    <div class="reveal">
-      <p class="section-label">The media studio</p>
-      <h2 class="section-title">Not just words.<br>A full creative suite.</h2>
-      <p class="section-sub">Sent is a personal media studio for relationships — text, photos, GIFs, memes, video, and voice, all curated by AI and delivered in your voice.</p>
-    </div>
+  <!-- Step 4: Media Suite -->
+  <div class="card">
+    <div class="section-label">Step 4 — Add media <span style="font-size:10px;background:rgba(200,131,42,0.12);color:var(--amber);padding:2px 8px;border-radius:10px;margin-left:6px;letter-spacing:0.5px;">Optional</span></div>
+    <div class="media-suite">
+      <div class="media-tabs">
+        <div class="media-tab active" onclick="switchTab('photos', this)">📸 Photos</div>
+        <div class="media-tab" onclick="switchTab('gifs', this)">🎭 GIF / Meme</div>
+        <div class="media-tab" onclick="switchTab('video', this)">🎬 Video</div>
+        <div class="media-tab" onclick="switchTab('gift', this)">💸 Gift</div>
+      </div>
 
-    <div class="media-grid">
+      <!-- Photos panel -->
+      <div class="media-panel active" id="panel-photos">
+        <div class="photo-upload-area" onclick="document.getElementById('photo-input').click()">
+          <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(this)">
+          <span class="photo-upload-icon">📷</span>
+          <div class="photo-upload-text">Click to add photos</div>
+          <div class="photo-upload-sub">Up to 3 photos on free tier · JPG, PNG, GIF</div>
+        </div>
+        <div class="photo-previews" id="photo-previews"></div>
+        <div class="media-tier-note">Free: 3 photos &nbsp;·&nbsp; <span>Sent+</span>: 10 photos &nbsp;·&nbsp; <span>Pro</span>: Unlimited</div>
+      </div>
 
-      <div class="media-card reveal">
-        <span class="media-card-icon">📸</span>
-        <h3>Photos</h3>
-        <p>Add a throwback, a screenshot, a moment you shared. A photo makes any message a memory.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge free">Free</span><span class="tier-desc">Up to 3 per message</span></div>
-          <div class="media-tier"><span class="tier-badge plus">Sent+</span><span class="tier-desc">Up to 10 per message</span></div>
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">Unlimited + AI suggestions</span></div>
+      <!-- GIF panel -->
+      <div class="media-panel" id="panel-gifs">
+        <div class="gif-search-bar">
+          <input class="gif-search-input" id="gif-search" placeholder="Search GIFs and memes..." onkeydown="if(event.key==='Enter') searchGifs()">
+          <button class="gif-suggest-btn" onclick="suggestGif()">✦ AI Suggest</button>
+        </div>
+        <div class="gif-grid" id="gif-grid">
+          <div class="gif-placeholder">Search above or hit ✦ AI Suggest to get contextual picks based on who you're messaging.</div>
+        </div>
+        <div class="media-tier-note">Free: 1 GIF &nbsp;·&nbsp; <span>Sent+</span>: Unlimited &nbsp;·&nbsp; <span>Pro</span>: Full AI suite</div>
+      </div>
+
+      <!-- Video panel -->
+      <div class="media-panel" id="panel-video">
+        <div class="video-note">✦ AI will draft a script based on your context — you record in your own voice. The most personal message you can send.</div>
+        <div class="video-upload-area" style="margin-top:12px;" onclick="document.getElementById('video-input').click()">
+          <input type="file" id="video-input" accept="video/*" onchange="handleVideo(this)">
+          <span class="photo-upload-icon">🎬</span>
+          <div class="photo-upload-text">Click to attach a video</div>
+          <div class="photo-upload-sub">Free: 15 sec &nbsp;·&nbsp; Sent+: 60 sec &nbsp;·&nbsp; Pro: 3 min</div>
+        </div>
+        <div class="media-tier-note">Free: 15 sec &nbsp;·&nbsp; <span>Sent+</span>: 60 sec &nbsp;·&nbsp; <span>Pro</span>: 3 min + voice notes</div>
+      </div>
+
+      <!-- Gift panel -->
+      <div class="media-panel" id="panel-gift">
+        <div class="video-note">💸 Remember the birthday card your uncle slipped a $20 into? The gift is part of the message — no Venmo link, no forgetting.</div>
+        <div style="margin-top:16px;">
+          <div style="margin-bottom:10px;font-size:12px;font-weight:500;color:var(--ink-60);">Choose an amount</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;" id="gift-presets">
+            <button onclick="selectGiftAmount(this, 5)"  class="gift-preset-btn">$5</button>
+            <button onclick="selectGiftAmount(this, 10)" class="gift-preset-btn">$10</button>
+            <button onclick="selectGiftAmount(this, 20)" class="gift-preset-btn active">$20</button>
+            <button onclick="selectGiftAmount(this, 50)" class="gift-preset-btn">$50</button>
+            <button onclick="selectGiftAmount(this, 100)" class="gift-preset-btn">$100</button>
+            <button onclick="selectGiftAmount(this, 0)"  class="gift-preset-btn" data-custom="true">Custom</button>
+          </div>
+          <div id="gift-custom-wrap" style="display:none;margin-bottom:14px;">
+            <input id="gift-custom-input" class="gif-search-input" type="number" placeholder="Enter amount..." min="1" max="500" oninput="giftAmount=parseInt(this.value)||0">
+          </div>
+          <div style="background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--ink-60);line-height:1.65;">
+            Recipient gets a tap-to-claim button in their message. They can send to Apple Pay, Google Pay, or their bank. Powered by Stripe.
+          </div>
+          <div class="media-tier-note" style="margin-top:12px;">Free: up to $25 &nbsp;·&nbsp; <span>Sent+</span>: up to $100 &nbsp;·&nbsp; <span>Pro</span>: up to $500</div>
         </div>
       </div>
-
-      <div class="media-card reveal">
-        <div class="media-new-badge">AI Powered</div>
-        <span class="media-card-icon">🎭</span>
-        <h3>GIFs & Memes</h3>
-        <p>Visual language is how people actually communicate. The AI suggests contextually perfect GIFs based on who you're messaging.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge free">Free</span><span class="tier-desc">1 per message</span></div>
-          <div class="media-tier"><span class="tier-badge plus">Sent+</span><span class="tier-desc">Unlimited + AI picks</span></div>
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">Unlimited + full AI suite</span></div>
-        </div>
-      </div>
-
-      <div class="media-card reveal">
-        <span class="media-card-icon">🎬</span>
-        <h3>Video Messages</h3>
-        <p>Video is intimacy. Nobody forgets a video message — especially from someone they care about.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge free">Free</span><span class="tier-desc">Up to 15 seconds</span></div>
-          <div class="media-tier"><span class="tier-badge plus">Sent+</span><span class="tier-desc">Up to 60 seconds</span></div>
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">Up to 3 minutes</span></div>
-        </div>
-      </div>
-
-      <div class="media-card reveal">
-        <div class="media-new-badge">Pro Exclusive</div>
-        <span class="media-card-icon">🎙️</span>
-        <h3>Voice Notes</h3>
-        <p>AI drafts the script. You record it in your own voice. Delivered as an audio message — hearing someone's voice on your special day is unforgettable.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">AI-scripted, your voice</span></div>
-        </div>
-      </div>
-
-      <div class="media-card featured reveal">
-        <div class="media-new-badge">Sent+ & Pro</div>
-        <span class="media-card-icon">💌</span>
-        <h3>Digital Postcard Builder</h3>
-        <p>Your photo, framed as a vintage postcard with the Sent stamp. The message on the back. People screenshot these. People share these. Organic marketing that money can't buy.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge plus">Sent+</span><span class="tier-desc">Postcard builder included</span></div>
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">Postcard builder included</span></div>
-        </div>
-      </div>
-
-      <div class="media-card reveal" style="border-color:var(--amber);background:rgba(200,131,42,0.06);">
-        <div class="media-new-badge">New</div>
-        <span class="media-card-icon">💸</span>
-        <h3>Sent Gift</h3>
-        <p>Remember the birthday card your uncle slipped a $20 into? That — but digital, instant, and built right into your message. No Venmo link. No "I'll send it later." The gift <em>is</em> the message.</p>
-        <div class="media-tiers">
-          <div class="media-tier"><span class="tier-badge free">Free</span><span class="tier-desc">Up to $25 per gift</span></div>
-          <div class="media-tier"><span class="tier-badge plus">Sent+</span><span class="tier-desc">Up to $100 per gift</span></div>
-          <div class="media-tier"><span class="tier-badge pro">Pro</span><span class="tier-desc">Up to $500 per gift</span></div>
-        </div>
-      </div>
-
-      <div class="media-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:rgba(200,131,42,0.04);border-style:dashed;">
-        <span style="font-size:36px;margin-bottom:12px;">✦</span>
-        <h3 style="color:var(--amber);">More coming.</h3>
-        <p style="margin:0;">We're building fast. The media suite grows with your feedback.</p>
-      </div>
-
     </div>
   </div>
-</section>
 
-<!-- VOICES -->
-<section class="voices">
-  <div class="voices-inner">
-    <div class="reveal">
-      <p class="section-label">Your voice</p>
-      <h2 class="section-title">Five personalities.<br>One that sounds like you.</h2>
-      <p class="section-sub">Choose your archetype and Sent writes in your natural style — for any occasion. No two messages feel the same. Click one to see an example.</p>
-    </div>
+  <button class="generate-btn" id="gen-btn" onclick="generateMessage()">
+    <span id="btn-label">Generate Message ✦</span>
+  </button>
 
-    <div class="voices-grid">
-      <div class="voice-card reveal" data-voice="warm" onclick="selectVoice(this)">
-        <span class="voice-icon">🤗</span>
-        <p class="voice-name">The Nurturer</p>
-        <p class="voice-desc">Warm, expressive, big-hearted</p>
+  <div class="error-msg" id="error-msg"></div>
+
+  <hr class="divider" id="output-divider" style="display:none;">
+
+  <!-- Output -->
+  <div class="output-section" id="output-section">
+    <div class="card">
+      <div class="output-header">
+        <div class="output-label" id="output-label">Your message</div>
+        <button class="copy-btn" id="copy-btn" onclick="copyMessage()">Copy</button>
       </div>
-      <div class="voice-card reveal" data-voice="witty" onclick="selectVoice(this)">
-        <span class="voice-icon">😏</span>
-        <p class="voice-name">The Wit</p>
-        <p class="voice-desc">Dry humor, sharp, playful</p>
-      </div>
-      <div class="voice-card reveal" data-voice="sincere" onclick="selectVoice(this)">
-        <span class="voice-icon">🌿</span>
-        <p class="voice-name">The Sage</p>
-        <p class="voice-desc">Thoughtful, genuine, grounded</p>
-      </div>
-      <div class="voice-card reveal" data-voice="hype" onclick="selectVoice(this)">
-        <span class="voice-icon">🎉</span>
-        <p class="voice-name">The Hype</p>
-        <p class="voice-desc">Energetic, enthusiastic, loud</p>
-      </div>
-      <div class="voice-card reveal" data-voice="brief" onclick="selectVoice(this)">
-        <span class="voice-icon">🎯</span>
-        <p class="voice-name">The Minimalist</p>
-        <p class="voice-desc">Short, clean, no fluff</p>
+      <div id="message-container"></div>
+      <div class="regenerate-row">
+        <button class="regen-btn" onclick="generateMessage()">↻ Regenerate</button>
+        <button class="regen-btn" onclick="tryDifferentVoice()">Try a different voice</button>
       </div>
     </div>
-
-    <div class="voice-example" id="voice-example">
-      <p class="voice-example-label" id="voice-label">THE NURTURER</p>
-      <p class="voice-example-msg" id="voice-msg">"Sarah!! Happy birthday to one of the most genuinely kind humans I know. I hope today wraps you up like the warmest hug — you absolutely deserve it. So glad you moved back to the city. Let's actually celebrate this week! 🥂"</p>
-    </div>
-
-    <div style="margin-top: 40px; text-align: center;" class="reveal">
-      <a href="#demo" class="btn-primary" style="display:inline-flex;">Try it yourself — generate a real occasion message →</a>
-    </div>
   </div>
-</section>
 
-<!-- WAITLIST -->
-<section class="waitlist" id="waitlist">
-  <p class="section-label" style="text-align:center;">Early access</p>
-  <h2 class="section-title reveal" style="color:var(--white);">Be the first to<br>never miss a moment.</h2>
-  <p class="waitlist-sub reveal">We're opening to a small group of early users first. Drop your email and we'll reach out when it's your turn.</p>
-
-  <div class="waitlist-form reveal">
-    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="your@email.com" />
-    <button class="waitlist-submit" onclick="submitWaitlist()">Join waitlist</button>
-  </div>
-  <p class="waitlist-note reveal">No spam. No noise. Just one email when you're in.</p>
-  <p class="success-msg" id="success-msg">You're on the list. We'll be in touch. ✦</p>
-
-  <div class="waitlist-closing reveal">
-    <p class="waitlist-tagline">
-      Relationships, remembered.<br><em>Sent.</em>
-    </p>
-  </div>
-</section>
-
-<!-- DEMO ANCHOR -->
-<div id="demo"></div>
-
-<!-- FOOTER -->
-<footer>
-  <p class="footer-logo"><em>S</em>ent — sentapp.net</p>
-  <div class="footer-links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">Contact</a>
-  </div>
-  <p class="footer-copy">© 2026 Sent. All rights reserved.</p>
-</footer>
+</div>
 
 <script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
+  let selectedVoice = 'warm';
+  let selectedChannel = 'text';
+  let currentMessage = '';
+
+  const voiceDescriptions = {
+    warm: 'warm, affectionate, and expressive — like a big hug in words',
+    witty: 'dry, playful, and a little cheeky — charming without being over the top',
+    sincere: 'thoughtful, grounded, and genuinely meaningful — no fluff',
+    hype: 'high energy, enthusiastic, and celebratory — turn it up',
+    brief: 'short, clean, and to the point — says a lot with very little'
+  };
+
+  const channelInstructions = {
+    text: 'Write a text message. Keep it casual and conversational. 2-4 sentences max. No subject line.',
+    email: 'Write an email. Include a subject line on the first line (format: "Subject: ..."), then a blank line, then the email body. Keep it personal and not too long.',
+    linkedin: 'Write a LinkedIn message. Professional yet warm. 2-3 sentences. No subject line.',
+    instagram: 'Write an Instagram DM. Casual, fun, emoji-friendly. 1-3 sentences.'
+  };
+
+  document.querySelectorAll('.voice-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedVoice = card.dataset.voice;
+    });
   });
-}, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.channel-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedChannel = card.dataset.channel;
+    });
+  });
 
-// Voice examples
-const voices = {
-  warm:    { label: 'THE NURTURER', msg: '"Sarah!! Happy birthday to one of the most genuinely kind humans I know. I hope today wraps you up like the warmest hug — you deserve every bit of it. So glad you moved back to the city. Let\'s actually celebrate this week! 🥂"' },
-  witty:   { label: 'THE WIT',      msg: '"Happy birthday, Marcus. I\'d say you don\'t look a day older, but I\'ve seen your LinkedIn photo. Give Biscuit a birthday biscuit from me and try not to Yelp every restaurant in Austin in one week."' },
-  sincere: { label: 'THE SAGE',     msg: '"Happy birthday. I\'ve been thinking about how much you\'ve taken on this year — the move, the new chapter. I hope today feels like a genuine exhale. Really glad you\'re in my corner."' },
-  hype:    { label: 'THE HYPE',     msg: '"MARCUS!!! IT\'S YOUR BIRTHDAY AND I AM SCREAMING!!! 🎉🎉🎉 Austin gained the GOAT. Biscuit is the luckiest dog ALIVE. CELEBRATE EVERYTHING TODAY!!!"' },
-  brief:   { label: 'THE MINIMALIST', msg: '"Happy birthday, Marcus. Hope Austin\'s treating you well."' },
-};
+  async function generateMessage() {
+    const name = document.getElementById('person-name').value.trim();
+    const relationship = document.getElementById('relationship').value.trim();
+    const context = document.getElementById('context').value.trim();
 
-function selectVoice(el) {
-  document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  const v = voices[el.dataset.voice];
-  document.getElementById('voice-label').textContent = v.label;
-  document.getElementById('voice-msg').textContent = v.msg;
-  const example = document.getElementById('voice-example');
-  example.classList.add('visible');
-  example.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
+    if (!name) {
+      showError("Give them a name — they deserve at least that.");
+      return;
+    }
 
-// Waitlist
-function submitWaitlist() {
-  const email = document.getElementById('waitlist-email').value;
-  if (!email || !email.includes('@')) {
-    document.getElementById('waitlist-email').style.borderColor = '#E24B4A';
-    return;
+    hideError();
+    setLoading(true);
+
+    const occasion = document.getElementById('occasion')?.value || 'birthday';
+    const prompt = `You are writing a personalized ${occasion} message for someone.
+
+Here's the situation:
+- Person's name: ${name}
+- Occasion: ${occasion}
+- My relationship with them: ${relationship || 'friend'}
+- What's going on in their life lately: ${context || 'not much specific info available, keep it personal but general'}
+- My voice/personality style: ${voiceDescriptions[selectedVoice]}
+- Channel: ${channelInstructions[selectedChannel]}
+
+Write the occasion message now. Make it feel genuinely personal — reference what's going on in their life if context was provided. Do NOT use generic clichés. Sound like a real person who actually knows them.
+
+Output only the message itself, nothing else. No explanations, no quotes around it.`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        showError("API error: " + (data.error.message || "Something went wrong."));
+        setLoading(false);
+        return;
+      }
+
+      currentMessage = data.content[0].text.trim();
+      renderMessage(currentMessage);
+      setLoading(false);
+
+    } catch (err) {
+      showError("Couldn't connect to the API. Check your connection and try again.");
+      setLoading(false);
+    }
   }
-  document.querySelector('.waitlist-form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
-}
 
-// Smooth nav on scroll
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  if (window.scrollY > 50) {
-    nav.style.borderBottomColor = 'rgba(200,131,42,0.25)';
-  } else {
-    nav.style.borderBottomColor = 'rgba(200,131,42,0.15)';
+  function renderMessage(message) {
+    const container = document.getElementById('message-container');
+    const label = document.getElementById('output-label');
+    const channelNames = { text: 'Text message', email: 'Email', linkedin: 'LinkedIn message', instagram: 'Instagram DM' };
+    label.textContent = channelNames[selectedChannel];
+
+    if (selectedChannel === 'text') {
+      container.innerHTML = `
+        <div class="sms-wrapper">
+          <div class="sms-header">iMessage</div>
+          <div class="message-bubble sms">${escapeHtml(message)}</div>
+        </div>`;
+    } else if (selectedChannel === 'email') {
+      const lines = message.split('\n');
+      let subject = '';
+      let body = message;
+      if (lines[0].toLowerCase().startsWith('subject:')) {
+        subject = lines[0].replace(/^subject:\s*/i, '');
+        body = lines.slice(2).join('\n').trim();
+      }
+      container.innerHTML = `
+        ${subject ? `<div style="font-size:13px;color:var(--ink-60);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);"><strong style="color:var(--ink)">Subject:</strong> ${escapeHtml(subject)}</div>` : ''}
+        <div class="message-bubble email">${escapeHtml(body)}</div>`;
+    } else {
+      container.innerHTML = `<div class="message-bubble">${escapeHtml(message)}</div>`;
+    }
+
+    document.getElementById('output-divider').style.display = 'block';
+    document.getElementById('output-section').classList.add('visible');
+    document.getElementById('copy-btn').textContent = 'Copy';
+    document.getElementById('copy-btn').classList.remove('copied');
+
+    setTimeout(() => {
+      document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   }
-});
+
+  function copyMessage() {
+    navigator.clipboard.writeText(currentMessage).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function tryDifferentVoice() {
+    const voices = ['warm', 'witty', 'sincere', 'hype', 'brief'];
+    const currentIndex = voices.indexOf(selectedVoice);
+    const nextVoice = voices[(currentIndex + 1) % voices.length];
+    document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('selected'));
+    document.querySelector(`[data-voice="${nextVoice}"]`).classList.add('selected');
+    selectedVoice = nextVoice;
+    generateMessage();
+  }
+
+  function setLoading(isLoading) {
+    const btn = document.getElementById('gen-btn');
+    const label = document.getElementById('btn-label');
+    btn.disabled = isLoading;
+    if (isLoading) {
+      label.innerHTML = 'Writing something good&nbsp;<span class="loading-dots"><span></span><span></span><span></span></span>';
+    } else {
+      label.textContent = 'Generate Message ✦';
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  function hideError() {
+    document.getElementById('error-msg').classList.remove('visible');
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  // ── Media suite ─────────────────────────────────────────────────
+  let uploadedPhotos = [];
+  let selectedGif = null;
+  let uploadedVideo = null;
+
+  function switchTab(panel, el) {
+    document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.media-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + panel).classList.add('active');
+  }
+
+  function handlePhotos(input) {
+    const files = Array.from(input.files).slice(0, 3); // free tier limit
+    uploadedPhotos = files;
+    const previews = document.getElementById('photo-previews');
+    previews.innerHTML = '';
+    files.forEach((file, i) => {
+      const url = URL.createObjectURL(file);
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-preview-wrap';
+      wrap.innerHTML = \`<img class="photo-preview" src="\${url}">
+        <button class="photo-remove" onclick="removePhoto(\${i})">✕</button>\`;
+      previews.appendChild(wrap);
+    });
+  }
+
+  function removePhoto(i) {
+    uploadedPhotos.splice(i, 1);
+    const dt = new DataTransfer();
+    uploadedPhotos.forEach(f => dt.items.add(f));
+    document.getElementById('photo-input').files = dt.files;
+    handlePhotos(document.getElementById('photo-input'));
+  }
+
+  // Emoji GIF placeholders (Giphy API would replace these in production)
+  const gifSuggestions = {
+    default: ['🎂','🎉','🥳','🎊','🎈','🎁'],
+    warm:    ['🤗','💝','🌸','✨','💫','🥂'],
+    witty:   ['😏','🤌','👀','💅','🙃','😂'],
+    sincere: ['🌿','💙','🙏','✨','🫶','🌟'],
+    hype:    ['🔥','🎉','💥','🚀','⚡','🏆'],
+    brief:   ['✓','👍','🤝','💯','🎯','🫡'],
+  };
+
+  function suggestGif() {
+    const grid = document.getElementById('gif-grid');
+    const voice = selectedVoice || 'default';
+    const emojis = gifSuggestions[voice] || gifSuggestions.default;
+    grid.innerHTML = emojis.map((e, i) =>
+      \`<div class="gif-item" onclick="selectGif(this, '\${e}')" title="Click to select">\${e}</div>\`
+    ).join('');
+  }
+
+  function searchGifs() {
+    const q = document.getElementById('gif-search').value;
+    if (!q) return;
+    const grid = document.getElementById('gif-grid');
+    // In production this calls Giphy/Tenor API — for demo, show themed emojis
+    const themed = ['🎂','🎉','🥳','🎊','🎈','🎁','😄','🌟','💫','🔥','✨','🎶'];
+    grid.innerHTML = themed.map((e, i) =>
+      \`<div class="gif-item" onclick="selectGif(this, '\${e}')">\${e}</div>\`
+    ).join('');
+  }
+
+  function selectGif(el, gif) {
+    document.querySelectorAll('.gif-item').forEach(g => g.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedGif = gif;
+  }
+
+  function handleVideo(input) {
+    if (input.files[0]) {
+      uploadedVideo = input.files[0];
+      const area = input.closest('.video-upload-area');
+      area.innerHTML = \`<input type="file" id="video-input" accept="video/*" style="display:none" onchange="handleVideo(this)">
+        <span class="photo-upload-icon">✅</span>
+        <div class="photo-upload-text">\${uploadedVideo.name}</div>
+        <div class="photo-upload-sub" style="color:var(--amber);cursor:pointer" onclick="document.getElementById('video-input').click()">Change video</div>\`;
+    }
+  }
+
+
+
+  // ── Gift ─────────────────────────────────────────────────────────
+  let giftAmount = 20;
+
+  function selectGiftAmount(btn, amount) {
+    document.querySelectorAll('.gift-preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const customWrap = document.getElementById('gift-custom-wrap');
+    if (btn.dataset.custom) {
+      customWrap.style.display = 'block';
+      giftAmount = 0;
+    } else {
+      customWrap.style.display = 'none';
+      giftAmount = amount;
+    }
+  }
+
 </script>
 </body>
 </html>
