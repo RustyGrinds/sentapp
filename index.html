@@ -828,6 +828,149 @@ footer {
   font-style: italic;
   margin-top: 16px;
 }
+
+/* ─── PRICING ─────────────────────────────────────────────────── */
+.pricing {
+  background: var(--ink);
+}
+
+.pricing-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pricing .section-title { color: var(--white); }
+.pricing .section-sub   { color: var(--ink-30); }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+.pricing-card {
+  background: #221C16;
+  border: 1px solid #3A2F25;
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.pricing-card:hover { border-color: var(--amber); }
+
+.pricing-card.featured {
+  border: 2px solid var(--amber);
+  transform: translateY(-8px);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pricing-tier {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.pricing-price {
+  font-family: var(--serif);
+  font-size: 44px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.pricing-price span {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink-30);
+}
+
+.pricing-desc {
+  font-size: 13px;
+  color: var(--ink-30);
+  line-height: 1.55;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.pricing-divider {
+  border: none;
+  border-top: 1px solid #3A2F25;
+  margin-bottom: 24px;
+}
+
+.pricing-features {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.pricing-features li {
+  font-size: 13px;
+  color: var(--ink-30);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: var(--amber);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.pricing-cta {
+  display: block;
+  text-align: center;
+  padding: 13px;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.pricing-cta.outline {
+  border: 1px solid #3A2F25;
+  color: var(--ink-30);
+}
+
+.pricing-cta.outline:hover { border-color: var(--amber); color: var(--amber); }
+
+.pricing-cta.primary {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+.pricing-cta.primary:hover { background: var(--amber-lt); transform: translateY(-1px); }
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .pricing-card.featured { transform: none; }
+}
 </style>
 </head>
 <body>
@@ -1181,6 +1324,74 @@ footer {
 
     <div style="margin-top: 40px; text-align: center;" class="reveal">
       <a href="#demo" class="btn-primary" style="display:inline-flex;">Try it yourself — generate a real occasion message →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title reveal" style="color:var(--white);">Simple, honest pricing.</h2>
+    <p class="section-sub reveal">Start free. Upgrade when you're ready.</p>
+
+    <div class="pricing-grid reveal">
+
+      <!-- Free -->
+      <div class="pricing-card">
+        <p class="pricing-tier">Free</p>
+        <div class="pricing-price">$0<span>/mo</span></div>
+        <p class="pricing-desc">For trying Sent and sending your first few messages.</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li>Up to 10 contacts</li>
+          <li>3 messages per month</li>
+          <li>Text &amp; email delivery</li>
+          <li>3 photos per message</li>
+          <li>1 GIF per message</li>
+          <li>Video up to 15 sec</li>
+          <li>Sent Gift up to $25</li>
+        </ul>
+        <a href="#waitlist" class="pricing-cta outline">Join waitlist</a>
+      </div>
+
+      <!-- Sent+ -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most popular</div>
+        <p class="pricing-tier">Sent+</p>
+        <div class="pricing-price">$4.99<span>/mo</span></div>
+        <p class="pricing-desc">For people who show up for everyone in their life.</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li>Unlimited contacts &amp; messages</li>
+          <li>All delivery channels</li>
+          <li>10 photos + AI suggestions</li>
+          <li>Unlimited GIFs</li>
+          <li>Video up to 60 sec</li>
+          <li>Digital postcard builder</li>
+          <li>Sent Gift up to $100</li>
+        </ul>
+        <a href="#waitlist" class="pricing-cta primary">Join waitlist</a>
+      </div>
+
+      <!-- Sent Pro -->
+      <div class="pricing-card">
+        <p class="pricing-tier">Sent Pro</p>
+        <div class="pricing-price">$12.99<span>/mo</span></div>
+        <p class="pricing-desc">For power users, teams, and anyone who takes relationships seriously.</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li>Everything in Sent+</li>
+          <li>Voice notes</li>
+          <li>Full voice fingerprinting</li>
+          <li>Analytics dashboard</li>
+          <li>CRM sync (Salesforce)</li>
+          <li>Team &amp; business use</li>
+          <li>Sent Gift up to $500</li>
+        </ul>
+        <a href="#waitlist" class="pricing-cta outline">Join waitlist</a>
+      </div>
+
     </div>
   </div>
 </section>
