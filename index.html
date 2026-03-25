@@ -1265,13 +1265,10 @@ async function submitWaitlist() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('https://api.kit.com/v2/forms/0a445e9048/subscribers', {
+    const res = await fetch('https://api.convertkit.com/v3/forms/9245595/subscribe', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Kit-Api-Key': 'qgO0Jc7JqLbi_k_Tw513hw'
-      },
-      body: JSON.stringify({ email_address: email })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: 'qgO0Jc7JqLbi_k_Tw513hw', email })
     });
 
     if (res.ok) {
