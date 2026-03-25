@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Model setup
+
+See global `~/.claude/CLAUDE.md` for the hybrid cloud/local model configuration. All work in this repo uses `claude-cloud`.
+
 ## Project
 
 Sent is a pre-launch AI-powered occasion intelligence platform at sentapp.net. The repo is a GitHub Pages site — pushing to `main` deploys automatically. There is no build step, no bundler, no dependencies, and no package manager.
