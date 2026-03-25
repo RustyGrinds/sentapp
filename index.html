@@ -1192,7 +1192,7 @@ footer {
   <p class="waitlist-sub reveal">We're opening to a small group of early users first. Drop your email and we'll reach out when it's your turn.</p>
 
   <div class="waitlist-form reveal">
-    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="your@email.com" />
+    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="your@email.com" onkeydown="if(event.key==='Enter') submitWaitlist()" />
     <button class="waitlist-submit" onclick="submitWaitlist()">Join waitlist</button>
   </div>
   <p class="waitlist-note reveal">No spam. No noise. Just one email when you're in.</p>
@@ -1252,14 +1252,40 @@ function selectVoice(el) {
 }
 
 // Waitlist
-function submitWaitlist() {
-  const email = document.getElementById('waitlist-email').value;
+async function submitWaitlist() {
+  const email = document.getElementById('waitlist-email').value.trim();
   if (!email || !email.includes('@')) {
     document.getElementById('waitlist-email').style.borderColor = '#E24B4A';
     return;
   }
-  document.querySelector('.waitlist-form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+
+  const btn = document.querySelector('.waitlist-submit');
+  const originalText = btn.textContent;
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://api.kit.com/v2/forms/0a445e9048/subscribers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Kit-Api-Key': 'qgO0Jc7JqLbi_k_Tw513hw'
+      },
+      body: JSON.stringify({ email_address: email })
+    });
+
+    if (res.ok) {
+      document.querySelector('.waitlist-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      document.getElementById('waitlist-email').style.borderColor = '#E24B4A';
+    }
+  } catch (err) {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
 }
 
 // Smooth nav on scroll
