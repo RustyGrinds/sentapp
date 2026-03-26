@@ -829,6 +829,95 @@ footer {
   margin-top: 16px;
 }
 
+/* ─── SENT GIFT CALLOUT ───────────────────────────────────────── */
+.gift-callout {
+  background: var(--amber);
+  padding: 80px 48px;
+}
+
+.gift-callout-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.gift-callout-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ink-80);
+  margin-bottom: 16px;
+}
+
+.gift-callout-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.5vw, 44px);
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+}
+
+.gift-callout-body {
+  font-size: 16px;
+  color: var(--ink-80);
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+.gift-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gift-tier-row {
+  background: rgba(26,20,16,0.1);
+  border-radius: 10px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gift-tier-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.gift-tier-amount {
+  font-size: 22px;
+  font-family: var(--serif);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.gift-tier-note {
+  font-size: 12px;
+  color: var(--ink-80);
+  margin-top: 3px;
+  text-align: right;
+}
+
+.gift-stripe-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--ink-80);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 900px) {
+  .gift-callout { padding: 64px 24px; }
+  .gift-callout-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+
 /* ─── PRICING ─────────────────────────────────────────────────── */
 .pricing {
   background: var(--ink);
@@ -1280,6 +1369,47 @@ footer {
   </div>
 </section>
 
+<!-- SENT GIFT -->
+<section class="gift-callout">
+  <div class="gift-callout-inner">
+    <div class="reveal">
+      <p class="gift-callout-label">Sent Gift — Revenue Model #2</p>
+      <h2 class="gift-callout-title">Remember the birthday card your uncle slipped a $20 into?</h2>
+      <p class="gift-callout-body">That — but digital, instant, and built right into the message. No Venmo link. No "I'll send it later." The gift <em>is</em> the message. Powered by Stripe. Embedded as a tap-to-claim button. Every gift generates a transaction fee — a revenue stream that compounds independently of subscriptions.</p>
+      <p class="gift-stripe-note">⚡ Powered by Stripe &nbsp;·&nbsp; Works across text, email, LinkedIn, Instagram, WhatsApp</p>
+    </div>
+    <div class="gift-tiers reveal">
+      <div class="gift-tier-row">
+        <div>
+          <div class="gift-tier-name">Free</div>
+        </div>
+        <div>
+          <div class="gift-tier-amount">Up to $25</div>
+          <div class="gift-tier-note">per gift</div>
+        </div>
+      </div>
+      <div class="gift-tier-row">
+        <div>
+          <div class="gift-tier-name">Sent+</div>
+        </div>
+        <div>
+          <div class="gift-tier-amount">Up to $100</div>
+          <div class="gift-tier-note">per gift</div>
+        </div>
+      </div>
+      <div class="gift-tier-row">
+        <div>
+          <div class="gift-tier-name">Sent Pro</div>
+        </div>
+        <div>
+          <div class="gift-tier-amount">Up to $500</div>
+          <div class="gift-tier-note">per gift</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- VOICES -->
 <section class="voices">
   <div class="voices-inner">
@@ -1333,7 +1463,13 @@ footer {
   <div class="pricing-inner">
     <p class="section-label">Pricing</p>
     <h2 class="section-title reveal" style="color:var(--white);">Simple, honest pricing.</h2>
-    <p class="section-sub reveal">Start free. Upgrade when you're ready.</p>
+    <div class="reveal" style="margin-top:28px;margin-bottom:8px;text-align:center;">
+      <div style="display:inline-block;background:rgba(200,131,42,0.12);border:1.5px solid var(--amber);border-radius:12px;padding:20px 40px;">
+        <p style="font-family:var(--serif);font-size:clamp(22px,2.5vw,30px);color:var(--white);margin-bottom:6px;">Start with 30 days of Pro, free.</p>
+        <p style="font-size:14px;color:var(--amber-lt);letter-spacing:0.3px;">No card required. Keep everything you make.</p>
+      </div>
+    </div>
+    <p class="section-sub reveal" style="text-align:center;margin-top:16px;">After your trial, choose the plan that fits.</p>
 
     <div class="pricing-grid reveal">
 
@@ -1341,7 +1477,7 @@ footer {
       <div class="pricing-card">
         <p class="pricing-tier">Free</p>
         <div class="pricing-price">$0<span>/mo</span></div>
-        <p class="pricing-desc">For trying Sent and sending your first few messages.</p>
+        <p class="pricing-desc">Curated preset examples — beautiful, personal messages from Sent's best. Genuinely better than anything you were doing before.</p>
         <hr class="pricing-divider">
         <ul class="pricing-features">
           <li>Up to 10 contacts</li>
@@ -1360,7 +1496,7 @@ footer {
         <div class="pricing-badge">Most popular</div>
         <p class="pricing-tier">Sent+</p>
         <div class="pricing-price">$4.99<span>/mo</span></div>
-        <p class="pricing-desc">For people who show up for everyone in their life.</p>
+        <p class="pricing-desc">Real AI generation — messages written from your recipient's actual life context, in your voice. This is where Sent becomes genuinely personal.</p>
         <hr class="pricing-divider">
         <ul class="pricing-features">
           <li>Unlimited contacts &amp; messages</li>
@@ -1378,7 +1514,7 @@ footer {
       <div class="pricing-card">
         <p class="pricing-tier">Sent Pro</p>
         <div class="pricing-price">$12.99<span>/mo</span></div>
-        <p class="pricing-desc">For power users, teams, and anyone who takes relationships seriously.</p>
+        <p class="pricing-desc">Full intelligence — AI learns your actual writing style over time. Every message sounds authentically like you, not just an archetype.</p>
         <hr class="pricing-divider">
         <ul class="pricing-features">
           <li>Everything in Sent+</li>
