@@ -59,6 +59,12 @@ See `sent_design_doc_alt.pdf` and `sent_cribnotes_alt.pdf` for full product visi
 
 Nav → Hero → Problem → How It Works → The Magic (comparison) → Voices → Media Suite → Pricing → Waitlist → Footer
 
+## Founding infrastructure principle
+
+**The models are commodities. The data is the moat.** (Design doc §12)
+
+Sent's proprietary data — voice fingerprints, relationship context, occasion outcomes, media preferences — lives on infrastructure Sent owns. Cloud APIs (Anthropic, etc.) are rented inference horsepower, not a data home. Nothing proprietary leaves Sent's infrastructure. The roadmap: local Ollama for training data pre-seed → dedicated on-premise servers at Series A → hybrid architecture at Series B+ where Sent's fine-tuned models outperform generic alternatives. This principle should inform any architectural decision that touches where data is stored or processed.
+
 ## Remaining items to build
 
 1. Sent Gift section (currently only shown in media suite, needs its own featured section)
