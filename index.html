@@ -1782,6 +1782,7 @@ section.full { max-width: none; padding: 100px 48px; }
   height: 20px;
   display: flex;
   align-items: center;
+  gap: 0;
   opacity: 0;
   animation: ea-row-enter 10s ease-in-out infinite;
 }
@@ -1798,14 +1799,18 @@ section.full { max-width: none; padding: 100px 48px; }
   transform-origin: center;
   animation: ea-ticket-left 10s ease-in-out infinite;
 }
+/* ea-tr pulled 8px left so left-half right edge (SVG x=24) and right-half left edge
+   (SVG x=4) both land at row x=24 — zero visual gap, looks like one joined ticket */
 .ea-tr {
+  margin-left: -8px;
   transform-origin: center;
   animation: ea-ticket-right 10s ease-in-out infinite;
 }
-/* S centered at gap point via left:50%+translateX(-50%) */
+/* S centered at the visual join point (row x=24).
+   ea-gap is at row x=28, so left:-4px moves the center 4px left to x=24. */
 .ea-s {
   position: absolute;
-  left: 50%;
+  left: -4px;
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 9px;
@@ -1816,16 +1821,16 @@ section.full { max-width: none; padding: 100px 48px; }
   opacity: 0;
   animation: ea-s-glow 10s ease-in-out infinite;
 }
-/* Checkmark centered at same gap point */
+/* Checkmark at identical position as S */
 .ea-ck {
   position: absolute;
-  left: 50%;
+  left: -4px;
   top: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
   animation: ea-ck-appear 10s ease-in-out infinite;
 }
-/* ACCESS GRANTED starts 8px right of gap center */
+/* ACCESS GRANTED starts right of the checkmark */
 .ea-ag-text {
   position: absolute;
   left: 8px;
@@ -1842,13 +1847,13 @@ section.full { max-width: none; padding: 100px 48px; }
 }
 
 /* Phase timing (10s cycle):
-   0–13%  EARLY ACCESS holds
-   13–32% Row slides in joined from right (S hidden inside ticket)
-   32–40% Ticket sits still — tension hold
-   40–52% Tear apart — S reveals at gap simultaneously
-   52–62% S holds, glows
-   62–70% S fades, checkmark materializes
-   70–82% ACCESS GRANTED slides in, holds
+   0–13%   EARLY ACCESS holds
+   13–35%  Row slides in joined from right — looks like one whole ticket, S hidden
+   35–43%  Ticket sits still — tension hold
+   43–54%  Halves tear apart — S fades IN as they separate
+   54–62%  S holds, glows
+   62–70%  S fades, checkmark materializes at exact same position
+   70–82%  ACCESS GRANTED slides in, holds
    82–100% Fade, dark pause, loop
 */
 @keyframes ea-early {
@@ -1860,35 +1865,35 @@ section.full { max-width: none; padding: 100px 48px; }
 @keyframes ea-row-enter {
   0%   { opacity: 0; transform: translateX(60px); }
   13%  { opacity: 0; transform: translateX(60px); }
-  26%  { opacity: 1; transform: translateX(0); }
+  29%  { opacity: 1; transform: translateX(0); }
   88%  { opacity: 1; transform: translateX(0); }
   96%  { opacity: 0; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(60px); }
 }
-/* Left half tears up-left; starts visible since parent handles entry */
+/* Left half tears up-left; starts visible (parent row hidden before entry) */
 @keyframes ea-ticket-left {
   0%   { opacity: 1; transform: translateX(0); }
-  40%  { opacity: 1; transform: translateX(0); }
-  52%  { opacity: 0; transform: translateX(-22px) translateY(-8px) rotate(-15deg); }
+  43%  { opacity: 1; transform: translateX(0); }
+  54%  { opacity: 0; transform: translateX(-22px) translateY(-8px) rotate(-15deg); }
   100% { opacity: 0; transform: translateX(-22px) translateY(-8px) rotate(-15deg); }
 }
 /* Right half tears down-right */
 @keyframes ea-ticket-right {
   0%   { opacity: 1; transform: translateX(0); }
-  40%  { opacity: 1; transform: translateX(0); }
-  52%  { opacity: 0; transform: translateX(14px) translateY(8px) rotate(15deg); }
+  43%  { opacity: 1; transform: translateX(0); }
+  54%  { opacity: 0; transform: translateX(14px) translateY(8px) rotate(15deg); }
   100% { opacity: 0; transform: translateX(14px) translateY(8px) rotate(15deg); }
 }
-/* S reveals as halves tear, holds, fades before checkmark */
+/* S revealed by the tear, holds, then fades before checkmark */
 @keyframes ea-s-glow {
   0%   { opacity: 0; }
-  42%  { opacity: 0; }
-  48%  { opacity: 1; }
+  44%  { opacity: 0; }
+  50%  { opacity: 1; }
   62%  { opacity: 1; }
   68%  { opacity: 0; }
   100% { opacity: 0; }
 }
-/* Checkmark materializes where S was */
+/* Checkmark materializes at exact same position as S */
 @keyframes ea-ck-appear {
   0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
   62%  { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
@@ -2185,7 +2190,7 @@ footer {
         </linearGradient>
       </defs>
       <!-- Outer border -->
-      <rect x="4" y="4" width="232" height="272" rx="7" ry="7"
+      <rect x="4" y="4" width="232" height="272" rx="6" ry="6"
             fill="none" stroke="url(#navSteelH)" stroke-width="3"/>
       <!-- Perforations top -->
       <circle cx="20"  cy="4" r="5" fill="#06080F"/>
@@ -2221,11 +2226,11 @@ footer {
       <rect x="26" y="178"   width="188" height="5"   rx="2" fill="url(#tubeGrad4)"/>
       <rect x="26" y="207"   width="188" height="3.5" rx="2" fill="url(#tubeGrad5)"/>
       <rect x="26" y="234.5" width="188" height="2"   rx="2" fill="url(#tubeGrad6)"/>
-      <!-- S drawn last, on top of tubes, centered in inner face -->
+      <!-- S drawn last, on top of tubes, font-size = 85% of inner face height (244) -->
       <text x="120" y="140"
             font-family="Georgia, serif"
             font-style="italic"
-            font-size="152"
+            font-size="207"
             font-weight="700"
             text-anchor="middle"
             dominant-baseline="central"
@@ -2304,7 +2309,7 @@ footer {
           </linearGradient>
         </defs>
         <!-- Outer border -->
-        <rect x="4" y="4" width="232" height="272" rx="7" ry="7"
+        <rect x="4" y="4" width="232" height="272" rx="6" ry="6"
               fill="none" stroke="url(#stampSteelH)" stroke-width="3"/>
         <!-- Perforations top -->
         <circle cx="20"  cy="4" r="5" fill="#06080F"/>
@@ -2350,11 +2355,11 @@ footer {
         <rect x="26" y="178"   width="188" height="5"   rx="2" fill="url(#tubeGrad4)"/>
         <rect x="26" y="207"   width="188" height="3.5" rx="2" fill="url(#tubeGrad5)"/>
         <rect x="26" y="234.5" width="188" height="2"   rx="2" fill="url(#tubeGrad6)"/>
-        <!-- S drawn last, on top of tubes, centered in inner face -->
+        <!-- S drawn last, on top of tubes, font-size = 85% of inner face height (244) -->
         <text x="120" y="140"
               font-family="Georgia, serif"
               font-style="italic"
-              font-size="152"
+              font-size="207"
               font-weight="700"
               text-anchor="middle"
               dominant-baseline="central"
@@ -2372,7 +2377,7 @@ footer {
       </svg>
     </div>
   </div>
-  <div class="demo-wrap">
+  <div style="display:flex; justify-content:center; width:100%; padding-top:2.5rem;">
     <button class="demo-btn" onclick="window.location='#waitlist'">
       <span class="btn-text">Try the demo today!</span>
       <div class="demo-chevrons">
@@ -2975,8 +2980,8 @@ footer {
       <rect x="10" y="59.4" width="60" height="1.7" rx="1" fill="url(#tubeGrad4)"/>
       <rect x="10" y="68.7" width="60" height="1.2" rx="1" fill="url(#tubeGrad5)"/>
       <rect x="10" y="77.5" width="60" height="0.8" rx="1" fill="url(#tubeGrad6)"/>
-      <!-- S drawn last, on top of tubes, centered in inner face -->
-      <text x="40" y="47" font-family="Georgia,serif" font-style="italic" font-size="48" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="url(#smokeGrad)" stroke="url(#footerSteelH)" stroke-width="0.4">S</text>
+      <!-- S drawn last, on top of tubes, font-size = 85% of inner face height (78) -->
+      <text x="40" y="47" font-family="Georgia,serif" font-style="italic" font-size="66" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="url(#smokeGrad)" stroke="url(#footerSteelH)" stroke-width="0.4">S</text>
       <!-- SENT label near bottom of inner face -->
       <text x="40" y="82" font-family="'Trebuchet MS',sans-serif" font-size="5" text-anchor="middle" fill="#4A5568" letter-spacing="5">SENT</text>
     </svg>
