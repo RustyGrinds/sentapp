@@ -629,6 +629,145 @@ section.full { max-width: none; padding: 100px 48px; }
 
 .how-label-wrap {
   margin-bottom: 48px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Section 3: HOW IT WORKS — pipe label ────────────────────── */
+.how-label-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 28px;
+}
+.how-lbl-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  white-space: nowrap;
+}
+.how-pipe-outer {
+  position: relative;
+  width: 110px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: how-pipe-show 10s ease-in-out infinite;
+}
+@keyframes how-pipe-show {
+  0%, 10%  { opacity: 0; }
+  16%      { opacity: 1; }
+  82%      { opacity: 1; }
+  90%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+.how-pipe-tube {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: linear-gradient(to bottom,
+    rgba(18,22,32,0.9) 0%,
+    rgba(74,85,104,0.7) 22%,
+    rgba(154,170,187,0.5) 43%,
+    rgba(212,224,236,0.55) 50%,
+    rgba(154,170,187,0.5) 57%,
+    rgba(74,85,104,0.7) 78%,
+    rgba(18,22,32,0.9) 100%
+  );
+}
+.how-pipe-emojis {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0px, transparent 8px,
+    black 9px, black calc(100% - 9px),
+    transparent calc(100% - 8px), transparent 100%
+  );
+  mask-image: linear-gradient(to right,
+    transparent 0px, transparent 8px,
+    black 9px, black calc(100% - 9px),
+    transparent calc(100% - 8px), transparent 100%
+  );
+}
+.hpe {
+  position: absolute;
+  font-size: 11px;
+  line-height: 16px;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+@keyframes hpe1 {
+  0%, 16%  { opacity: 0; transform: translateX(0); }
+  16.5%    { opacity: 1; transform: translateX(0); }
+  22%      { opacity: 1; transform: translateX(112px); }
+  22.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+@keyframes hpe2 {
+  0%, 18%  { opacity: 0; transform: translateX(0); }
+  18.5%    { opacity: 1; transform: translateX(0); }
+  24%      { opacity: 1; transform: translateX(112px); }
+  24.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+@keyframes hpe3 {
+  0%, 20%  { opacity: 0; transform: translateX(0); }
+  20.5%    { opacity: 1; transform: translateX(0); }
+  26%      { opacity: 1; transform: translateX(112px); }
+  26.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+@keyframes hpe4 {
+  0%, 22%  { opacity: 0; transform: translateX(0); }
+  22.5%    { opacity: 1; transform: translateX(0); }
+  28%      { opacity: 1; transform: translateX(112px); }
+  28.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+@keyframes hpe5 {
+  0%, 24%  { opacity: 0; transform: translateX(0); }
+  24.5%    { opacity: 1; transform: translateX(0); }
+  30%      { opacity: 1; transform: translateX(112px); }
+  30.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+@keyframes hpe6 {
+  0%, 26%  { opacity: 0; transform: translateX(0); }
+  26.5%    { opacity: 1; transform: translateX(0); }
+  32%      { opacity: 1; transform: translateX(112px); }
+  32.5%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+.he1 { animation: hpe1 10s linear infinite; }
+.he2 { animation: hpe2 10s linear infinite; }
+.he3 { animation: hpe3 10s linear infinite; }
+.he4 { animation: hpe4 10s linear infinite; }
+.he5 { animation: hpe5 10s linear infinite; }
+.he6 { animation: hpe6 10s linear infinite; }
+.how-pipe-sent {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  background: linear-gradient(90deg, #4A5568 0%, #9AAABB 50%, #4A5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+  opacity: 0;
+  animation: how-sent-show 10s ease-in-out infinite;
+}
+@keyframes how-sent-show {
+  0%, 34%  { opacity: 0; }
+  40%      { opacity: 1; }
+  82%      { opacity: 1; }
+  90%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
 
 .pipe-label-container {
@@ -767,12 +906,210 @@ section.full { max-width: none; padding: 100px 48px; }
   align-items: center;
 }
 
-.magic-label-static {
+/* ── Sections 4/5/6: shared label animation base ─────────────── */
+.magic-label-anim, .media-label-anim, .voice-label-anim {
+  position: relative;
+  display: inline-block;
+  height: 28px;
+  min-width: 200px;
+  overflow: visible;
+}
+/* Tool SVG slides in from left, holds, fades before text done */
+.lbl-tool-svg {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-20px);
+  opacity: 0;
+  animation: lbl-tool-enter 10s ease-in-out infinite;
+}
+@keyframes lbl-tool-enter {
+  0%     { opacity: 0; transform: translateY(-50%) translateX(-20px); }
+  6%     { opacity: 1; transform: translateY(-50%) translateX(0); }
+  24%    { opacity: 1; transform: translateY(-50%) translateX(0); }
+  30%    { opacity: 0; transform: translateY(-50%) translateX(0); }
+  100%   { opacity: 0; transform: translateY(-50%) translateX(0); }
+}
+/* Iris blades: 6 thin rects snap closed */
+.lbl-iris {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+.lbl-ib {
+  position: absolute;
+  width: 2px;
+  height: 9px;
+  background: #4A5568;
+  left: calc(50% - 1px);
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  animation: lbl-iris-snap 10s ease-in-out infinite;
+}
+.lbl-ib1 { --irot: 0deg; }
+.lbl-ib2 { --irot: 60deg; }
+.lbl-ib3 { --irot: 120deg; }
+.lbl-ib4 { --irot: 180deg; }
+.lbl-ib5 { --irot: 240deg; }
+.lbl-ib6 { --irot: 300deg; }
+@keyframes lbl-iris-snap {
+  0%, 10%  { opacity: 0; transform: rotate(var(--irot)) scaleY(1); }
+  13%      { opacity: 0.7; transform: rotate(var(--irot)) scaleY(1); }
+  18%      { opacity: 0; transform: rotate(var(--irot)) scaleY(0); }
+  100%     { opacity: 0; transform: rotate(var(--irot)) scaleY(0); }
+}
+/* Flash burst */
+.lbl-flash {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(238,244,250,0.9) 0%, rgba(154,170,187,0.35) 55%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center;
+  animation: lbl-flash-burst 10s ease-in-out infinite;
+}
+@keyframes lbl-flash-burst {
+  0%, 16%   { opacity: 0; transform: scale(0); }
+  19%       { opacity: 1; transform: scale(1.3); }
+  23%       { opacity: 0; transform: scale(2); }
+  100%      { opacity: 0; }
+}
+/* Text materializes from blur + wide letter-spacing */
+.lbl-mat-text {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--text-mid);
+  opacity: 0;
+  filter: blur(4px);
+  white-space: nowrap;
+  animation: lbl-text-mat 10s ease-in-out infinite;
+}
+@keyframes lbl-text-mat {
+  0%, 19%   { opacity: 0; filter: blur(4px); letter-spacing: 14px; }
+  28%       { opacity: 1; filter: blur(0); letter-spacing: 3px; }
+  82%       { opacity: 1; filter: blur(0); letter-spacing: 3px; }
+  90%       { opacity: 0; letter-spacing: 3px; }
+  100%      { opacity: 0; letter-spacing: 3px; }
+}
+/* Sparks fly off after text materializes */
+.lbl-spark {
+  position: absolute;
+  font-size: 11px;
+  opacity: 0;
+  pointer-events: none;
+  left: 10px;
+  top: 50%;
+  margin-top: -7px;
+}
+.lbl-spark.ls1 { animation: lbl-spark1 10s ease-in-out infinite; }
+.lbl-spark.ls2 { animation: lbl-spark2 10s ease-in-out infinite; }
+.lbl-spark.ls3 { animation: lbl-spark3 10s ease-in-out infinite; }
+.lbl-spark.ls4 { animation: lbl-spark4 10s ease-in-out infinite; }
+@keyframes lbl-spark1 {
+  0%, 28%  { opacity: 0; transform: translate(0,0) scale(1); }
+  29%      { opacity: 1; transform: translate(0,0) scale(1); }
+  38%      { opacity: 0; transform: translate(28px,-18px) scale(0.5); }
+  100%     { opacity: 0; }
+}
+@keyframes lbl-spark2 {
+  0%, 29%  { opacity: 0; transform: translate(0,0) scale(1); }
+  30%      { opacity: 1; transform: translate(0,0) scale(1); }
+  39%      { opacity: 0; transform: translate(-18px,-20px) scale(0.5); }
+  100%     { opacity: 0; }
+}
+@keyframes lbl-spark3 {
+  0%, 30%  { opacity: 0; transform: translate(0,0) scale(1); }
+  31%      { opacity: 1; transform: translate(0,0) scale(1); }
+  40%      { opacity: 0; transform: translate(22px,16px) scale(0.5); }
+  100%     { opacity: 0; }
+}
+@keyframes lbl-spark4 {
+  0%, 31%  { opacity: 0; transform: translate(0,0) scale(1); }
+  32%      { opacity: 1; transform: translate(0,0) scale(1); }
+  41%      { opacity: 0; transform: translate(-14px,18px) scale(0.5); }
+  100%     { opacity: 0; }
+}
+/* ── Section 6: YOUR VOICE — mic + wave bars ──────────────────── */
+.voice-wave-bars {
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+.vwb {
+  width: 3px;
+  border-radius: 2px;
+  background: #4A5568;
+  opacity: 0;
+  transform-origin: center bottom;
+  transform: scaleY(0.15);
+  animation: vwb-pulse 10s ease-in-out infinite;
+}
+@keyframes vwb-pulse {
+  0%, 5%  { opacity: 0; transform: scaleY(0.15); }
+  13%     { opacity: 0.8; transform: scaleY(1); }
+  23%     { opacity: 0.4; transform: scaleY(0.3); }
+  28%     { opacity: 0; transform: scaleY(0.15); }
+  100%    { opacity: 0; transform: scaleY(0.15); }
+}
+.vwb1 { height: 6px; }
+.vwb2 { height: 10px; }
+.vwb3 { height: 16px; }
+.vwb4 { height: 20px; }
+.vwb5 { height: 16px; }
+.vwb6 { height: 10px; }
+.vwb7 { height: 6px; }
+/* ── Section 2: THE PROBLEM — eq-s (large glowing S) ─────────── */
+.eq-s {
+  font-size: 20px;
+  font-weight: 700;
+  display: inline-block;
+  vertical-align: middle;
+  background: linear-gradient(90deg,
+    #4A5568 0%, #9AAABB 40%,
+    #EEF4FA 50%, #9AAABB 60%, #4A5568 100%);
+  background-size: 200% auto;
+  animation: steel-pingpong 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(154,170,187,0.6));
+}
+.eq-letter {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  animation: eq-letter-pop 0.2s ease forwards;
+  background: linear-gradient(90deg, #4A5568 0%, #9AAABB 50%, #4A5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes eq-letter-pop {
+  from { opacity: 0; transform: scale(0.5) translateY(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .versus-grid {
@@ -1988,7 +2325,21 @@ footer {
 <div id="how" style="background:var(--n1);padding:100px 48px;">
 <div class="inner" style="max-width:1100px;margin:0 auto;">
   <div class="how-label-wrap">
-    <span style="font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text-mid);">HOW IT WORKS</span>
+    <div class="how-label-inner">
+      <span class="how-lbl-text">HOW IT WORKS</span>
+      <div class="how-pipe-outer" aria-hidden="true">
+        <div class="how-pipe-tube"></div>
+        <div class="how-pipe-emojis">
+          <span class="hpe he1">🎂</span>
+          <span class="hpe he2">📸</span>
+          <span class="hpe he3">👶</span>
+          <span class="hpe he4">🎬</span>
+          <span class="hpe he5">🏆</span>
+          <span class="hpe he6">🎙️</span>
+        </div>
+      </div>
+      <span class="how-pipe-sent">Sent.</span>
+    </div>
   </div>
   <div class="pipeline">
     <div class="pipeline-step">
@@ -2041,7 +2392,35 @@ footer {
 <div id="magic" style="background:var(--n2);padding:100px 48px;">
 <div class="inner" style="max-width:1100px;margin:0 auto;">
   <div class="magic-label-wrap">
-    <span class="magic-label-static" id="magicLabel">THE MAGIC</span>
+    <div class="magic-label-anim" aria-label="THE MAGIC">
+      <!-- Wand SVG -->
+      <svg class="lbl-tool-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+        <line x1="5" y1="19" x2="17" y2="7" stroke="#6A7A8E" stroke-width="2" stroke-linecap="round"/>
+        <line x1="17" y1="7" x2="17" y2="3" stroke="#9AAABB" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="17" y1="7" x2="21" y2="7" stroke="#9AAABB" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="17" y1="7" x2="19.8" y2="4.2" stroke="#9AAABB" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="17" y1="7" x2="14.2" y2="4.2" stroke="#9AAABB" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="17" cy="7" r="1.5" fill="#D4E0EC"/>
+      </svg>
+      <!-- Iris blades -->
+      <div class="lbl-iris" aria-hidden="true">
+        <div class="lbl-ib lbl-ib1"></div>
+        <div class="lbl-ib lbl-ib2"></div>
+        <div class="lbl-ib lbl-ib3"></div>
+        <div class="lbl-ib lbl-ib4"></div>
+        <div class="lbl-ib lbl-ib5"></div>
+        <div class="lbl-ib lbl-ib6"></div>
+      </div>
+      <!-- Flash burst -->
+      <div class="lbl-flash" aria-hidden="true"></div>
+      <!-- Sparks -->
+      <span class="lbl-spark ls1" aria-hidden="true">📸</span>
+      <span class="lbl-spark ls2" aria-hidden="true">🎬</span>
+      <span class="lbl-spark ls3" aria-hidden="true">🎙️</span>
+      <span class="lbl-spark ls4" aria-hidden="true">🎭</span>
+      <!-- Label text materializes -->
+      <span class="lbl-mat-text">THE MAGIC</span>
+    </div>
   </div>
   <div class="versus-grid">
     <!-- Without Sent -->
@@ -2089,7 +2468,34 @@ footer {
 <div id="media" style="background:var(--n1);padding:100px 48px;">
 <div class="inner" style="max-width:1100px;margin:0 auto;">
   <div class="media-label-wrap">
-    <span style="font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text-mid);">THE MEDIA STUDIO</span>
+    <div class="media-label-anim" aria-label="THE MEDIA STUDIO">
+      <!-- Camera SVG -->
+      <svg class="lbl-tool-svg" viewBox="0 0 28 22" width="22" height="18" fill="none" aria-hidden="true">
+        <rect x="1" y="6" width="26" height="15" rx="3" stroke="#6A7A8E" stroke-width="1.5"/>
+        <circle cx="14" cy="13.5" r="5" stroke="#9AAABB" stroke-width="1.5"/>
+        <circle cx="14" cy="13.5" r="2" fill="#4A5568"/>
+        <rect x="9" y="3" width="6" height="4" rx="1.5" fill="#6A7A8E"/>
+        <rect x="21" y="4" width="4" height="3" rx="1" fill="#4A5568"/>
+      </svg>
+      <!-- Iris blades -->
+      <div class="lbl-iris" aria-hidden="true">
+        <div class="lbl-ib lbl-ib1"></div>
+        <div class="lbl-ib lbl-ib2"></div>
+        <div class="lbl-ib lbl-ib3"></div>
+        <div class="lbl-ib lbl-ib4"></div>
+        <div class="lbl-ib lbl-ib5"></div>
+        <div class="lbl-ib lbl-ib6"></div>
+      </div>
+      <!-- Flash burst -->
+      <div class="lbl-flash" aria-hidden="true"></div>
+      <!-- Sparks -->
+      <span class="lbl-spark ls1" aria-hidden="true">📸</span>
+      <span class="lbl-spark ls2" aria-hidden="true">🎬</span>
+      <span class="lbl-spark ls3" aria-hidden="true">🎙️</span>
+      <span class="lbl-spark ls4" aria-hidden="true">🎭</span>
+      <!-- Label text materializes -->
+      <span class="lbl-mat-text">THE MEDIA STUDIO</span>
+    </div>
   </div>
   <div class="featured-cards" id="featuredCards">
     <div class="featured-card">
@@ -2166,7 +2572,27 @@ footer {
 <div id="voice" style="background:var(--n2);padding:100px 48px;">
 <div class="inner" style="max-width:1100px;margin:0 auto;">
   <div class="voice-label-wrap">
-    <span style="font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text-mid);">YOUR VOICE</span>
+    <div class="voice-label-anim" aria-label="YOUR VOICE">
+      <!-- Wave bars (behind mic, pulse outward) -->
+      <div class="voice-wave-bars" aria-hidden="true">
+        <div class="vwb vwb1"></div>
+        <div class="vwb vwb2"></div>
+        <div class="vwb vwb3"></div>
+        <div class="vwb vwb4"></div>
+        <div class="vwb vwb5"></div>
+        <div class="vwb vwb6"></div>
+        <div class="vwb vwb7"></div>
+      </div>
+      <!-- Mic SVG slides in -->
+      <svg class="lbl-tool-svg voice-lbl-mic" viewBox="0 0 20 26" width="16" height="20" fill="none" aria-hidden="true">
+        <rect x="6" y="1" width="8" height="13" rx="4" stroke="#6A7A8E" stroke-width="1.5"/>
+        <path d="M3,11 Q3,18 10,18 Q17,18 17,11" stroke="#9AAABB" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="18" x2="10" y2="24" stroke="#6A7A8E" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="6" y1="24" x2="14" y2="24" stroke="#6A7A8E" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <!-- Label text materializes -->
+      <span class="lbl-mat-text">YOUR VOICE</span>
+    </div>
   </div>
   <div class="voice-cards">
     <div class="voice-archetype-card" onclick="selectArchetype('nurturer', this)">
@@ -2469,39 +2895,53 @@ function toggleProblemCard(index) {
 
 // ─── PROBLEM LABEL ANIMATION ──────────────────────────────────
 const problemEq = document.getElementById('problemEq');
-const eqSteps = [
-  '',
-  '∑(missed)',
-  '∑(missed) + ∅',
-  '∑(missed) + ∅ ÷ time',
-  '∑(missed) + ∅ ÷ time = <span class="eq-solved">SOLVED</span>',
-];
 
 function animateProblemLabel() {
-  let step = 0;
   problemEq.innerHTML = '';
   problemEq.style.opacity = '1';
 
-  const showStep = () => {
-    if (step < eqSteps.length) {
-      problemEq.innerHTML = eqSteps[step];
-      step++;
-      if (step < eqSteps.length) {
-        setTimeout(showStep, step === eqSteps.length - 1 ? 400 : 600);
-      } else {
-        // hold then fade
-        setTimeout(() => {
-          problemEq.style.transition = 'opacity 0.8s';
-          problemEq.style.opacity = '0';
+  const phases = [
+    { html: '∑(missed)', delay: 600 },
+    { html: '∑(missed) + ∅', delay: 600 },
+    { html: '∑(missed) + ∅ ÷ time', delay: 600 },
+    { html: '∑(missed) + ∅ ÷ time = <span class="eq-s">S</span>', delay: 0 },
+  ];
+
+  let i = 0;
+  const showPhase = () => {
+    problemEq.innerHTML = phases[i].html;
+    const d = phases[i].delay;
+    i++;
+    if (i < phases.length) {
+      setTimeout(showPhase, d);
+    } else {
+      // S is showing — now add OLVED letter by letter
+      const letters = ['O', 'L', 'V', 'E', 'D'];
+      let j = 0;
+      const addLetter = () => {
+        const span = document.createElement('span');
+        span.className = 'eq-letter';
+        span.textContent = letters[j];
+        problemEq.appendChild(span);
+        j++;
+        if (j < letters.length) {
+          setTimeout(addLetter, 150);
+        } else {
+          // full equation — hold then fade
           setTimeout(() => {
-            problemEq.style.transition = '';
-            animateProblemLabel();
-          }, 900);
-        }, 3200);
-      }
+            problemEq.style.transition = 'opacity 0.8s';
+            problemEq.style.opacity = '0';
+            setTimeout(() => {
+              problemEq.style.transition = '';
+              animateProblemLabel();
+            }, 900);
+          }, 3000);
+        }
+      };
+      setTimeout(addLetter, 350);
     }
   };
-  setTimeout(showStep, 800);
+  setTimeout(showPhase, 800);
 }
 
 // ─── VOICE TAGS (MAGIC SECTION) ───────────────────────────────
