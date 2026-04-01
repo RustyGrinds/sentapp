@@ -486,6 +486,9 @@ async function createAccount() {
       currentSession.access_token = refreshed.access_token;
       currentSession.refresh_token = refreshed.refresh_token;
       localStorage.setItem('sent_session', JSON.stringify(currentSession));
+    } else {
+      const rfErr = await refreshRes.json();
+      console.error('Refresh failed:', rfErr);
     }
 
     // Update password via Supabase REST
@@ -501,6 +504,7 @@ async function createAccount() {
 
     if (!res.ok) {
       const err = await res.json();
+      console.error('PUT /user error:', err);
       throw new Error(err.message || 'Update failed');
     }
 
