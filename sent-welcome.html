@@ -475,6 +475,19 @@ async function createAccount() {
   setMsg(msg, 'Setting up your account…', '');
 
   try {
+    // Refresh token before making authenticated requests
+    const refreshRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ refresh_token: currentSession.refresh_token })
+    });
+    if (refreshRes.ok) {
+      const refreshed = await refreshRes.json();
+      currentSession.access_token = refreshed.access_token;
+      currentSession.refresh_token = refreshed.refresh_token;
+      localStorage.setItem('sent_session', JSON.stringify(currentSession));
+    }
+
     // Update password via Supabase REST
     const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       method: 'PUT',
