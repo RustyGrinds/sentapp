@@ -59,44 +59,6 @@ html, body {
 }
 
 /* ── AUTH SCREEN ── */
-#screen-auth {
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  padding: 32px;
-}
-
-.auth-stamp {
-  width: 72px;
-  height: 80px;
-  margin-bottom: 28px;
-}
-
-.auth-title {
-  font-family: var(--serif);
-  font-size: 36px;
-  font-style: italic;
-  color: var(--platinum);
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-}
-
-.auth-sub {
-  font-size: 14px;
-  color: var(--text-dim);
-  margin-bottom: 40px;
-  text-align: center;
-  max-width: 280px;
-  line-height: 1.6;
-}
-
-.auth-form {
-  width: 100%;
-  max-width: 340px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 
 .input {
   width: 100%;
@@ -159,15 +121,6 @@ html, body {
   margin: 4px 0;
 }
 
-.auth-msg {
-  text-align: center;
-  font-size: 13px;
-  color: var(--steel-lt);
-  font-style: italic;
-  min-height: 20px;
-  margin-top: 4px;
-}
-.auth-msg.error { color: var(--red); font-style: normal; }
 
 /* ── MAIN LAYOUT ── */
 #screen-main {
@@ -696,48 +649,6 @@ select.input option { background: var(--bg2); }
 </div>
 
 <!-- AUTH SCREEN -->
-<div class="screen" id="screen-auth">
-  <svg class="auth-stamp" viewBox="0 0 60 68" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#B8CBDF"/>
-        <stop offset="50%" stop-color="#D4E1EE"/>
-        <stop offset="100%" stop-color="#8CA4C0"/>
-      </linearGradient>
-    </defs>
-    <rect x="2" y="2" width="56" height="64" rx="3" fill="url(#sg2)" opacity="0.15" stroke="url(#sg2)" stroke-width="1.5"/>
-    <circle cx="2" cy="2" r="4" fill="var(--bg)"/>
-    <circle cx="15" cy="2" r="4" fill="var(--bg)"/>
-    <circle cx="30" cy="2" r="4" fill="var(--bg)"/>
-    <circle cx="45" cy="2" r="4" fill="var(--bg)"/>
-    <circle cx="58" cy="2" r="4" fill="var(--bg)"/>
-    <circle cx="2" cy="66" r="4" fill="var(--bg)"/>
-    <circle cx="15" cy="66" r="4" fill="var(--bg)"/>
-    <circle cx="30" cy="66" r="4" fill="var(--bg)"/>
-    <circle cx="45" cy="66" r="4" fill="var(--bg)"/>
-    <circle cx="58" cy="66" r="4" fill="var(--bg)"/>
-    <circle cx="2" cy="18" r="4" fill="var(--bg)"/>
-    <circle cx="2" cy="34" r="4" fill="var(--bg)"/>
-    <circle cx="2" cy="50" r="4" fill="var(--bg)"/>
-    <circle cx="58" cy="18" r="4" fill="var(--bg)"/>
-    <circle cx="58" cy="34" r="4" fill="var(--bg)"/>
-    <circle cx="58" cy="50" r="4" fill="var(--bg)"/>
-    <rect x="8" y="22" width="44" height="5" rx="2.5" fill="url(#sg2)" opacity="0.7"/>
-    <rect x="8" y="30" width="44" height="4" rx="2" fill="url(#sg2)" opacity="0.5"/>
-    <rect x="8" y="37" width="44" height="3" rx="1.5" fill="url(#sg2)" opacity="0.3"/>
-    <text x="30" y="58" font-family="Georgia,serif" font-size="28" font-style="italic" fill="none" stroke="url(#sg2)" stroke-width="1" text-anchor="middle" opacity="0.9">S</text>
-  </svg>
-
-  <h1 class="auth-title">Sent</h1>
-  <p class="auth-sub">Relationships, remembered.<br>Enter your email to get started.</p>
-
-  <div class="auth-form">
-    <input type="email" class="input" id="auth-email" placeholder="your@email.com" autocomplete="email"/>
-    <button class="btn btn-amber" onclick="sendMagicLink()">Send magic link ✦</button>
-    <p class="auth-msg" id="auth-msg"></p>
-  </div>
-</div>
-
 <!-- MAIN APP -->
 <div class="screen" id="screen-main">
 
@@ -1021,15 +932,6 @@ const sb = {
     return text ? JSON.parse(text) : [];
   },
 
-  async auth(email) {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
-      method: 'POST',
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, create_user: true })
-    });
-    return res.ok;
-  },
-
   async getSession() {
     // Check URL hash for magic link token (fallback direct landing)
     const hash = window.location.hash;
@@ -1111,30 +1013,12 @@ async function loadData() {
 }
 
 // ── AUTH ──
-async function sendMagicLink() {
-  const email = document.getElementById('auth-email').value.trim();
-  const msg = document.getElementById('auth-msg');
-  if (!email || !email.includes('@')) {
-    msg.textContent = 'Enter a valid email.';
-    msg.className = 'auth-msg error';
-    return;
-  }
-  msg.textContent = 'Sending…';
-  msg.className = 'auth-msg';
-  const ok = await sb.auth(email);
-  if (ok) {
-    msg.textContent = '✦ Check your email for the magic link.';
-  } else {
-    msg.textContent = 'Something went wrong. Try again.';
-    msg.className = 'auth-msg error';
-  }
-}
-
 function signOut() {
   localStorage.removeItem('sb_token');
+  localStorage.removeItem('sent_session');
   sb.token = null;
   currentUser = null;
-  showScreen('screen-auth');
+  window.location.href = 'sent-app.html';
 }
 
 // ── SCREENS ──
