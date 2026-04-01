@@ -403,56 +403,53 @@ function showScreen(id) {
 
 // ── INIT: Handle magic link token from URL ──
 async function init() {
-  // Supabase puts token in URL hash as #access_token=...&type=magiclink
-  const hash = window.location.hash;
-  const params = new URLSearchParams(hash.replace('#', '?'));
-  const accessToken = params.get('access_token') || params.get('token');
-  const refreshToken = params.get('refresh_token');
-  const type = params.get('type');
+  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+  const qParams    = new URLSearchParams(window.location.search);
 
-  // Also check query string (some redirect configs use ?)
-  const qParams = new URLSearchParams(window.location.search);
-  const qToken = qParams.get('access_token') || qParams.get('token');
+  const accessToken  = hashParams.get('access_token')  || qParams.get('access_token');
+  const refreshToken = hashParams.get('refresh_token') || qParams.get('refresh_token');
+  const tokenHash    = qParams.get('token_hash') || hashParams.get('token_hash');
+  const type         = hashParams.get('type')    || qParams.get('type');
 
-  const token = accessToken || qToken;
-
-  if (!token) {
-    // No token — could be returning user who already set password; redirect to login
-    window.location.href = 'sent-app.html';
-    return;
-  }
+  console.log('hash:', window.location.hash);
+  console.log('search:', window.location.search);
+  console.log('access_token:', accessToken ? 'present' : 'missing');
+  console.log('token_hash:', tokenHash ? 'present' : 'missing');
+  console.log('type:', type);
 
   try {
-    // Exchange token for session
-    let res;
-    if (type === 'magiclink' || type === 'recovery' || accessToken) {
-      res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'apikey': SUPABASE_ANON_KEY
-        }
+    let userData, finalToken, finalRefresh;
+
+    if (accessToken) {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'apikey': SUPABASE_ANON_KEY }
       });
+      if (!res.ok) throw new Error('Token rejected');
+      userData     = await res.json();
+      finalToken   = accessToken;
+      finalRefresh = refreshToken;
+
+    } else if (tokenHash) {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+        body: JSON.stringify({ token_hash: tokenHash, type: type || 'magiclink' })
+      });
+      if (!res.ok) throw new Error('Token exchange failed');
+      const data   = await res.json();
+      finalToken   = data.access_token;
+      finalRefresh = data.refresh_token;
+      userData     = data.user;
+
+    } else {
+      window.location.href = 'sent-app.html';
+      return;
     }
 
-    if (!res || !res.ok) throw new Error('Invalid token');
-
-    const userData = await res.json();
-
-    currentSession = {
-      access_token: token,
-      refresh_token: refreshToken,
-      user: userData
-    };
-
-    // Store session
+    currentSession = { access_token: finalToken, refresh_token: finalRefresh, user: userData };
     localStorage.setItem('sent_session', JSON.stringify(currentSession));
-
-    // Pre-fill email
     document.getElementById('field-email').value = userData.email || '';
-
-    // Clean URL
     history.replaceState(null, '', window.location.pathname);
-
     showScreen('screen-welcome');
 
   } catch (e) {
