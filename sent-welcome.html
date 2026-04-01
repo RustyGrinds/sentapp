@@ -421,11 +421,11 @@ async function init() {
     let userData, finalToken, finalRefresh;
 
     if (accessToken) {
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-        headers: { 'Authorization': `Bearer ${accessToken}`, 'apikey': SUPABASE_ANON_KEY }
-      });
-      if (!res.ok) throw new Error('Token rejected');
-      userData     = await res.json();
+      // Decode user data directly from JWT payload — no network call needed
+      try {
+        const payload = JSON.parse(atob(accessToken.split('.')[1]));
+        userData = { id: payload.sub, email: payload.email, user_metadata: payload.user_metadata || {} };
+      } catch(e) { throw new Error('Could not decode token'); }
       finalToken   = accessToken;
       finalRefresh = refreshToken;
 
