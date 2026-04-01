@@ -946,13 +946,31 @@ const sb = {
         return token;
       }
     }
-    // Check sent_session written by sent-welcome.html onboarding flow
+    // Check sent_session — attempt refresh before using
     const welcomeSession = localStorage.getItem('sent_session');
     if (welcomeSession) {
       try {
         const parsed = JSON.parse(welcomeSession);
-        const token = parsed.access_token;
-        if (token) { sb.token = token; return token; }
+        if (parsed.refresh_token) {
+          const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+            body: JSON.stringify({ refresh_token: parsed.refresh_token })
+          });
+          if (res.ok) {
+            const refreshed = await res.json();
+            const updated = {
+              access_token:  refreshed.access_token,
+              refresh_token: refreshed.refresh_token,
+              user: refreshed.user || parsed.user
+            };
+            localStorage.setItem('sent_session', JSON.stringify(updated));
+            sb.token = refreshed.access_token;
+            return refreshed.access_token;
+          }
+        }
+        // Refresh failed or no refresh token — fall through to use raw access token
+        if (parsed.access_token) { sb.token = parsed.access_token; return parsed.access_token; }
       } catch(e) {}
     }
     // Legacy token key
