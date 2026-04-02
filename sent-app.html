@@ -1096,6 +1096,7 @@ const sb = {
           });
           if (res.ok) {
             const refreshed = await res.json();
+            console.log('Token refreshed successfully, new exp:', JSON.parse(atob(refreshed.access_token.split('.')[1])).exp);
             const updated = {
               access_token:  refreshed.access_token,
               refresh_token: refreshed.refresh_token,
@@ -1107,7 +1108,10 @@ const sb = {
           }
         }
         // Refresh failed or no refresh token — fall through to use raw access token
-        if (parsed.access_token) { sb.token = parsed.access_token; return parsed.access_token; }
+        if (parsed.access_token) { 
+          console.warn('Refresh failed, using raw access_token');
+          sb.token = parsed.access_token; return parsed.access_token; 
+        }
       } catch(e) {}
     }
     // Legacy token key
@@ -1386,6 +1390,8 @@ async function generateMessage() {
   text.style.display = 'none';
 
   try {
+    console.log('Token being sent to Edge Function:', sb.token ? sb.token.slice(0,20) + '...' : 'NULL');
+    console.log('Token exp:', sb.token ? JSON.parse(atob(sb.token.split('.')[1])).exp : 'N/A', '| Now:', Math.floor(Date.now()/1000));
     const res = await fetch(`${SUPABASE_URL}/functions/v1/generate-message`, {
       method: 'POST',
       headers: {
