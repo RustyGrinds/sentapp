@@ -313,6 +313,9 @@ html, body {
 .small-btn:hover { border-color: var(--border-lt); color: var(--platinum); }
 .small-btn.generate { background: rgba(200,131,42,0.1); border-color: rgba(200,131,42,0.3); color: var(--amber-lt); }
 .small-btn.generate:hover { background: rgba(200,131,42,0.2); border-color: var(--amber); }
+.small-btn.edit { flex: 0 0 auto; padding: 8px 12px; }
+.small-btn.delete { flex: 0 0 auto; padding: 8px 12px; color: var(--red); border-color: rgba(248,113,113,0.2); }
+.small-btn.delete:hover { background: rgba(248,113,113,0.1); border-color: var(--red); }
 
 .empty-state {
   text-align: center;
@@ -356,7 +359,27 @@ html, body {
 .contact-name { font-size: 15px; font-weight: 500; color: var(--platinum); margin-bottom: 3px; }
 .contact-meta { font-size: 12px; color: var(--text-dim); }
 
-.contact-arrow { color: var(--text-dim); font-size: 16px; }
+.contact-card { cursor: default; }
+.contact-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* ── MESSAGE CARDS ── */
+.message-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.message-name { font-size: 14px; font-weight: 500; color: var(--platinum); }
+.message-date { font-size: 11px; color: var(--text-dim); }
+.message-occasion { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
+.message-body { font-size: 14px; color: var(--steel-lt); line-height: 1.6; font-style: italic; }
 
 /* ── MODAL OVERLAY ── */
 .modal-overlay {
@@ -677,6 +700,7 @@ select.input option { background: var(--bg2); }
   <div class="tabs">
     <div class="tab active" onclick="switchTab('upcoming')">Upcoming</div>
     <div class="tab" onclick="switchTab('contacts')">Contacts</div>
+    <div class="tab" onclick="switchTab('messages')">Messages</div>
     <div class="tab" onclick="switchTab('profile')">Profile</div>
   </div>
 
@@ -709,6 +733,17 @@ select.input option { background: var(--bg2); }
           <p>No contacts yet.<br>Add the people you want to remember.</p>
           <button class="btn btn-primary" style="max-width:220px;margin:0 auto;" onclick="openAddContact()">Add contact</button>
         </div>
+      </div>
+    </div>
+
+
+    <!-- MESSAGES TAB -->
+    <div class="panel" id="panel-messages">
+      <div class="section-head">
+        <h2 class="section-title">Messages</h2>
+      </div>
+      <div id="messages-list">
+        <div class="empty-state"><div class="emoji">✉️</div><p>No messages yet.<br>Generate one from an occasion.</p></div>
       </div>
     </div>
 
@@ -830,7 +865,7 @@ select.input option { background: var(--bg2); }
     </div>
     <div class="form-group">
       <label class="form-label">Occasion type *</label>
-      <select class="input" id="o-type">
+      <select class="input" id="o-type" onchange="toggleCustomOccasion()">
         <option value="Birthday">🎂 Birthday</option>
         <option value="Graduation">🎓 Graduation</option>
         <option value="Promotion">🏆 Promotion</option>
@@ -846,6 +881,10 @@ select.input option { background: var(--bg2); }
     <div class="form-group">
       <label class="form-label">Date *</label>
       <input type="date" class="input" id="o-date"/>
+    </div>
+    <div class="form-group" id="o-custom-group" style="display:none;">
+      <label class="form-label">Custom occasion name *</label>
+      <input type="text" class="input" id="o-custom" placeholder="e.g. Work anniversary"/>
     </div>
     <div class="form-group" style="display:flex;align-items:center;gap:12px;">
       <input type="checkbox" id="o-recurring" style="width:18px;height:18px;accent-color:var(--steel);cursor:pointer;"/>
@@ -900,6 +939,104 @@ select.input option { background: var(--bg2); }
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:0.5" onclick="copyMessage()">Copy</button>
       <button class="btn btn-amber" onclick="generateMessage()">Generate ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EDIT CONTACT -->
+<div class="modal-overlay" id="modal-edit-contact" onclick="closeModal('modal-edit-contact', event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2 class="modal-title">Edit contact</h2>
+    <input type="hidden" id="ec-id"/>
+    <div class="form-group">
+      <label class="form-label">Name *</label>
+      <input type="text" class="input" id="ec-name"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Relationship</label>
+      <select class="input" id="ec-relationship">
+        <option value="friend">Friend</option>
+        <option value="family">Family</option>
+        <option value="colleague">Colleague</option>
+        <option value="partner">Partner</option>
+        <option value="mentor">Mentor</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="input" id="ec-email"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone</label>
+      <input type="tel" class="input" id="ec-phone"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes (context for AI)</label>
+      <input type="text" class="input" id="ec-notes"/>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:0.5" onclick="closeModal('modal-edit-contact')">Cancel</button>
+      <button class="btn btn-amber" onclick="saveEditContact()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EDIT OCCASION -->
+<div class="modal-overlay" id="modal-edit-occasion" onclick="closeModal('modal-edit-occasion', event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2 class="modal-title">Edit occasion</h2>
+    <input type="hidden" id="eo-id"/>
+    <div class="form-group">
+      <label class="form-label">Contact</label>
+      <select class="input" id="eo-contact"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Occasion type *</label>
+      <select class="input" id="eo-type" onchange="toggleEditCustom()">
+        <option value="Birthday">🎂 Birthday</option>
+        <option value="Graduation">🎓 Graduation</option>
+        <option value="Promotion">🏆 Promotion</option>
+        <option value="New Baby">👶 New Baby</option>
+        <option value="Anniversary">💍 Anniversary</option>
+        <option value="Retirement">🌅 Retirement</option>
+        <option value="New Job">💼 New Job</option>
+        <option value="Condolence">🕯️ Condolence</option>
+        <option value="Holiday">✨ Holiday</option>
+        <option value="Custom">⭐ Custom</option>
+      </select>
+    </div>
+    <div class="form-group" id="eo-custom-group" style="display:none;">
+      <label class="form-label">Custom occasion name *</label>
+      <input type="text" class="input" id="eo-custom"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Date *</label>
+      <input type="date" class="input" id="eo-date"/>
+    </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:12px;">
+      <input type="checkbox" id="eo-recurring" style="width:18px;height:18px;accent-color:var(--steel);cursor:pointer;"/>
+      <label for="eo-recurring" style="font-size:14px;color:var(--text-dim);cursor:pointer;">Recurring yearly</label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:0.5" onclick="closeModal('modal-edit-occasion')">Cancel</button>
+      <button class="btn btn-amber" onclick="saveEditOccasion()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADD OCCASION PROMPT -->
+<div class="modal-overlay" id="modal-add-occasion-prompt" onclick="closeModal('modal-add-occasion-prompt', event)">
+  <div class="modal" style="text-align:center;">
+    <div class="modal-handle"></div>
+    <div style="font-size:28px;margin-bottom:12px;">🎉</div>
+    <h2 class="modal-title" id="prompt-title">Contact saved!</h2>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:24px;">Want to add an occasion for them now?</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:0.5" onclick="closeModal('modal-add-occasion-prompt')">Later</button>
+      <button class="btn btn-amber" id="prompt-add-btn">Add occasion →</button>
     </div>
   </div>
 </div>
@@ -1026,6 +1163,7 @@ async function loadData() {
     ]);
     renderOccasions();
     renderContacts();
+    await loadMessages();
   } catch (e) {
     console.error(e);
   }
@@ -1050,10 +1188,10 @@ function showScreen(id) {
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById(`panel-${name}`).classList.add('active');
+  const tabs = ['upcoming', 'contacts', 'messages', 'profile'];
+  document.querySelectorAll('.tab')[tabs.indexOf(name)]?.classList.add('active');
+  document.getElementById(`panel-${name}`)?.classList.add('active');
 }
-
 // ── RENDER OCCASIONS ──
 function renderOccasions() {
   const list = document.getElementById('occasions-list');
@@ -1087,6 +1225,8 @@ function renderOccasions() {
         <div class="occasion-type">${o.type}</div>
         <div class="occasion-actions">
           <button class="small-btn generate" onclick="openGenerate('${o.id}')">✦ Generate message</button>
+          <button class="small-btn edit" onclick="openEditOccasion('${o.id}')">Edit</button>
+          <button class="small-btn delete" onclick="deleteOccasion('${o.id}')">Delete</button>
         </div>
       </div>`;
   }).join('');
@@ -1109,7 +1249,10 @@ function renderContacts() {
           <div class="contact-name">${c.name}</div>
           <div class="contact-meta">${c.relationship || 'Contact'} · ${oCount} occasion${oCount !== 1 ? 's' : ''}</div>
         </div>
-        <span class="contact-arrow">›</span>
+        <div class="contact-card-actions">
+          <button class="small-btn edit" onclick="openEditContact('${c.id}')">Edit</button>
+          <button class="small-btn delete" onclick="deleteContact('${c.id}')">Delete</button>
+        </div>
       </div>`;
   }).join('');
 }
@@ -1145,12 +1288,13 @@ async function saveContact() {
     closeModal('modal-contact');
     toast('Contact saved ✦');
 
-    // Offer to add an occasion
-    setTimeout(() => {
-      if (confirm(`Add an occasion for ${name}?`)) {
-        openAddOccasion(saved.id);
-      }
-    }, 400);
+    // Inline prompt instead of confirm()
+    document.getElementById('prompt-title').textContent = `${name} added!`;
+    document.getElementById('prompt-add-btn').onclick = () => {
+      closeModal('modal-add-occasion-prompt');
+      openAddOccasion(saved.id);
+    };
+    setTimeout(() => openModal('modal-add-occasion-prompt'), 300);
   } catch (e) {
     toast('Error saving contact');
     console.error(e);
@@ -1175,9 +1319,10 @@ function openAddOccasion(preselectedContactId = null) {
 
 async function saveOccasion() {
   const contactId = document.getElementById('o-contact').value;
-  const type = document.getElementById('o-type').value;
+  const typeVal = document.getElementById('o-type').value;
+  const type = typeVal === 'Custom' ? document.getElementById('o-custom').value.trim() : typeVal;
   const date = document.getElementById('o-date').value;
-  if (!contactId || !date) { toast('Contact and date required'); return; }
+  if (!contactId || !type || !date) { toast('Contact, type and date required'); return; }
 
   try {
     const [saved] = await sb.request('/occasions', {
@@ -1279,6 +1424,7 @@ async function generateMessage() {
           status: 'draft'
         })
       }).catch(() => {});
+      loadMessages();
     } else {
       text.textContent = 'Something went wrong. Try again.';
       text.style.color = 'var(--red)';
@@ -1326,6 +1472,170 @@ async function syncArchetypeFromProfile() {
   } catch(e) {}
 }
 
+// ── CUSTOM OCCASION TYPE ──
+function toggleCustomOccasion() {
+  const v = document.getElementById('o-type').value;
+  document.getElementById('o-custom-group').style.display = v === 'Custom' ? 'block' : 'none';
+}
+function toggleEditCustom() {
+  const v = document.getElementById('eo-type').value;
+  document.getElementById('eo-custom-group').style.display = v === 'Custom' ? 'block' : 'none';
+}
+
+// ── EDIT CONTACT ──
+function openEditContact(id) {
+  const c = contacts.find(c => c.id === id);
+  if (!c) return;
+  document.getElementById('ec-id').value = c.id;
+  document.getElementById('ec-name').value = c.name || '';
+  document.getElementById('ec-relationship').value = c.relationship || 'friend';
+  document.getElementById('ec-email').value = c.email || '';
+  document.getElementById('ec-phone').value = c.phone || '';
+  document.getElementById('ec-notes').value = c.notes || '';
+  openModal('modal-edit-contact');
+}
+
+async function saveEditContact() {
+  const id = document.getElementById('ec-id').value;
+  const name = document.getElementById('ec-name').value.trim();
+  if (!name) { toast('Name is required'); return; }
+  try {
+    const [updated] = await sb.request(`/contacts?id=eq.${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        name,
+        relationship: document.getElementById('ec-relationship').value,
+        email: document.getElementById('ec-email').value.trim() || null,
+        phone: document.getElementById('ec-phone').value.trim() || null,
+        notes: document.getElementById('ec-notes').value.trim() || null,
+      })
+    });
+    const idx = contacts.findIndex(c => c.id === id);
+    if (idx !== -1) contacts[idx] = updated;
+    renderContacts();
+    renderOccasions();
+    closeModal('modal-edit-contact');
+    toast('Contact updated ✦');
+  } catch(e) { toast('Error updating contact'); console.error(e); }
+}
+
+async function deleteContact(id) {
+  const c = contacts.find(c => c.id === id);
+  if (!c) return;
+  // Inline confirmation via toast-style — use a dedicated confirm modal would be ideal later
+  // For now: second click confirms
+  if (c._pendingDelete) {
+    try {
+      await sb.request(`/contacts?id=eq.${id}`, { method: 'DELETE' });
+      contacts = contacts.filter(c => c.id !== id);
+      occasions = occasions.filter(o => o.contact_id !== id);
+      renderContacts();
+      renderOccasions();
+      toast('Contact deleted');
+    } catch(e) { toast('Error deleting contact'); console.error(e); }
+  } else {
+    c._pendingDelete = true;
+    toast('Tap delete again to confirm');
+    setTimeout(() => { c._pendingDelete = false; }, 3000);
+  }
+}
+
+// ── EDIT OCCASION ──
+function openEditOccasion(id) {
+  const o = occasions.find(o => o.id === id);
+  if (!o) return;
+  document.getElementById('eo-id').value = o.id;
+  const sel = document.getElementById('eo-contact');
+  sel.innerHTML = contacts.map(c => `<option value="${c.id}" ${c.id === o.contact_id ? 'selected' : ''}>${c.name}</option>`).join('');
+  const knownTypes = ['Birthday','Graduation','Promotion','New Baby','Anniversary','Retirement','New Job','Condolence','Holiday','Custom'];
+  const isKnown = knownTypes.includes(o.type);
+  document.getElementById('eo-type').value = isKnown ? o.type : 'Custom';
+  document.getElementById('eo-custom').value = isKnown ? '' : o.type;
+  toggleEditCustom();
+  document.getElementById('eo-date').value = o.date;
+  document.getElementById('eo-recurring').checked = !!o.recurring;
+  openModal('modal-edit-occasion');
+}
+
+async function saveEditOccasion() {
+  const id = document.getElementById('eo-id').value;
+  const typeVal = document.getElementById('eo-type').value;
+  const type = typeVal === 'Custom' ? document.getElementById('eo-custom').value.trim() : typeVal;
+  const date = document.getElementById('eo-date').value;
+  if (!type || !date) { toast('Type and date required'); return; }
+  try {
+    const [updated] = await sb.request(`/occasions?id=eq.${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        contact_id: document.getElementById('eo-contact').value,
+        type,
+        date,
+        recurring: document.getElementById('eo-recurring').checked,
+      })
+    });
+    const idx = occasions.findIndex(o => o.id === id);
+    if (idx !== -1) occasions[idx] = updated;
+    renderOccasions();
+    closeModal('modal-edit-occasion');
+    toast('Occasion updated ✦');
+  } catch(e) { toast('Error updating occasion'); console.error(e); }
+}
+
+async function deleteOccasion(id) {
+  const o = occasions.find(o => o.id === id);
+  if (!o) return;
+  if (o._pendingDelete) {
+    try {
+      await sb.request(`/occasions?id=eq.${id}`, { method: 'DELETE' });
+      occasions = occasions.filter(o => o.id !== id);
+      renderOccasions();
+      toast('Occasion deleted');
+    } catch(e) { toast('Error deleting occasion'); console.error(e); }
+  } else {
+    o._pendingDelete = true;
+    toast('Tap delete again to confirm');
+    setTimeout(() => { o._pendingDelete = false; }, 3000);
+  }
+}
+
+// ── MESSAGE HISTORY ──
+let messages = [];
+
+async function loadMessages() {
+  try {
+    messages = await sb.request('/messages?order=created_at.desc&limit=50');
+    renderMessages();
+  } catch(e) { console.error(e); }
+}
+
+function renderMessages() {
+  const list = document.getElementById('messages-list');
+  if (!messages.length) {
+    list.innerHTML = `<div class="empty-state"><div class="emoji">✉️</div><p>No messages yet.<br>Generate one from an occasion.</p></div>`;
+    return;
+  }
+  list.innerHTML = messages.map(m => {
+    const contact = contacts.find(c => c.id === m.contact_id);
+    const occasion = occasions.find(o => o.id === m.occasion_id);
+    const date = new Date(m.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const voice = m.voice_archetype ? m.voice_archetype.charAt(0).toUpperCase() + m.voice_archetype.slice(1) : '';
+    return `
+      <div class="message-card">
+        <div class="message-meta">
+          <span class="message-name">${contact?.name || 'Unknown'}</span>
+          <span class="message-date">${date}</span>
+        </div>
+        <div class="message-occasion">${occasion?.type || ''} ${voice ? '· ' + voice : ''}</div>
+        <div class="message-body">${m.content}</div>
+        <button class="small-btn generate" style="margin-top:10px;" onclick="copyText(\`${m.content.replace(/`/g,'\\`')}\`)">Copy</button>
+      </div>`;
+  }).join('');
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => toast('Copied ✦'));
+}
+
 // ── MODALS ──
 function openModal(id) {
   document.getElementById(id).classList.add('open');
@@ -1337,14 +1647,7 @@ function closeModal(id, event) {
 }
 
 // ── HELPERS ──
-function switchTabTo(name) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    const names = ['upcoming', 'contacts', 'profile'];
-    t.classList.toggle('active', names[i] === name);
-  });
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(`panel-${name}`).classList.add('active');
-}
+function switchTabTo(name) { switchTab(name); }
 
 function toast(msg) {
   const el = document.getElementById('toast');
