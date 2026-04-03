@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="color-scheme: dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -991,6 +991,348 @@ footer { background: var(--bg); border-top: 1px solid var(--surface); padding: 6
   .demo-wrap { padding: 0 20px; }
 }
 </style>
+
+<style>
+/* ─── POSTCARD WIDGET ─────────────────────────────────────────── */
+.postcard-demo {
+  margin: 0 0 48px;
+  background: var(--bg-2);
+  border: 1px solid var(--surface);
+  border-radius: 16px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.postcard-demo::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    #0C0D10 0%, #1C2028 12%, #4A5568 28%, #9AAABB 42%,
+    #D4E0EC 50%, #EEF4FA 54%, #C8D8E8 64%,
+    #6A7A8E 78%, #1C2028 90%, #0C0D10 100%);
+  background-size: 300% auto;
+  animation: steel-pingpong 4s ease-in-out infinite;
+}
+
+.pc-demo-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pc-demo-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--surface);
+}
+
+.pc-demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .pc-demo-grid { grid-template-columns: 1fr; }
+  .pc-card-wrap { order: -1; }
+}
+
+/* ── CONTROLS ── */
+.pc-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pc-ctrl-group { display: flex; flex-direction: column; gap: 8px; }
+
+.pc-ctrl-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-lo);
+}
+
+.pc-select, .pc-input {
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  color-scheme: dark;
+}
+
+.pc-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233A4A64' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+.pc-select:focus, .pc-input:focus { border-color: #4A5568; }
+.pc-input::placeholder { color: var(--text-lo); }
+
+.pc-voice-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.pc-voice-btn {
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
+  border-radius: 8px;
+  padding: 8px 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+  font-family: var(--sans);
+}
+
+.pc-voice-btn:hover { border-color: #4A5568; }
+
+.pc-voice-btn.active {
+  border-color: #6A7A8E;
+  background: var(--bg-4);
+}
+
+.pc-voice-emoji { font-size: 18px; line-height: 1; }
+.pc-voice-name { font-size: 9px; font-weight: 500; color: var(--text-mid); letter-spacing: 0.3px; }
+
+.pc-gen-btn {
+  width: 100%;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #EEF4FA;
+  background: linear-gradient(90deg,
+    #0C0D10 0%, #1C2028 12%, #4A5568 28%, #9AAABB 42%,
+    #D4E0EC 50%, #EEF4FA 54%, #C8D8E8 64%,
+    #6A7A8E 78%, #1C2028 90%, #0C0D10 100%);
+  background-size: 300% auto;
+  animation: steel-pingpong 4s ease-in-out infinite;
+  box-shadow: inset 0 0 0 1px rgba(154,170,187,0.25);
+  transition: opacity 0.2s, transform 0.1s;
+  position: relative;
+}
+
+.pc-gen-btn:hover { opacity: 0.9; }
+.pc-gen-btn:active { transform: scale(0.99); }
+.pc-gen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pc-gen-btn .pc-btn-text { position: relative; z-index: 1; }
+
+.pc-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.pc-cta-link {
+  font-size: 13px;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.pc-cta-link:hover { color: var(--text); }
+
+.pc-cta-arrow {
+  font-size: 13px;
+  color: var(--text-lo);
+  transition: transform 0.2s;
+}
+
+.pc-cta-row:hover .pc-cta-arrow { transform: translateX(3px); color: var(--text-mid); }
+
+/* ── POSTCARD ── */
+.pc-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.pc-card {
+  width: 380px;
+  height: 260px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0a1018;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(154,170,187,0.1);
+  transform: rotate(-0.5deg);
+  transition: transform 0.3s ease;
+}
+
+.pc-card:hover { transform: rotate(0deg) scale(1.01); }
+
+/* steel border glow */
+.pc-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: linear-gradient(#0a1018, #0a1018) padding-box,
+    linear-gradient(135deg, rgba(212,224,236,0.4), rgba(74,85,104,0.1), rgba(212,224,236,0.3)) border-box;
+  pointer-events: none;
+}
+
+/* horizontal divider — classic postcard back */
+.pc-card-divider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 55%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent 8px, rgba(74,85,104,0.3) 8px, rgba(74,85,104,0.3) calc(100% - 8px), transparent calc(100% - 8px));
+}
+
+/* left: message */
+.pc-card-left {
+  position: absolute;
+  top: 20px; bottom: 20px;
+  left: 20px; right: 47%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pc-msg-occasion {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin-bottom: 10px;
+  transition: opacity 0.4s;
+}
+
+.pc-msg-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.4s;
+  min-height: 80px;
+}
+
+.pc-msg-text.loading {
+  color: var(--text-lo);
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: 12px;
+  align-items: center;
+}
+
+.pc-msg-placeholder {
+  color: var(--text-lo);
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.pc-msg-voice {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin-top: 10px;
+}
+
+/* right: stamp + address */
+.pc-card-right {
+  position: absolute;
+  top: 16px; bottom: 16px;
+  right: 16px;
+  left: 57%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.pc-stamp-corner {
+  flex-shrink: 0;
+}
+
+.pc-address-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.pc-address-line {
+  height: 1px;
+  background: var(--surface);
+  border-radius: 1px;
+  width: 100%;
+}
+
+.pc-address-line:nth-child(2) { width: 80%; }
+.pc-address-line:nth-child(3) { width: 60%; }
+
+.pc-card-domain {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: var(--text-lo);
+  text-transform: lowercase;
+  align-self: flex-end;
+}
+
+/* shimmer for loading */
+@keyframes pc-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.pc-shimmer-line {
+  height: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-3) 25%, var(--surface) 50%, var(--bg-3) 75%);
+  background-size: 400px 100%;
+  animation: pc-shimmer 1.2s infinite;
+  margin-bottom: 6px;
+}
+
+.pc-shimmer-line:nth-child(2) { width: 85%; }
+.pc-shimmer-line:nth-child(3) { width: 70%; }
+
+.pc-hint {
+  font-size: 11px;
+  color: var(--text-lo);
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+</style>
 </head>
 <body>
 
@@ -1428,6 +1770,149 @@ footer { background: var(--bg); border-top: 1px solid var(--surface); padding: 6
       </div>
     </div>
   </div>
+
+  <div class="postcard-demo" id="postcardDemo">
+    <div class="pc-demo-label">Live Demo — Postcard Builder</div>
+
+    <div class="pc-demo-grid">
+
+      <!-- CONTROLS -->
+      <div class="pc-controls">
+
+        <div class="pc-ctrl-group">
+          <span class="pc-ctrl-label">Occasion</span>
+          <select class="pc-select" id="pc-occasion">
+            <option value="">Select an occasion…</option>
+            <option value="Birthday">🎂 Birthday</option>
+            <option value="Graduation">🎓 Graduation</option>
+            <option value="New Baby">👶 New Baby</option>
+            <option value="Promotion">📈 Promotion</option>
+            <option value="Retirement">🌅 Retirement</option>
+            <option value="Condolences">🕊️ Condolences</option>
+            <option value="Anniversary">💍 Anniversary</option>
+            <option value="Just Because">✨ Just Because</option>
+          </select>
+        </div>
+
+        <div class="pc-ctrl-group">
+          <span class="pc-ctrl-label">Their Name</span>
+          <input class="pc-input" id="pc-name" type="text" placeholder="e.g. Marcus, Sarah, Mom…" maxlength="40">
+        </div>
+
+        <div class="pc-ctrl-group">
+          <span class="pc-ctrl-label">Your Voice</span>
+          <div class="pc-voice-grid" id="pc-voice-grid">
+            <button class="pc-voice-btn active" data-voice="Nurturer" onclick="pcSelectVoice(this)">
+              <span class="pc-voice-emoji">🤗</span>
+              <span class="pc-voice-name">Nurturer</span>
+            </button>
+            <button class="pc-voice-btn" data-voice="Wit" onclick="pcSelectVoice(this)">
+              <span class="pc-voice-emoji">😏</span>
+              <span class="pc-voice-name">The Wit</span>
+            </button>
+            <button class="pc-voice-btn" data-voice="Sage" onclick="pcSelectVoice(this)">
+              <span class="pc-voice-emoji">🌿</span>
+              <span class="pc-voice-name">The Sage</span>
+            </button>
+            <button class="pc-voice-btn" data-voice="Hype" onclick="pcSelectVoice(this)">
+              <span class="pc-voice-emoji">🎉</span>
+              <span class="pc-voice-name">The Hype</span>
+            </button>
+            <button class="pc-voice-btn" data-voice="Minimalist" onclick="pcSelectVoice(this)">
+              <span class="pc-voice-emoji">🎯</span>
+              <span class="pc-voice-name">Minimalist</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="pc-gen-btn" id="pc-gen-btn" onclick="pcGenerate()">
+          <span class="pc-btn-text">Generate Postcard Message →</span>
+        </button>
+
+        <div class="pc-cta-row">
+          <a href="sent-postcard.html" class="pc-cta-link">Add a photo &amp; build the full postcard</a>
+          <span class="pc-cta-arrow">→</span>
+        </div>
+
+      </div>
+
+      <!-- POSTCARD PREVIEW -->
+      <div class="pc-card-wrap">
+        <div class="pc-card" id="pc-card">
+
+          <!-- Vertical divider -->
+          <div class="pc-card-divider"></div>
+
+          <!-- Left: message area -->
+          <div class="pc-card-left">
+            <div id="pc-display-occasion" class="pc-msg-occasion"></div>
+            <div class="pc-msg-text" id="pc-msg-text">
+              <span class="pc-msg-placeholder">Your message will appear here — pick an occasion and generate.</span>
+            </div>
+            <div class="pc-msg-voice" id="pc-msg-voice"></div>
+          </div>
+
+          <!-- Right: stamp + address lines -->
+          <div class="pc-card-right">
+            <div class="pc-stamp-corner">
+              <svg width="38" height="46" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="pc-stamp-border" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#D4E0EE" stop-opacity="0.85"/>
+                    <stop offset="100%" stop-color="#4a6080" stop-opacity="0.85"/>
+                  </linearGradient>
+                  <linearGradient id="pc-tube-a" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#B8CCE0" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#4a6080" stop-opacity="0.8"/>
+                  </linearGradient>
+                  <linearGradient id="pc-tube-b" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#D4E0EE" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#6B8AAA" stop-opacity="0.8"/>
+                  </linearGradient>
+                  <linearGradient id="pc-s-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#D4E0EE"/>
+                    <stop offset="100%" stop-color="#6B8AAA"/>
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="40" height="48" rx="3"
+                      fill="rgba(10,16,24,0.9)"
+                      stroke="url(#pc-stamp-border)" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <!-- 7 tube rects — always rect, never line -->
+                <rect x="6"  y="10" width="3.5" height="28" rx="1.75" fill="url(#pc-tube-a)"/>
+                <rect x="11" y="13" width="3.5" height="22" rx="1.75" fill="url(#pc-tube-b)"/>
+                <rect x="16" y="9"  width="3.5" height="30" rx="1.75" fill="url(#pc-tube-a)"/>
+                <rect x="21" y="12" width="3.5" height="24" rx="1.75" fill="url(#pc-tube-b)"/>
+                <rect x="26" y="10" width="3.5" height="28" rx="1.75" fill="url(#pc-tube-a)"/>
+                <rect x="31" y="14" width="3.5" height="20" rx="1.75" fill="url(#pc-tube-b)"/>
+                <rect x="36" y="9"  width="3.5" height="30" rx="1.75" fill="url(#pc-tube-a)"/>
+                <!-- S drawn last, on top -->
+                <text x="22" y="40" text-anchor="middle"
+                      font-family="DM Serif Display, Georgia, serif"
+                      font-style="italic" font-weight="700" font-size="22"
+                      fill="url(#pc-s-grad)">S</text>
+                <text x="22" y="48" text-anchor="middle"
+                      font-family="DM Sans, sans-serif"
+                      font-size="5.5" letter-spacing="2.5"
+                      fill="#8CA4C0" opacity="0.75">SENT</text>
+              </svg>
+            </div>
+
+            <div class="pc-address-lines">
+              <div class="pc-address-line"></div>
+              <div class="pc-address-line"></div>
+              <div class="pc-address-line"></div>
+            </div>
+
+            <span class="pc-card-domain">sentapp.net</span>
+          </div>
+
+        </div>
+        <div class="pc-hint">A preview of the postcard back — add a photo to complete it</div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="media-cards">
     <div class="media-card" onclick="toggleMediaCard(this)">
       <div class="media-card-top"><span class="media-card-icon">📸</span><span class="media-card-toggle">+</span></div>
@@ -1848,6 +2333,88 @@ window.addEventListener('load', () => {
   const problemSection = document.getElementById('problem');
   if (problemSection) observer.observe(problemSection);
 });
+</script>
+
+<script>
+(function() {
+  let pcVoice = 'Nurturer';
+  let pcGenerating = false;
+
+  window.pcSelectVoice = function(btn) {
+    document.querySelectorAll('.pc-voice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pcVoice = btn.dataset.voice;
+  };
+
+  window.pcGenerate = async function() {
+    const occasion = document.getElementById('pc-occasion').value;
+    const name = document.getElementById('pc-name').value.trim();
+
+    if (!occasion) {
+      document.getElementById('pc-occasion').focus();
+      return;
+    }
+    if (pcGenerating) return;
+    pcGenerating = true;
+
+    const btn = document.getElementById('pc-gen-btn');
+    btn.disabled = true;
+    btn.querySelector('.pc-btn-text').textContent = 'Writing…';
+
+    // Show shimmer
+    const msgEl = document.getElementById('pc-msg-text');
+    msgEl.innerHTML = `
+      <div style="width:100%">
+        <div class="pc-shimmer-line"></div>
+        <div class="pc-shimmer-line"></div>
+        <div class="pc-shimmer-line"></div>
+      </div>`;
+
+    const voiceDescriptions = {
+      Nurturer:   'warm, expressive, heartfelt — like a close friend who genuinely cares',
+      Wit:        'dry humor, sharp wit, clever callbacks — roasts with love',
+      Sage:       'thoughtful, genuine, grounded — says something that actually means something',
+      Hype:       'energetic, ALL CAPS energy, maximum enthusiasm, exclamation marks',
+      Minimalist: 'brutally short — 1-2 sentences max, no fluff, every word earns its place'
+    };
+
+    const recipientLine = name ? `The recipient's name is ${name}.` : 'The recipient name is unknown — write it generically.';
+
+    const prompt = `You are Sent — an AI that writes deeply personal occasion messages. Write a single short postcard message for a ${occasion} occasion. ${recipientLine} Write in the voice of: ${pcVoice} — ${voiceDescriptions[pcVoice]}. The message should feel like it came from a real person who knows the recipient. 2-4 sentences max. No hashtags, no emoji in the message itself, no generic filler. Return ONLY the message text, nothing else.`;
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 180,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content?.[0]?.text?.trim() || 'Something went wrong — try again.';
+
+      // Update postcard
+      msgEl.innerHTML = '';
+      msgEl.textContent = text;
+      msgEl.style.fontStyle = 'italic';
+
+      document.getElementById('pc-display-occasion').textContent = (name ? name + ' · ' : '') + occasion;
+      document.getElementById('pc-msg-voice').textContent = pcVoice;
+
+    } catch (err) {
+      msgEl.innerHTML = '';
+      msgEl.textContent = 'Could not generate — check your connection and try again.';
+      msgEl.style.fontStyle = 'normal';
+    }
+
+    btn.disabled = false;
+    btn.querySelector('.pc-btn-text').textContent = 'Generate Postcard Message →';
+    pcGenerating = false;
+  };
+})();
 </script>
 </body>
 </html>
