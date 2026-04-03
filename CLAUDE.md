@@ -64,10 +64,18 @@ animation: steel-pingpong 4s ease-in-out infinite;
 |------|---------|
 | `index.html` | Landing page — 8 slides, all locked |
 | `sent-app.html` | Working AI prototype — occasion selector + media suite |
-| `sent-postcard.html` | Digital postcard builder |
+| `sent-postcard.html` | Digital postcard builder (single builder — duplicate removed) |
 | `sent-welcome.html` | Onboarding / welcome screen |
 | `sw.js` | Service worker |
 | `manifest.json` | PWA manifest |
+
+## Postcard Widget (index.html Slide 5)
+Live demo widget embedded after `.featured-cards`, before `.media-cards` in `#media`. Calls Anthropic API directly. Controls: occasion + name + voice → generates message → renders on postcard preview. CTA links to `sent-postcard.html`. Postcard Builder featured card removed from `.featured-cards` (Sent Gift card remains).
+
+## Task Queue
+1. **Tier enforcement in `sent-app.html`** — audit current gate state first, then gate by Free/Sent+/Pro with upgrade prompts
+2. **Sent Gift bigger moment** — tabled, revisit post-seed
+3. **Sent Gift callout + pricing update** on `index.html`
 
 ---
 
