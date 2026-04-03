@@ -72,10 +72,24 @@ animation: steel-pingpong 4s ease-in-out infinite;
 ## Postcard Widget (index.html Slide 5)
 Live demo widget embedded after `.featured-cards`, before `.media-cards` in `#media`. Calls Anthropic API directly. Controls: occasion + name + voice → generates message → renders on postcard preview. CTA links to `sent-postcard.html`. Postcard Builder featured card removed from `.featured-cards` (Sent Gift card remains).
 
+## Tier Enforcement (sent-app.html)
+Shipped April 2026. Stored in `localStorage` key `sent_tier` (`'free'`/`'plus'`/`'pro'`). Usage counters in `sent_usage` (resets monthly). Migrate to Supabase `profiles.tier` column when Stripe billing goes live.
+
+| | Free | Sent+ | Pro |
+|---|---|---|---|
+| Contacts | 3 | 25 | ∞ |
+| Occasions | 5 | ∞ | ∞ |
+| Generates/mo | 5 | 25 | ∞ |
+| Voices | Nurturer only | All 5 | All 5 |
+| Price | $0 | $4/mo | $12/mo |
+
+Gates: `saveContact`, `saveOccasion`, `generateMessage`, `selectArchetype`. Upgrade modal → waitlist CTA at `sentapp.net/#early-access`.
+
 ## Task Queue
-1. **Tier enforcement in `sent-app.html`** — audit current gate state first, then gate by Free/Sent+/Pro with upgrade prompts
+1. ~~**Tier enforcement in `sent-app.html`**~~ ✅ shipped April 2026
 2. **Sent Gift bigger moment** — tabled, revisit post-seed
-3. **Sent Gift callout + pricing update** on `index.html`
+3. **Sent Gift callout + pricing update** on `index.html` — **next**
+4. **Strip debug console.log lines** from `sent-app.html` (token logging) before launch
 
 ---
 
