@@ -1091,7 +1091,6 @@ const sb = {
           });
           if (res.ok) {
             const refreshed = await res.json();
-            console.log('Token refreshed successfully, new exp:', JSON.parse(atob(refreshed.access_token.split('.')[1])).exp);
             const updated = {
               access_token:  refreshed.access_token,
               refresh_token: refreshed.refresh_token,
@@ -1103,9 +1102,8 @@ const sb = {
           }
         }
         // Refresh failed or no refresh token — fall through to use raw access token
-        if (parsed.access_token) { 
-          console.warn('Refresh failed, using raw access_token');
-          sb.token = parsed.access_token; return parsed.access_token; 
+        if (parsed.access_token) {
+          sb.token = parsed.access_token; return parsed.access_token;
         }
       } catch(e) {}
     }
@@ -1164,7 +1162,7 @@ async function loadData() {
     renderContacts();
     await loadMessages();
   } catch (e) {
-    console.error(e);
+    // init error
   }
 }
 
@@ -1296,7 +1294,6 @@ async function saveContact() {
     setTimeout(() => openModal('modal-add-occasion-prompt'), 300);
   } catch (e) {
     toast('Error saving contact');
-    console.error(e);
   }
 }
 
@@ -1341,7 +1338,6 @@ async function saveOccasion() {
     switchTabTo('upcoming');
   } catch (e) {
     toast('Error saving occasion');
-    console.error(e);
   }
 }
 
@@ -1385,8 +1381,6 @@ async function generateMessage() {
   text.style.display = 'none';
 
   try {
-    console.log('Token being sent to Edge Function:', sb.token ? sb.token.slice(0,20) + '...' : 'NULL');
-    console.log('Token exp:', sb.token ? JSON.parse(atob(sb.token.split('.')[1])).exp : 'N/A', '| Now:', Math.floor(Date.now()/1000));
     const res = await fetch(`${SUPABASE_URL}/functions/v1/generate-message`, {
       method: 'POST',
       headers: {
@@ -1437,7 +1431,6 @@ async function generateMessage() {
     text.textContent = 'Error connecting. Check your connection.';
     text.style.color = 'var(--red)';
     text.style.fontStyle = 'normal';
-    console.error(e);
   }
 }
 
@@ -1458,7 +1451,7 @@ function selectArchetype(el) {
   sb.request(`/profiles?id=eq.${currentUser.id}`, {
     method: 'PATCH',
     body: JSON.stringify({ voice_archetype: el.dataset.archetype })
-  }).catch(console.error);
+  });
   toast('Voice updated ✦');
 }
 
@@ -1517,7 +1510,7 @@ async function saveEditContact() {
     renderOccasions();
     closeModal('modal-edit-contact');
     toast('Contact updated ✦');
-  } catch(e) { toast('Error updating contact'); console.error(e); }
+  } catch(e) { toast('Error updating contact'); }
 }
 
 async function deleteContact(id) {
@@ -1533,7 +1526,7 @@ async function deleteContact(id) {
       renderContacts();
       renderOccasions();
       toast('Contact deleted');
-    } catch(e) { toast('Error deleting contact'); console.error(e); }
+    } catch(e) { toast('Error deleting contact'); }
   } else {
     c._pendingDelete = true;
     toast('Tap delete again to confirm');
@@ -1579,7 +1572,7 @@ async function saveEditOccasion() {
     renderOccasions();
     closeModal('modal-edit-occasion');
     toast('Occasion updated ✦');
-  } catch(e) { toast('Error updating occasion'); console.error(e); }
+  } catch(e) { toast('Error updating occasion'); }
 }
 
 async function deleteOccasion(id) {
@@ -1591,7 +1584,7 @@ async function deleteOccasion(id) {
       occasions = occasions.filter(o => o.id !== id);
       renderOccasions();
       toast('Occasion deleted');
-    } catch(e) { toast('Error deleting occasion'); console.error(e); }
+    } catch(e) { toast('Error deleting occasion'); }
   } else {
     o._pendingDelete = true;
     toast('Tap delete again to confirm');
@@ -1606,7 +1599,7 @@ async function loadMessages() {
   try {
     messages = await sb.request('/messages?order=created_at.desc&limit=50');
     renderMessages();
-  } catch(e) { console.error(e); }
+  } catch(e) {}
 }
 
 function renderMessages() {
