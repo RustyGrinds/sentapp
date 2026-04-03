@@ -15,18 +15,13 @@
 
 :root {
   --bg:        #06080F;
-  --bg2:       #0D1117;
-  --bg3:       #141920;
-  --surface:   #1A2133;
-  --border:    #1F2A46;
-  --border-lt: #2A3A5C;
-  --steel:     #8CA4C0;
-  --steel-lt:  #B8CBDF;
-  --platinum:  #D4E1EE;
-  --text:      #EEF4FA;
-  --text-dim:  #7A90A8;
-  --amber:     #C8832A;
-  --amber-lt:  #F5A84B;
+  --bg-2:      #0C1220;
+  --bg-3:      #111A2E;
+  --bg-4:      #182038;
+  --surface:   #1F2A46;
+  --text:      #DCE4F0;
+  --text-mid:  #7A8DAA;
+  --text-lo:   #3A4A64;
   --green:     #4ade80;
   --red:       #f87171;
   --serif:     'DM Serif Display', Georgia, serif;
@@ -64,7 +59,7 @@ html, body {
 .input {
   width: 100%;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface);
   border-radius: var(--r);
   padding: 14px 18px;
   font-family: var(--sans);
@@ -73,8 +68,8 @@ html, body {
   outline: none;
   transition: border-color 0.2s;
 }
-.input::placeholder { color: var(--text-dim); }
-.input:focus { border-color: var(--border-lt); }
+.input::placeholder { color: var(--text-mid); }
+.input:focus { border-color: var(--text-lo); }
 
 .btn {
   width: 100%;
@@ -94,31 +89,31 @@ html, body {
 
 .btn-primary {
   background: linear-gradient(135deg, #1F2A46, #2A3A5C);
-  color: var(--platinum);
-  border: 1px solid var(--border-lt);
+  color: var(--text);
+  border: 1px solid var(--text-lo);
 }
-.btn-primary:hover { background: linear-gradient(135deg, #2A3A5C, #3A4E6E); border-color: var(--steel); }
+.btn-primary:hover { background: linear-gradient(135deg, #2A3A5C, #3A4E6E); border-color: var(--text-mid); }
 .btn-primary:active { transform: scale(0.98); }
 
 .btn-amber {
-  background: var(--amber);
-  color: #1A1410;
+  background: var(--text-mid);
+  color: var(--bg);
   font-weight: 600;
 }
-.btn-amber:hover { background: var(--amber-lt); }
+.btn-amber:hover { background: var(--text-mid); }
 .btn-amber:active { transform: scale(0.98); }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text-dim);
-  border: 1px solid var(--border);
+  color: var(--text-mid);
+  border: 1px solid var(--surface);
 }
-.btn-ghost:hover { border-color: var(--border-lt); color: var(--text); }
+.btn-ghost:hover { border-color: var(--text-lo); color: var(--text); }
 
 .auth-divider {
   text-align: center;
   font-size: 12px;
-  color: var(--text-dim);
+  color: var(--text-mid);
   margin: 4px 0;
 }
 
@@ -134,7 +129,7 @@ html, body {
   justify-content: space-between;
   padding: 16px 20px;
   padding-top: max(16px, env(safe-area-inset-top));
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--surface);
   background: var(--bg);
   flex-shrink: 0;
 }
@@ -149,7 +144,7 @@ html, body {
   font-family: var(--serif);
   font-size: 22px;
   font-style: italic;
-  color: var(--platinum);
+  color: var(--text);
   letter-spacing: -0.3px;
 }
 
@@ -162,9 +157,9 @@ html, body {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface);
   background: var(--surface);
-  color: var(--steel-lt);
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,12 +167,12 @@ html, body {
   transition: all 0.2s;
   font-size: 16px;
 }
-.icon-btn:hover { border-color: var(--border-lt); color: var(--platinum); }
+.icon-btn:hover { border-color: var(--text-lo); color: var(--text); }
 
 /* ── TABS ── */
 .tabs {
   display: flex;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--surface);
   flex-shrink: 0;
   background: var(--bg);
 }
@@ -189,14 +184,14 @@ html, body {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.5px;
-  color: var(--text-dim);
+  color: var(--text-mid);
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
 }
 .tab.active {
-  color: var(--platinum);
-  border-bottom-color: var(--steel);
+  color: var(--text);
+  border-bottom-color: var(--text-mid);
 }
 
 /* ── CONTENT AREA ── */
@@ -222,13 +217,13 @@ html, body {
 .section-title {
   font-family: var(--serif);
   font-size: 20px;
-  color: var(--platinum);
+  color: var(--text);
 }
 
 .pill-btn {
   background: var(--surface);
-  border: 1px solid var(--border-lt);
-  color: var(--steel-lt);
+  border: 1px solid var(--text-lo);
+  color: var(--text);
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 500;
@@ -237,11 +232,11 @@ html, body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.pill-btn:hover { background: var(--border); color: var(--platinum); }
+.pill-btn:hover { background: var(--surface); color: var(--text); }
 
 .occasion-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
   border-radius: var(--r-lg);
   padding: 18px;
   margin-bottom: 12px;
@@ -255,11 +250,11 @@ html, body {
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 3px;
-  background: var(--steel);
+  background: var(--text-mid);
   opacity: 0.6;
 }
-.occasion-card:hover { border-color: var(--border-lt); transform: translateY(-1px); }
-.occasion-card.urgent::before { background: var(--amber); opacity: 1; }
+.occasion-card:hover { border-color: var(--text-lo); transform: translateY(-1px); }
+.occasion-card.urgent::before { background: var(--text-mid); opacity: 1; }
 
 .occasion-top {
   display: flex;
@@ -271,7 +266,7 @@ html, body {
 .occasion-name {
   font-family: var(--serif);
   font-size: 17px;
-  color: var(--platinum);
+  color: var(--text);
 }
 
 .occasion-days {
@@ -280,14 +275,14 @@ html, body {
   padding: 3px 10px;
   border-radius: 10px;
   background: var(--surface);
-  color: var(--text-dim);
+  color: var(--text-mid);
   white-space: nowrap;
 }
-.occasion-days.urgent { background: rgba(200,131,42,0.15); color: var(--amber-lt); }
+.occasion-days.urgent { background: rgba(58,74,100,0.15); color: var(--text-mid); }
 
 .occasion-type {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--text-mid);
   margin-bottom: 12px;
 }
 
@@ -300,9 +295,9 @@ html, body {
   flex: 1;
   padding: 8px;
   border-radius: 8px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface);
   background: var(--surface);
-  color: var(--steel-lt);
+  color: var(--text);
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 500;
@@ -310,9 +305,9 @@ html, body {
   transition: all 0.2s;
   text-align: center;
 }
-.small-btn:hover { border-color: var(--border-lt); color: var(--platinum); }
-.small-btn.generate { background: rgba(200,131,42,0.1); border-color: rgba(200,131,42,0.3); color: var(--amber-lt); }
-.small-btn.generate:hover { background: rgba(200,131,42,0.2); border-color: var(--amber); }
+.small-btn:hover { border-color: var(--text-lo); color: var(--text); }
+.small-btn.generate { background: rgba(58,74,100,0.1); border-color: rgba(58,74,100,0.3); color: var(--text-mid); }
+.small-btn.generate:hover { background: rgba(58,74,100,0.2); border-color: var(--text-mid); }
 .small-btn.edit { flex: 0 0 auto; padding: 8px 12px; }
 .small-btn.delete { flex: 0 0 auto; padding: 8px 12px; color: var(--red); border-color: rgba(248,113,113,0.2); }
 .small-btn.delete:hover { background: rgba(248,113,113,0.1); border-color: var(--red); }
@@ -320,15 +315,15 @@ html, body {
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-dim);
+  color: var(--text-mid);
 }
 .empty-state .emoji { font-size: 40px; margin-bottom: 16px; }
 .empty-state p { font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
 
 /* ── CONTACTS ── */
 .contact-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
   border-radius: var(--r);
   padding: 16px 18px;
   margin-bottom: 10px;
@@ -338,34 +333,34 @@ html, body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.contact-card:hover { border-color: var(--border-lt); }
+.contact-card:hover { border-color: var(--text-lo); }
 
 .contact-avatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   background: var(--surface);
-  border: 1px solid var(--border-lt);
+  border: 1px solid var(--text-lo);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--serif);
   font-size: 18px;
-  color: var(--platinum);
+  color: var(--text);
   flex-shrink: 0;
 }
 
 .contact-info { flex: 1; min-width: 0; }
-.contact-name { font-size: 15px; font-weight: 500; color: var(--platinum); margin-bottom: 3px; }
-.contact-meta { font-size: 12px; color: var(--text-dim); }
+.contact-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.contact-meta { font-size: 12px; color: var(--text-mid); }
 
 .contact-card { cursor: default; }
 .contact-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
 /* ── MESSAGE CARDS ── */
 .message-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
   border-radius: var(--r);
   padding: 16px 18px;
   margin-bottom: 10px;
@@ -376,10 +371,10 @@ html, body {
   align-items: center;
   margin-bottom: 4px;
 }
-.message-name { font-size: 14px; font-weight: 500; color: var(--platinum); }
-.message-date { font-size: 11px; color: var(--text-dim); }
-.message-occasion { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
-.message-body { font-size: 14px; color: var(--steel-lt); line-height: 1.6; font-style: italic; }
+.message-name { font-size: 14px; font-weight: 500; color: var(--text); }
+.message-date { font-size: 11px; color: var(--text-mid); }
+.message-occasion { font-size: 12px; color: var(--text-mid); margin-bottom: 10px; }
+.message-body { font-size: 14px; color: var(--text); line-height: 1.6; font-style: italic; }
 
 /* ── MODAL OVERLAY ── */
 .modal-overlay {
@@ -403,8 +398,8 @@ html, body {
   width: 100%;
   max-width: 540px;
   margin: 0 auto;
-  background: var(--bg2);
-  border: 1px solid var(--border);
+  background: var(--bg-2);
+  border: 1px solid var(--surface);
   border-bottom: none;
   border-radius: var(--r-lg) var(--r-lg) 0 0;
   padding: 24px 24px max(24px, env(safe-area-inset-bottom));
@@ -420,7 +415,7 @@ html, body {
 .modal-handle {
   width: 40px;
   height: 4px;
-  background: var(--border-lt);
+  background: var(--text-lo);
   border-radius: 2px;
   margin: 0 auto 20px;
 }
@@ -428,7 +423,7 @@ html, body {
 .modal-title {
   font-family: var(--serif);
   font-size: 22px;
-  color: var(--platinum);
+  color: var(--text);
   margin-bottom: 20px;
 }
 
@@ -441,7 +436,7 @@ html, body {
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-mid);
   margin-bottom: 8px;
   display: block;
 }
@@ -454,7 +449,7 @@ select.input {
   padding-right: 40px;
   cursor: pointer;
 }
-select.input option { background: var(--bg2); }
+select.input option { background: var(--bg-2); }
 
 .modal-actions {
   display: flex;
@@ -473,28 +468,28 @@ select.input option { background: var(--bg2); }
 .voice-chip {
   padding: 10px 6px;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface);
   background: var(--surface);
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
 }
-.voice-chip:hover { border-color: var(--border-lt); }
-.voice-chip.active { border-color: var(--steel); background: rgba(140,164,192,0.1); }
+.voice-chip:hover { border-color: var(--text-lo); }
+.voice-chip.active { border-color: var(--text-mid); background: rgba(140,164,192,0.1); }
 
 .voice-chip-icon { font-size: 20px; margin-bottom: 4px; }
-.voice-chip-name { font-size: 9px; color: var(--text-dim); line-height: 1.3; }
-.voice-chip.active .voice-chip-name { color: var(--steel-lt); }
+.voice-chip-name { font-size: 9px; color: var(--text-mid); line-height: 1.3; }
+.voice-chip.active .voice-chip-name { color: var(--text); }
 
 .generated-msg {
-  background: var(--bg3);
-  border: 1px solid var(--border-lt);
+  background: var(--bg-3);
+  border: 1px solid var(--text-lo);
   border-radius: var(--r);
   padding: 18px;
   font-family: var(--serif);
   font-size: 17px;
   font-style: italic;
-  color: var(--platinum);
+  color: var(--text);
   line-height: 1.65;
   min-height: 80px;
   margin-bottom: 14px;
@@ -511,7 +506,7 @@ select.input option { background: var(--bg2); }
 .dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--steel);
+  background: var(--text-mid);
   animation: pulse 1.2s ease infinite;
 }
 .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -532,8 +527,8 @@ select.input option { background: var(--bg2); }
 
 /* ── PROFILE ── */
 .profile-section {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: var(--bg-3);
+  border: 1px solid var(--surface);
   border-radius: var(--r-lg);
   padding: 20px;
   margin-bottom: 16px;
@@ -544,19 +539,19 @@ select.input option { background: var(--bg2); }
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-mid);
   margin-bottom: 12px;
 }
 
 .profile-email {
   font-size: 15px;
-  color: var(--platinum);
+  color: var(--text);
   margin-bottom: 4px;
 }
 
 .profile-since {
   font-size: 12px;
-  color: var(--text-dim);
+  color: var(--text-mid);
 }
 
 .archetype-list {
@@ -571,19 +566,19 @@ select.input option { background: var(--bg2); }
   gap: 14px;
   padding: 14px;
   border-radius: var(--r);
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface);
   background: var(--surface);
   cursor: pointer;
   transition: all 0.2s;
 }
-.archetype-option:hover { border-color: var(--border-lt); }
-.archetype-option.active { border-color: var(--steel); background: rgba(140,164,192,0.08); }
+.archetype-option:hover { border-color: var(--text-lo); }
+.archetype-option.active { border-color: var(--text-mid); background: rgba(140,164,192,0.08); }
 
 .archetype-icon { font-size: 22px; }
 .archetype-info { flex: 1; }
-.archetype-name { font-size: 14px; font-weight: 500; color: var(--platinum); margin-bottom: 2px; }
-.archetype-desc { font-size: 12px; color: var(--text-dim); }
-.archetype-check { color: var(--steel-lt); font-size: 16px; opacity: 0; }
+.archetype-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.archetype-desc { font-size: 12px; color: var(--text-mid); }
+.archetype-check { color: var(--text); font-size: 16px; opacity: 0; }
 .archetype-option.active .archetype-check { opacity: 1; }
 
 /* ── STAMP SVG MINI ── */
@@ -599,11 +594,11 @@ select.input option { background: var(--bg2); }
   left: 50%;
   transform: translateX(-50%) translateY(20px);
   background: var(--surface);
-  border: 1px solid var(--border-lt);
+  border: 1px solid var(--text-lo);
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 13px;
-  color: var(--platinum);
+  color: var(--text);
   z-index: 300;
   opacity: 0;
   transition: all 0.3s;
@@ -633,7 +628,7 @@ select.input option { background: var(--bg2); }
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -761,7 +756,7 @@ select.input option { background: var(--bg2); }
 
       <div class="profile-section">
         <p class="profile-label">Your Voice</p>
-        <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">How should Sent write your messages?</p>
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:16px;">How should Sent write your messages?</p>
         <div class="archetype-list">
           <div class="archetype-option active" data-archetype="nurturer" onclick="selectArchetype(this)">
             <span class="archetype-icon">🤗</span>
@@ -887,8 +882,8 @@ select.input option { background: var(--bg2); }
       <input type="text" class="input" id="o-custom" placeholder="e.g. Work anniversary"/>
     </div>
     <div class="form-group" style="display:flex;align-items:center;gap:12px;">
-      <input type="checkbox" id="o-recurring" style="width:18px;height:18px;accent-color:var(--steel);cursor:pointer;"/>
-      <label for="o-recurring" style="font-size:14px;color:var(--text-dim);cursor:pointer;">Recurring yearly</label>
+      <input type="checkbox" id="o-recurring" style="width:18px;height:18px;accent-color:var(--text-mid);cursor:pointer;"/>
+      <label for="o-recurring" style="font-size:14px;color:var(--text-mid);cursor:pointer;">Recurring yearly</label>
     </div>
 
     <div class="modal-actions">
@@ -904,7 +899,7 @@ select.input option { background: var(--bg2); }
     <div class="modal-handle"></div>
     <h2 class="modal-title" id="gen-title">Generate message</h2>
 
-    <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Choose a voice:</p>
+    <p style="font-size:12px;color:var(--text-mid);margin-bottom:12px;">Choose a voice:</p>
     <div class="voice-grid">
       <div class="voice-chip active" data-voice="nurturer" onclick="selectVoice(this)">
         <div class="voice-chip-icon">🤗</div>
@@ -932,7 +927,7 @@ select.input option { background: var(--bg2); }
       <div class="generating-pulse" id="gen-pulse" style="display:none;">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
-      <span id="gen-text" style="color:var(--text-dim);font-style:normal;font-size:14px;">Hit generate to write a message in your voice.</span>
+      <span id="gen-text" style="color:var(--text-mid);font-style:normal;font-size:14px;">Hit generate to write a message in your voice.</span>
     </div>
     <p class="copy-confirm" id="copy-confirm"></p>
 
@@ -1017,8 +1012,8 @@ select.input option { background: var(--bg2); }
       <input type="date" class="input" id="eo-date"/>
     </div>
     <div class="form-group" style="display:flex;align-items:center;gap:12px;">
-      <input type="checkbox" id="eo-recurring" style="width:18px;height:18px;accent-color:var(--steel);cursor:pointer;"/>
-      <label for="eo-recurring" style="font-size:14px;color:var(--text-dim);cursor:pointer;">Recurring yearly</label>
+      <input type="checkbox" id="eo-recurring" style="width:18px;height:18px;accent-color:var(--text-mid);cursor:pointer;"/>
+      <label for="eo-recurring" style="font-size:14px;color:var(--text-mid);cursor:pointer;">Recurring yearly</label>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:0.5" onclick="closeModal('modal-edit-occasion')">Cancel</button>
@@ -1033,7 +1028,7 @@ select.input option { background: var(--bg2); }
     <div class="modal-handle"></div>
     <div style="font-size:28px;margin-bottom:12px;">🎉</div>
     <h2 class="modal-title" id="prompt-title">Contact saved!</h2>
-    <p style="font-size:14px;color:var(--text-dim);margin-bottom:24px;">Want to add an occasion for them now?</p>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:24px;">Want to add an occasion for them now?</p>
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:0.5" onclick="closeModal('modal-add-occasion-prompt')">Later</button>
       <button class="btn btn-amber" id="prompt-add-btn">Add occasion →</button>
@@ -1357,7 +1352,7 @@ function openGenerate(occasionId) {
   const contact = contacts.find(c => c.id === currentOccasion.contact_id);
   document.getElementById('gen-title').textContent = `Message for ${contact?.name || 'them'}`;
   document.getElementById('gen-text').textContent = 'Hit generate to write a message in your voice.';
-  document.getElementById('gen-text').style.color = 'var(--text-dim)';
+  document.getElementById('gen-text').style.color = 'var(--text-mid)';
   document.getElementById('gen-text').style.fontStyle = 'normal';
   document.getElementById('gen-text').style.fontSize = '14px';
   document.getElementById('copy-confirm').textContent = '';
@@ -1414,7 +1409,7 @@ async function generateMessage() {
 
     if (data.message) {
       text.textContent = data.message;
-      text.style.color = 'var(--platinum)';
+      text.style.color = 'var(--text)';
       text.style.fontStyle = 'italic';
       text.style.fontSize = '17px';
 
