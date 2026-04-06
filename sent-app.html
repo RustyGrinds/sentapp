@@ -668,8 +668,8 @@ body { min-height: 100vh; }
     <div class="sheet">
       <div class="handle"></div>
       <div class="sheet-head">
-        <div class="sheet-kicker">Generate</div>
-        <h2 class="sheet-title">Write something that <span class="steel-text">actually lands.</span></h2>
+        <div class="sheet-kicker" id="sheetKicker">Generate</div>
+        <h2 class="sheet-title" id="sheetTitle">Write something that <span class="steel-text">actually lands.</span></h2>
         <p class="sheet-sub" id="sheetSub">For Alexâ€™s birthday. Start with the right voice, then generate and turn it into a postcard.</p>
       </div>
 
@@ -692,7 +692,7 @@ body { min-height: 100vh; }
         </div>
       </div>
 
-      <button class="btn btn-primary" style="width:100%; margin-bottom:12px;" onclick="generateMessage()">Generate</button>
+      <button class="btn btn-primary" id="generateBtn" style="width:100%; margin-bottom:12px;" onclick="generateMessage()">Generate</button>
 
       <div class="output">
         <div class="output-kicker">Draft</div>
@@ -745,6 +745,8 @@ let currentName = 'Alex';
 let currentOccasion = 'Birthday';
 let currentVoice = 'Warm';
 let currentDraft = '';
+let currentContext = '';
+let isFirstRunFlow = false;
 let uses = 1;
 const freeLimit = 3;
 
@@ -763,15 +765,42 @@ function closeUpgrade() {
   document.getElementById('upgradeBox').classList.remove('active');
 }
 
-function openComposer(name, occasion) {
+function setComposerMode() {
+  const kicker = document.getElementById('sheetKicker');
+  const title = document.getElementById('sheetTitle');
+  const button = document.getElementById('generateBtn');
+
+  if (isFirstRunFlow) {
+    if (kicker) kicker.textContent = 'First draft';
+    if (title) title.innerHTML = 'Here’s something you could <span class="steel-text">send</span>';
+    if (button) button.textContent = currentDraft ? 'Regenerate' : 'Generate';
+    return;
+  }
+
+  if (kicker) kicker.textContent = 'Generate';
+  if (title) title.innerHTML = 'Write something that <span class="steel-text">actually lands.</span>';
+  if (button) button.textContent = 'Generate';
+}
+
+function openComposer(name, occasion, options = {}) {
   currentName = name;
   currentOccasion = occasion;
+  currentContext = options.context || '';
+  isFirstRunFlow = !!options.firstRun;
   currentDraft = '';
 
   const out = document.getElementById('outputText');
   const sub = document.getElementById('sheetSub');
 
-  sub.textContent = `For ${name}'s ${occasion.toLowerCase()}. Start with the right voice, then generate and turn it into a postcard.`;
+  setComposerMode();
+
+  if (isFirstRunFlow) {
+    sub.textContent = currentContext
+      ? `For ${name}'s ${occasion.toLowerCase()}. We used your note about ${currentContext} to start from something real.`
+      : `For ${name}'s ${occasion.toLowerCase()}. We’ll start with a real draft so you can react instead of staring at a blank screen.`;
+  } else {
+    sub.textContent = `For ${name}'s ${occasion.toLowerCase()}. Start with the right voice, then generate and turn it into a postcard.`;
+  }
 
   out.textContent = 'Generate a message to see your draft here.';
   out.classList.add('empty');
@@ -804,11 +833,16 @@ function generateMessage() {
     msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. You’ve had a huge year and I’m seriously proud of you. I hope today feels like a real pause to celebrate everything you’ve built.`;
   }
 
+  if (currentContext) {
+    msg += ` I know ${currentContext}.`;
+  }
+
   currentDraft = msg;
 
   const out = document.getElementById('outputText');
   out.textContent = msg;
   out.classList.remove('empty');
+  setComposerMode();
 
   updateUsageUI();
 
@@ -865,7 +899,29 @@ function copyDraft() {
   navigator.clipboard.writeText(text);
 }
 
+function checkFirstRun() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('firstRun') !== 'true') return;
+
+  try {
+    const raw = sessionStorage.getItem('sent_first_run');
+    if (!raw) return;
+
+    const data = JSON.parse(raw);
+    openComposer(data.name || 'Someone', data.occasion || 'Birthday', {
+      firstRun: true,
+      context: data.context || ''
+    });
+    generateMessage();
+    sessionStorage.removeItem('sent_first_run');
+    history.replaceState(null, '', window.location.pathname);
+  } catch (err) {
+    sessionStorage.removeItem('sent_first_run');
+  }
+}
+
 updateUsageUI();
+window.addEventListener('DOMContentLoaded', checkFirstRun);
 
 window.addEventListener('click', (e) => {
   const overlay = document.getElementById('composer');

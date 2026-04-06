@@ -4,653 +4,296 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#06080F">
-<title>Welcome to Sent</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Start with one moment - Sent</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #06080F;
-  --bg-2:      #0C1220;
-  --bg-3:      #111A2E;
-  --bg-4:      #182038;
-  --surface:   #1F2A46;
-  --text:      #DCE4F0;
-  --text-mid:  #7A8DAA;
-  --text-lo:   #3A4A64;
-  --green:     #4ade80;
-  --red:       #f87171;
-  --serif:     'DM Serif Display', Georgia, serif;
-  --sans:      'DM Sans', system-ui, sans-serif;
-  --r:         12px;
+  --bg: #06080F;
+  --bg-2: #0C1220;
+  --bg-3: #111A2E;
+  --surface: #1F2A46;
+  --line: rgba(122, 141, 170, 0.22);
+  --text: #DCE4F0;
+  --text-mid: #90A2BD;
+  --text-lo: #647794;
+  --accent: #D4E0EC;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --radius: 18px;
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top center, rgba(143,167,194,.12), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.015), transparent 26%),
+    var(--bg);
+}
+
+.shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  width: min(100%, 420px);
+  border-radius: 24px;
+  border: 1px solid rgba(48,68,102,.55);
+  background: linear-gradient(180deg, rgba(17,26,46,.94), rgba(12,18,32,.98));
+  box-shadow: 0 24px 60px rgba(0,0,0,.34);
   overflow: hidden;
 }
 
-/* ── SCREEN SYSTEM ── */
-.screen {
-  position: fixed;
-  inset: 0;
+.panel-inner {
+  padding: 28px 24px 26px;
+}
+
+.brand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px 32px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+  gap: 10px;
+  margin-bottom: 28px;
 }
+
+.stamp {
+  width: 36px;
+  height: 40px;
+  border-radius: 11px;
+  border: 1px solid rgba(212,224,236,.34);
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  color: var(--accent);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 25px;
+  font-style: italic;
+}
+
+.screen {
+  display: none;
+}
+
 .screen.active {
-  opacity: 1;
-  pointer-events: all;
+  display: block;
 }
 
-/* ── STAMP ── */
-.stamp-wrap {
-  margin-bottom: 32px;
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin-bottom: 12px;
 }
 
-/* ── TYPOGRAPHY ── */
 .headline {
   font-family: var(--serif);
-  font-size: 38px;
-  font-style: italic;
-  color: var(--text);
-  letter-spacing: -0.5px;
-  text-align: center;
+  font-size: clamp(34px, 9vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -.03em;
   margin-bottom: 12px;
-  line-height: 1.15;
 }
 
 .subline {
-  font-size: 15px;
   color: var(--text-mid);
-  text-align: center;
-  line-height: 1.6;
-  max-width: 300px;
-  margin-bottom: 40px;
+  line-height: 1.65;
+  font-size: 15px;
+  margin-bottom: 26px;
 }
 
-/* ── FORM ── */
-.form-wrap {
-  width: 100%;
-  max-width: 340px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.form {
+  display: grid;
+  gap: 14px;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.field {
+  display: grid;
+  gap: 6px;
 }
 
-.input-label {
+.label {
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--text-mid);
-  padding-left: 2px;
 }
 
-.input {
+.input,
+.select,
+.textarea {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--surface);
-  border-radius: var(--r);
-  padding: 14px 18px;
-  font-family: var(--sans);
-  font-size: 15px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(31,42,70,.75);
   color: var(--text);
+  font: inherit;
   outline: none;
-  transition: border-color 0.2s;
-}
-.input::placeholder { color: var(--text-mid); }
-.input:focus { border-color: var(--text-lo); }
-.input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
-.input-hint {
-  font-size: 11px;
-  color: var(--text-mid);
-  padding-left: 2px;
+.input,
+.select {
+  padding: 14px 16px;
+}
+
+.textarea {
+  min-height: 92px;
+  padding: 14px 16px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-lo);
 }
 
 .btn {
   width: 100%;
-  padding: 15px;
-  border-radius: var(--r);
-  border: none;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
+  border: 0;
+  border-radius: 14px;
+  padding: 15px 16px;
+  font: inherit;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
+  transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.985);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1F2A46, #2A3A5C);
+  color: #06080F;
+  background: linear-gradient(135deg, #D4E0EC, #AFC1D6);
+}
+
+.btn-secondary {
   color: var(--text);
-  border: 1px solid var(--text-lo);
+  background: transparent;
+  border: 1px solid rgba(143,167,194,.28);
 }
-.btn-primary:hover { background: linear-gradient(135deg, #2A3A5C, #3A4E6E); border-color: var(--text-mid); }
-.btn-primary:active { transform: scale(0.98); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-.btn-steel {
-  background: linear-gradient(135deg, var(--text-mid) 0%, var(--text) 100%);
-  color: var(--bg);
-  font-weight: 600;
-  border: none;
-}
-.btn-steel:hover { filter: brightness(1.1); }
-.btn-steel:active { transform: scale(0.98); }
-.btn-steel:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-.msg {
-  text-align: center;
+.helper {
+  color: var(--text-lo);
   font-size: 13px;
-  color: var(--text);
-  font-style: italic;
-  min-height: 18px;
-  margin-top: 2px;
-}
-.msg.error { color: var(--red); font-style: normal; }
-.msg.success { color: var(--green); font-style: normal; }
-
-/* ── STEP DOTS ── */
-.step-dots {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 36px;
-}
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-lo);
-  transition: background 0.3s, transform 0.3s;
-}
-.dot.active {
-  background: var(--text);
-  transform: scale(1.3);
-}
-.dot.done {
-  background: var(--green);
+  line-height: 1.6;
 }
 
-/* ── SUCCESS ICON ── */
-.success-ring {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: 2px solid var(--green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 28px;
-  animation: pulse-ring 2s ease infinite;
-}
-@keyframes pulse-ring {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.2); }
-  50% { box-shadow: 0 0 0 12px rgba(74,222,128,0); }
+.error {
+  min-height: 20px;
+  color: #E18A8A;
+  font-size: 13px;
 }
 
 .tagline {
+  margin-top: 26px;
+  color: var(--text-lo);
   font-size: 13px;
-  color: var(--text-mid);
-  text-align: center;
-  font-style: italic;
-  margin-top: 28px;
-}
-
-/* ── LOADING ── */
-#screen-loading {
-  gap: 16px;
-}
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 2px solid var(--text-lo);
-  border-top-color: var(--text);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  font-size: 14px;
-  color: var(--text-mid);
+  line-height: 1.6;
 }
 </style>
 </head>
 <body>
+  <div class="shell">
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="brand">
+          <div class="stamp">S</div>
+          <div class="wordmark">Sent</div>
+        </div>
 
-<!-- LOADING -->
-<div class="screen active" id="screen-loading">
-  <div class="spinner"></div>
-  <div class="loading-text">Verifying your invitation…</div>
-</div>
+        <section class="screen active" id="screen-start">
+          <div class="eyebrow">First run</div>
+          <h1 class="headline">Let’s help you show up for someone.</h1>
+          <p class="subline">Add one person. We’ll take it from there.</p>
+          <button class="btn btn-primary" onclick="showScreen('screen-form')">Add a person</button>
+          <p class="tagline">Show up better. Don’t miss the moment.</p>
+        </section>
 
-<!-- SCREEN 1: WELCOME -->
-<div class="screen" id="screen-welcome">
-  <div class="stamp-wrap">
-    <svg width="64" height="72" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg-w" x1="0" y1="0" x2="64" y2="72" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#D4E1EE"/>
-          <stop offset="50%" stop-color="#8CA4C0"/>
-          <stop offset="100%" stop-color="#B8CBDF"/>
-        </linearGradient>
-        <linearGradient id="tg1-w" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stop-color="#D4E1EE"/>
-          <stop offset="100%" stop-color="#5A7A9A"/>
-        </linearGradient>
-        <linearGradient id="tg2-w" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stop-color="#B8CBDF"/>
-          <stop offset="100%" stop-color="#4A6A8A"/>
-        </linearGradient>
-        <linearGradient id="tg3-w" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stop-color="#C8D8E8"/>
-          <stop offset="100%" stop-color="#3A5A7A"/>
-        </linearGradient>
-      </defs>
-      <!-- Stamp border with perforated effect -->
-      <rect x="3" y="3" width="58" height="66" rx="4" fill="#0D1117" stroke="url(#sg-w)" stroke-width="2" stroke-dasharray="4 3"/>
-      <!-- Tubes -->
-      <rect x="16" y="14" width="5" height="32" rx="2.5" fill="url(#tg1-w)"/>
-      <rect x="24" y="18" width="4" height="28" rx="2" fill="url(#tg2-w)"/>
-      <rect x="31" y="12" width="6" height="36" rx="3" fill="url(#tg1-w)"/>
-      <rect x="40" y="16" width="4" height="30" rx="2" fill="url(#tg2-w)"/>
-      <rect x="47" y="20" width="3" height="24" rx="1.5" fill="url(#tg3-w)"/>
-      <!-- S -->
-      <text x="32" y="56" font-family="Georgia, serif" font-style="italic" font-size="28" font-weight="700" fill="url(#sg-w)" text-anchor="middle">S</text>
-    </svg>
-  </div>
+        <section class="screen" id="screen-form">
+          <div class="eyebrow">One moment</div>
+          <h1 class="headline" style="font-size:34px;">Start with one meaningful message.</h1>
+          <p class="subline">A name, a moment, and one quick note is enough to get you to a draft.</p>
 
-  <div class="step-dots">
-    <div class="dot active" id="dot-0"></div>
-    <div class="dot" id="dot-1"></div>
-    <div class="dot" id="dot-2"></div>
-  </div>
+          <div class="form">
+            <label class="field">
+              <span class="label">Name</span>
+              <input class="input" id="first-run-name" type="text" placeholder="Alex">
+            </label>
 
-  <div class="headline">You're in.</div>
-  <div class="subline">Your early access to Sent is confirmed. Add a few people and moments, and we’ll help you show up better.</div>
+            <label class="field">
+              <span class="label">Occasion</span>
+              <select class="select" id="first-run-occasion">
+                <option value="Birthday">Birthday</option>
+                <option value="Thank you">Thank you</option>
+                <option value="Just checking in">Just checking in</option>
+                <option value="Congrats">Congrats</option>
+              </select>
+            </label>
 
-  <div class="form-wrap">
-    <button class="btn btn-steel" onclick="showScreen('screen-create')">Get started →</button>
-  </div>
+            <label class="field">
+              <span class="label">Optional context</span>
+              <textarea class="textarea" id="first-run-context" maxlength="120" placeholder="New job, moved cities, big year…"></textarea>
+            </label>
 
-  <div class="tagline">Relationships, remembered. Sent.</div>
-</div>
+            <p class="helper">We’ll use this to make the first draft feel more like something you’d actually send.</p>
+            <p class="error" id="first-run-error"></p>
 
-<!-- SCREEN 2: CREATE ACCOUNT -->
-<div class="screen" id="screen-create">
-  <div class="stamp-wrap" style="margin-bottom:20px;">
-    <svg width="40" height="46" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg-c" x1="0" y1="0" x2="64" y2="72" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#D4E1EE"/><stop offset="50%" stop-color="#8CA4C0"/><stop offset="100%" stop-color="#B8CBDF"/>
-        </linearGradient>
-        <linearGradient id="tg1-c" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stop-color="#D4E1EE"/><stop offset="100%" stop-color="#5A7A9A"/>
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="58" height="66" rx="4" fill="#0D1117" stroke="url(#sg-c)" stroke-width="2" stroke-dasharray="4 3"/>
-      <rect x="16" y="14" width="5" height="32" rx="2.5" fill="url(#tg1-c)"/>
-      <rect x="24" y="18" width="4" height="28" rx="2" fill="url(#tg1-c)"/>
-      <rect x="31" y="12" width="6" height="36" rx="3" fill="url(#tg1-c)"/>
-      <rect x="40" y="16" width="4" height="30" rx="2" fill="url(#tg1-c)"/>
-      <rect x="47" y="20" width="3" height="24" rx="1.5" fill="url(#tg1-c)"/>
-      <text x="32" y="56" font-family="Georgia, serif" font-style="italic" font-size="28" font-weight="700" fill="url(#sg-c)" text-anchor="middle">S</text>
-    </svg>
-  </div>
-
-  <div class="step-dots">
-    <div class="dot done" id="dot-0b"></div>
-    <div class="dot active" id="dot-1b"></div>
-    <div class="dot" id="dot-2b"></div>
-  </div>
-
-  <div class="headline" style="font-size:28px; margin-bottom:8px;">Create your account</div>
-  <div class="subline" style="margin-bottom:28px;">Set a password so you can log in anytime.</div>
-
-  <div class="form-wrap">
-    <div class="input-group">
-      <div class="input-label">Your name</div>
-      <input class="input" id="field-name" type="text" placeholder="First name" autocomplete="given-name" />
+            <button class="btn btn-primary" onclick="submitFirstRun()">Continue</button>
+            <button class="btn btn-secondary" onclick="showScreen('screen-start')">Back</button>
+          </div>
+        </section>
+      </div>
     </div>
-    <div class="input-group">
-      <div class="input-label">Email</div>
-      <input class="input" id="field-email" type="email" disabled />
-      <div class="input-hint">Confirmed via your invitation link</div>
-    </div>
-    <div class="input-group">
-      <div class="input-label">Password</div>
-      <input class="input" id="field-pw" type="password" placeholder="At least 8 characters" autocomplete="new-password" />
-    </div>
-    <div class="input-group">
-      <div class="input-label">Confirm password</div>
-      <input class="input" id="field-pw2" type="password" placeholder="Repeat password" autocomplete="new-password" />
-    </div>
-    <div class="msg" id="create-msg"></div>
-    <button class="btn btn-steel" id="btn-create" onclick="createAccount()">Create account →</button>
   </div>
-</div>
-
-<!-- SCREEN 3: ALL SET -->
-<div class="screen" id="screen-done">
-  <div class="success-ring">
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <polyline points="6,16 13,23 26,9" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-
-  <div class="step-dots">
-    <div class="dot done"></div>
-    <div class="dot done"></div>
-    <div class="dot active"></div>
-  </div>
-
-  <div class="headline">You're all set.</div>
-  <div class="subline">Welcome to Sent. Your account is ready to help you write something more personal when it matters.</div>
-
-  <div class="form-wrap">
-    <button class="btn btn-steel" onclick="enterApp()">Enter Sent →</button>
-  </div>
-
-  <div class="tagline">Show up better.<br>Don’t miss the moment.</div>
-</div>
-
-<!-- SCREEN: SIGN IN (returning users) -->
-<div class="screen" id="screen-signin">
-  <div class="stamp-wrap" style="margin-bottom:20px;">
-    <svg width="40" height="46" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg-si" x1="0" y1="0" x2="64" y2="72" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#D4E1EE"/><stop offset="50%" stop-color="#8CA4C0"/><stop offset="100%" stop-color="#B8CBDF"/>
-        </linearGradient>
-        <linearGradient id="tg1-si" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stop-color="#D4E1EE"/><stop offset="100%" stop-color="#5A7A9A"/>
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="58" height="66" rx="4" fill="#0D1117" stroke="url(#sg-si)" stroke-width="2" stroke-dasharray="4 3"/>
-      <rect x="16" y="14" width="5" height="32" rx="2.5" fill="url(#tg1-si)"/>
-      <rect x="24" y="18" width="4" height="28" rx="2" fill="url(#tg1-si)"/>
-      <rect x="31" y="12" width="6" height="36" rx="3" fill="url(#tg1-si)"/>
-      <rect x="40" y="16" width="4" height="30" rx="2" fill="url(#tg1-si)"/>
-      <rect x="47" y="20" width="3" height="24" rx="1.5" fill="url(#tg1-si)"/>
-      <text x="32" y="56" font-family="Georgia, serif" font-style="italic" font-size="28" font-weight="700" fill="url(#sg-si)" text-anchor="middle">S</text>
-    </svg>
-  </div>
-
-  <div class="headline" style="font-size:28px; margin-bottom:8px;">Welcome back.</div>
-  <div class="subline" style="margin-bottom:28px;">Sign in to your Sent account.</div>
-
-  <div class="form-wrap">
-    <div class="input-group">
-      <div class="input-label">Email</div>
-      <input class="input" id="signin-email" type="email" placeholder="you@email.com" autocomplete="email" />
-    </div>
-    <div class="input-group">
-      <div class="input-label">Password</div>
-      <input class="input" id="signin-pw" type="password" placeholder="Your password" autocomplete="current-password" />
-    </div>
-    <div class="msg" id="signin-msg"></div>
-    <button class="btn btn-steel" id="btn-signin" onclick="signIn()">Sign in →</button>
-    <button class="btn btn-primary" style="margin-top:4px;font-size:13px;color:var(--text-mid);" onclick="sendMagicLink()">Send magic link instead</button>
-    <div class="msg" id="magic-msg"></div>
-  </div>
-</div>
-
-<!-- SCREEN: ERROR -->
-<div class="screen" id="screen-error">
-  <div class="headline" style="font-size:28px; color: var(--red);">Link expired.</div>
-  <div class="subline">This invitation link is no longer valid. Request a new one from the waitlist page.</div>
-  <div class="form-wrap">
-    <button class="btn btn-primary" onclick="window.location.href='https://sentapp.net'">Back to sentapp.net</button>
-    <button class="btn btn-steel" style="margin-top:8px;" onclick="showScreen('screen-signin')">Sign in instead →</button>
-  </div>
-</div>
 
 <script>
-// ── CONFIG ──
-const SUPABASE_URL = 'https://ondnsbnwgxnnavxqjuvi.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uZG5zYm53Z3hubmF2eHFqdXZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5OTcwOTksImV4cCI6MjA5MDU3MzA5OX0.GAaGxD-rGb7r1lD4QQhee9yvCx6ZeCDJzFloRsg41IMQ';
-
-let currentSession = null;
-
-// ── SCREEN TRANSITIONS ──
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// ── INIT: Handle magic link token from URL ──
-async function init() {
-  const hashParams = new URLSearchParams(window.location.hash.slice(1));
-  const qParams    = new URLSearchParams(window.location.search);
+function startFirstRun(name, occasion, context) {
+  const payload = {
+    name,
+    occasion,
+    context
+  };
 
-  const accessToken  = hashParams.get('access_token')  || qParams.get('access_token');
-  const refreshToken = hashParams.get('refresh_token') || qParams.get('refresh_token');
-  const tokenHash    = qParams.get('token_hash') || hashParams.get('token_hash');
-  const type         = hashParams.get('type')    || qParams.get('type');
+  sessionStorage.setItem('sent_first_run', JSON.stringify(payload));
+  window.location.href = 'sent-app.html?firstRun=true';
+}
 
-  console.log('hash:', window.location.hash);
-  console.log('search:', window.location.search);
-  console.log('access_token:', accessToken ? 'present' : 'missing');
-  console.log('token_hash:', tokenHash ? 'present' : 'missing');
-  console.log('type:', type);
+function submitFirstRun() {
+  const name = document.getElementById('first-run-name').value.trim();
+  const occasion = document.getElementById('first-run-occasion').value;
+  const context = document.getElementById('first-run-context').value.trim();
+  const error = document.getElementById('first-run-error');
 
-  try {
-    let userData, finalToken, finalRefresh;
-
-    if (accessToken) {
-      // Decode user data directly from JWT payload — no network call needed
-      try {
-        const payload = JSON.parse(atob(accessToken.split('.')[1]));
-        userData = { id: payload.sub, email: payload.email, user_metadata: payload.user_metadata || {} };
-      } catch(e) { throw new Error('Could not decode token'); }
-      finalToken   = accessToken;
-      finalRefresh = refreshToken;
-
-    } else if (tokenHash) {
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-        body: JSON.stringify({ token_hash: tokenHash, type: type || 'magiclink' })
-      });
-      if (!res.ok) throw new Error('Token exchange failed');
-      const data   = await res.json();
-      finalToken   = data.access_token;
-      finalRefresh = data.refresh_token;
-      userData     = data.user;
-
-    } else {
-      // No token in URL — returning user, show sign-in screen
-      showScreen('screen-signin');
-      return;
-    }
-
-    currentSession = { access_token: finalToken, refresh_token: finalRefresh, user: userData };
-    localStorage.setItem('sent_session', JSON.stringify(currentSession));
-    document.getElementById('field-email').value = userData.email || '';
-    history.replaceState(null, '', window.location.pathname);
-    showScreen('screen-welcome');
-
-  } catch (e) {
-    console.error('Token error:', e);
-    showScreen('screen-error');
+  if (!name) {
+    error.textContent = 'Add one person so we have somewhere to start.';
+    return;
   }
+
+  error.textContent = '';
+  startFirstRun(name, occasion, context);
 }
-
-// ── CREATE ACCOUNT ──
-async function createAccount() {
-  const name = document.getElementById('field-name').value.trim();
-  const pw = document.getElementById('field-pw').value;
-  const pw2 = document.getElementById('field-pw2').value;
-  const msg = document.getElementById('create-msg');
-  const btn = document.getElementById('btn-create');
-
-  // Validate
-  if (!name) return setMsg(msg, 'Enter your name.', 'error');
-  if (pw.length < 8) return setMsg(msg, 'Password must be at least 8 characters.', 'error');
-  if (pw !== pw2) return setMsg(msg, 'Passwords don\'t match.', 'error');
-
-  btn.disabled = true;
-  setMsg(msg, 'Setting up your account…', '');
-
-  try {
-    // Refresh token before making authenticated requests
-    const refreshRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-      body: JSON.stringify({ refresh_token: currentSession.refresh_token })
-    });
-    if (refreshRes.ok) {
-      const refreshed = await refreshRes.json();
-      currentSession.access_token = refreshed.access_token;
-      currentSession.refresh_token = refreshed.refresh_token;
-      localStorage.setItem('sent_session', JSON.stringify(currentSession));
-    } else {
-      const rfErr = await refreshRes.json();
-      console.error('Refresh failed:', rfErr);
-    }
-
-    // Update password via Supabase REST
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentSession.access_token}`,
-        'apikey': SUPABASE_ANON_KEY
-      },
-      body: JSON.stringify({ password: pw })
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      console.error('PUT /user error:', err);
-      throw new Error(err.message || 'Update failed');
-    }
-
-    // Upsert profile with name
-    await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentSession.access_token}`,
-        'apikey': SUPABASE_ANON_KEY,
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({
-        id: currentSession.user.id,
-        full_name: name,
-        email: currentSession.user.email
-      })
-    });
-
-    // Update stored session with name
-    currentSession.user.user_metadata = { ...currentSession.user.user_metadata, full_name: name };
-    localStorage.setItem('sent_session', JSON.stringify(currentSession));
-
-    setMsg(msg, '', '');
-    showScreen('screen-done');
-
-  } catch (e) {
-    console.error(e);
-    setMsg(msg, e.message || 'Something went wrong. Try again.', 'error');
-    btn.disabled = false;
-  }
-}
-
-// ── SIGN IN (returning users) ──
-async function signIn() {
-  const email = document.getElementById('signin-email').value.trim();
-  const pw    = document.getElementById('signin-pw').value;
-  const msg   = document.getElementById('signin-msg');
-  const btn   = document.getElementById('btn-signin');
-
-  if (!email) return setMsg(msg, 'Enter your email.', 'error');
-  if (!pw)    return setMsg(msg, 'Enter your password.', 'error');
-
-  btn.disabled = true;
-  setMsg(msg, 'Signing in…', '');
-
-  try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-      body: JSON.stringify({ email, password: pw })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error_description || data.message || 'Sign in failed');
-
-    const session = {
-      access_token:  data.access_token,
-      refresh_token: data.refresh_token,
-      user: data.user
-    };
-    localStorage.setItem('sent_session', JSON.stringify(session));
-    window.location.href = 'sent-app.html';
-
-  } catch (e) {
-    setMsg(msg, e.message, 'error');
-    btn.disabled = false;
-  }
-}
-
-// ── MAGIC LINK FALLBACK ──
-async function sendMagicLink() {
-  const email = document.getElementById('signin-email').value.trim();
-  const msg   = document.getElementById('magic-msg');
-
-  if (!email) return setMsg(msg, 'Enter your email above first.', 'error');
-
-  setMsg(msg, 'Sending…', '');
-  try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-      body: JSON.stringify({ email, create_user: false })
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || 'Could not send link');
-    }
-    setMsg(msg, 'Magic link sent — check your email.', 'success');
-  } catch (e) {
-    setMsg(msg, e.message, 'error');
-  }
-}
-
-// ── ENTER APP ──
-function enterApp() {
-  window.location.href = 'sent-app.html';
-}
-
-// ── HELPER ──
-function setMsg(el, text, type) {
-  el.textContent = text;
-  el.className = 'msg' + (type ? ' ' + type : '');
-}
-
-// ── START ──
-init();
 </script>
 </body>
 </html>
