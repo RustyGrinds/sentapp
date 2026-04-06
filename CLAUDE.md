@@ -4,7 +4,7 @@
 ---
 
 ## Project
-**Sent** — AI-powered occasion intelligence platform  
+**Sent** — premium AI message + postcard tool for meaningful moments  
 Live: sentapp.net (GitHub Pages) | Repo: RustyGrinds/sentapp, branch: main  
 Waitlist: Kit/ConvertKit via Cloudflare Worker at `sent-waitlist.rustycranklive.workers.dev` (form ID 9245595)  
 Payments: Stripe (Sent Gift feature)
@@ -63,7 +63,7 @@ animation: steel-pingpong 4s ease-in-out infinite;
 | File | Purpose |
 |------|---------|
 | `index.html` | Landing page — 8 slides, all locked |
-| `sent-app.html` | Working AI prototype — occasion selector + media suite |
+| `sent-app.html` | Working app prototype — core message + postcard flow |
 | `sent-postcard.html` | Digital postcard builder (single builder — duplicate removed) |
 | `sent-welcome.html` | Onboarding / welcome screen |
 | `sw.js` | Service worker |
@@ -72,23 +72,26 @@ animation: steel-pingpong 4s ease-in-out infinite;
 ## Postcard Widget (index.html Slide 5)
 Live demo widget embedded after `.featured-cards`, before `.media-cards` in `#media`. Calls Anthropic API directly. Controls: occasion + name + voice → generates message → renders on postcard preview. CTA links to `sent-postcard.html`. Postcard Builder featured card removed from `.featured-cards` (Sent Gift card remains).
 
-## Tier Enforcement (sent-app.html)
-Shipped April 2026. Stored in `localStorage` key `sent_tier` (`'free'`/`'plus'`/`'pro'`). Usage counters in `sent_usage` (resets monthly). Migrate to Supabase `profiles.tier` column when Stripe billing goes live.
+## Canonical Product Truth
+See `PRODUCT_TRUTH.md` before changing pricing, positioning, or feature claims.
+
+Current pricing:
 
 | | Free | Sent+ | Pro |
 |---|---|---|---|
-| Contacts | 3 | 25 | ∞ |
-| Occasions | 5 | ∞ | ∞ |
-| Generates/mo | 5 | 25 | ∞ |
-| Voices | Nurturer only | All 5 | All 5 |
-| Price | $0 | $4/mo | $12/mo |
+| Messages / mo | 3 | ∞ | Future tier |
+| Contacts | 10 | Included | Included |
+| Voices | Basic | All | Reserved |
+| Postcard access | Builder | Full | Reserved |
+| Price | $0 | $4.99/mo | $12.99/mo |
 
-Gates: `saveContact`, `saveOccasion`, `generateMessage`, `selectArchetype`. Upgrade modal → waitlist CTA at `sentapp.net/#early-access`.
+## Sent Gift (index.html — Media Section)
+Full-width two-column featured card. Left: narrative/revenue story, uncle/$20 analogy, Stripe note. Right: tier rows (Free $25 / Sent+ $100 / Pro $500). Framed as second revenue model — transaction fee per gift, additive to subscriptions.
 
 ## Task Queue
 1. ~~**Tier enforcement in `sent-app.html`**~~ ✅ shipped April 2026
 2. **Sent Gift bigger moment** — tabled, revisit post-seed
-3. **Sent Gift callout + pricing update** on `index.html` — **next**
+3. ~~**Sent Gift callout + pricing update** on `index.html`~~ ✅ shipped April 2026
 4. **Strip debug console.log lines** from `sent-app.html` (token logging) before launch
 
 ---

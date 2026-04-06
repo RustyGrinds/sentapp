@@ -1,7 +1,7 @@
 {
   "name": "Sent — Relationships, remembered.",
   "short_name": "Sent",
-  "description": "AI-powered occasion intelligence. Never miss a moment that matters.",
+  "description": "A premium tool for better, more personal messages when the moment matters.",
   "start_url": "/sent-app.html",
   "display": "standalone",
   "orientation": "portrait",

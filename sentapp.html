@@ -550,24 +550,24 @@
       <div class="media-panel" id="panel-gifs">
         <div class="gif-search-bar">
           <input class="gif-search-input" id="gif-search" placeholder="Search GIFs and memes..." onkeydown="if(event.key==='Enter') searchGifs()">
-          <button class="gif-suggest-btn" onclick="suggestGif()">✦ AI Suggest</button>
+          <button class="gif-suggest-btn" onclick="suggestGif()">✦ Sent Suggest</button>
         </div>
         <div class="gif-grid" id="gif-grid">
-          <div class="gif-placeholder">Search above or hit ✦ AI Suggest to get contextual picks based on who you're messaging.</div>
+          <div class="gif-placeholder">Search above or hit ✦ Sent Suggest to get a few picks that fit the moment.</div>
         </div>
-        <div class="media-tier-note">Free: 1 GIF &nbsp;·&nbsp; <span>Sent+</span>: Unlimited &nbsp;·&nbsp; <span>Pro</span>: Full AI suite</div>
+        <div class="media-tier-note">Free: 3 messages / month &nbsp;·&nbsp; <span>Sent+</span>: Unlimited messages &nbsp;·&nbsp; <span>Pro</span>: Future tier</div>
       </div>
 
       <!-- Video panel -->
       <div class="media-panel" id="panel-video">
-        <div class="video-note">✦ AI will draft a script based on your context — you record in your own voice. The most personal message you can send.</div>
+        <div class="video-note">Sent can help you shape the words first, then you can record something that still sounds like you.</div>
         <div class="video-upload-area" style="margin-top:12px;" onclick="document.getElementById('video-input').click()">
           <input type="file" id="video-input" accept="video/*" onchange="handleVideo(this)">
           <span class="photo-upload-icon">🎬</span>
           <div class="photo-upload-text">Click to attach a video</div>
-          <div class="photo-upload-sub">Free: 15 sec &nbsp;·&nbsp; Sent+: 60 sec &nbsp;·&nbsp; Pro: 3 min</div>
+          <div class="photo-upload-sub">Add a short clip if it helps the message land.</div>
         </div>
-        <div class="media-tier-note">Free: 15 sec &nbsp;·&nbsp; <span>Sent+</span>: 60 sec &nbsp;·&nbsp; <span>Pro</span>: 3 min + voice notes</div>
+        <div class="media-tier-note">Keep the focus on the message first. Video can follow if it adds something real.</div>
       </div>
 
       <!-- Gift panel -->
