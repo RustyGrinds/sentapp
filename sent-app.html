@@ -487,13 +487,37 @@ body { min-height: 100vh; }
 .upgrade {
   display: none;
   margin-top: 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(229,181,107,.32);
-  background: linear-gradient(180deg, rgba(229,181,107,.08), rgba(229,181,107,.03));
-  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(229,181,107,.22);
+  background:
+    radial-gradient(circle at top right, rgba(229,181,107,.16), transparent 38%),
+    linear-gradient(180deg, rgba(212,224,236,.06), rgba(229,181,107,.04));
+  padding: 18px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.28);
 }
 
 .upgrade.active { display: block; }
+
+.upgrade-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  background: rgba(229,181,107,.14);
+  border: 1px solid rgba(229,181,107,.22);
+  color: #F3D69B;
+  font-size: 15px;
+}
+
+.upgrade-kicker {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--warning);
+  margin-bottom: 6px;
+}
 
 .upgrade h3 {
   margin: 0 0 8px;
@@ -509,6 +533,57 @@ body { min-height: 100vh; }
   font-size: 14px;
 }
 
+.tier-stack {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tier-card {
+  border-radius: 16px;
+  border: 1px solid rgba(143,167,194,.18);
+  background: rgba(12,18,32,.56);
+  padding: 14px;
+}
+
+.tier-card.highlight {
+  border-color: rgba(229,181,107,.34);
+  background:
+    linear-gradient(180deg, rgba(229,181,107,.10), rgba(12,18,32,.64)),
+    rgba(12,18,32,.72);
+}
+
+.tier-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.tier-name {
+  font-family: var(--serif);
+  font-size: 24px;
+}
+
+.tier-price {
+  color: var(--text-mid);
+  font-size: 13px;
+}
+
+.price-num {
+  color: var(--text);
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.tier-features {
+  color: var(--text-mid);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.tier-cta.primary,
 .upgrade .btn-primary {
   width: 100%;
 }
@@ -630,9 +705,36 @@ body { min-height: 100vh; }
       </div>
 
       <div class="upgrade" id="upgradeBox">
+        <div class="upgrade-icon">✦</div>
+        <div class="upgrade-kicker">Free plan complete</div>
         <h3>Keep going with Sent+</h3>
-        <p>Youâ€™ve used your 3 free messages this month. Upgrade to unlock unlimited messages and full postcard access.</p>
-        <button class="btn btn-primary">Upgrade to Sent+</button>
+        <p>You’ve used your 3 free messages this month. Upgrade to keep writing better messages without stopping.</p>
+        <div class="tier-stack">
+          <div class="tier-card highlight">
+            <div class="tier-card-header">
+              <div class="tier-name">Sent+</div>
+              <div class="tier-price"><span class="price-num">$4.99</span>/mo</div>
+            </div>
+            <div class="tier-features">
+              Unlimited messages<br>
+              All voice styles<br>
+              Full postcard access
+            </div>
+            <button class="btn btn-primary tier-cta primary">Upgrade to Sent+</button>
+          </div>
+          <div class="tier-card">
+            <div class="tier-card-header">
+              <div class="tier-name">Pro</div>
+              <div class="tier-price"><span class="price-num">$12.99</span>/mo</div>
+            </div>
+            <div class="tier-features">
+              Everything in Sent+<br>
+              Deeper personalization<br>
+              More coming soon
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" onclick="closeUpgrade()">Maybe later</button>
       </div>
     </div>
   </div>
@@ -651,9 +753,19 @@ function selectVoice(el) {
   currentVoice = el.dataset.voice || 'Warm';
 }
 
+function openUpgradeModal() {
+  document.getElementById('upgradeBox').classList.add('active');
+  document.getElementById('composer').classList.add('active');
+}
+
+function closeUpgrade() {
+  document.getElementById('upgradeBox').classList.remove('active');
+}
+
 function openComposer(name, occasion) {
   currentName = name;
   currentOccasion = occasion;
+  currentDraft = '';
 
   const out = document.getElementById('outputText');
   const sub = document.getElementById('sheetSub');
@@ -667,15 +779,15 @@ function openComposer(name, occasion) {
   document.getElementById('composer').classList.add('active');
 
   if (uses >= freeLimit) {
-    out.textContent = 'Free limit reached. Upgrade to keep generating.';
+    out.textContent = 'You’ve used your free messages this month. Upgrade to keep writing without losing momentum.';
     out.classList.remove('empty');
-    document.getElementById('upgradeBox').classList.add('active');
+    openUpgradeModal();
   }
 }
 
 function generateMessage() {
   if (uses >= freeLimit) {
-    document.getElementById('upgradeBox').classList.add('active');
+    openUpgradeModal();
     return;
   }
 
@@ -684,11 +796,11 @@ function generateMessage() {
   let msg = '';
 
   if (currentVoice === 'Funny') {
-    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. Huge year, elite momentum, and still somehow no Nobel Prize for surviving all of it. Proud of you. Hope today is ridiculously good.`;
+    msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. Huge year, elite momentum, and still somehow no Nobel Prize for surviving all of it. Proud of you. Hope today is ridiculously good.`;
   } else if (currentVoice === 'Direct') {
-    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. You've had a big year and I'm proud of you. Hope you take a real moment to enjoy it today.`;
+    msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. You’ve had a big year and I’m proud of you. Hope you take a real moment to enjoy it today.`;
   } else {
-    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. You've had a huge year and I'm seriously proud of you. I hope today feels like a real pause to celebrate everything you've built.`;
+    msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. You’ve had a huge year and I’m seriously proud of you. I hope today feels like a real pause to celebrate everything you’ve built.`;
   }
 
   currentDraft = msg;
@@ -698,6 +810,12 @@ function generateMessage() {
   out.classList.remove('empty');
 
   updateUsageUI();
+
+  if (uses >= freeLimit) {
+    setTimeout(() => {
+      document.getElementById('upgradeBox').classList.add('active');
+    }, 500);
+  }
 }
 
 function updateUsageUI() {
@@ -713,7 +831,10 @@ function updateUsageUI() {
 }
 
 function goToPostcard() {
-  if (!currentDraft) return;
+  if (!currentDraft) {
+    if (uses >= freeLimit) openUpgradeModal();
+    return;
+  }
 
   const payload = {
     name: currentName,
