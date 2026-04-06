@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sent â€” Digital Postcard Builder</title>
+<title>Sent â€” Postcard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -123,6 +123,19 @@ nav {
   max-width: 520px;
   margin: 0 auto 48px;
   line-height: 1.7;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-mid);
+  text-decoration: none;
+  margin-bottom: 18px;
+  transition: color 0.2s ease;
+}
+.back-link:hover {
+  color: var(--text);
 }
 
 /* â”€â”€â”€ BUILDER LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -718,14 +731,15 @@ input[type="text"]:focus { border-color: var(--text-mid); }
     </svg>
     <span class="nav-wordmark">Sent</span>
   </a>
-  <span class="nav-tag">Digital Postcard Builder</span>
+  <span class="nav-tag">Postcard</span>
 </nav>
 
 <!-- â”€â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
 <section class="hero">
-  <p class="hero-eyebrow">Sent â€” Occasion Intelligence</p>
-  <h1 class="hero-title">Say it with a <span class="steel-gradient">postcard.</span></h1>
-  <p class="hero-sub">Upload a photo. Pick your voice. Let Sent write the message that makes it matter.</p>
+  <a href="sent-app.html" class="back-link">← Back to draft</a>
+  <p class="hero-eyebrow">Postcard</p>
+  <h1 class="hero-title">Make it something they’ll <span class="steel-gradient">keep.</span></h1>
+  <p class="hero-sub">Your draft is ready. Add a photo, refine the feel, and turn it into a postcard worth saving.</p>
 </section>
 
 <!-- â”€â”€â”€ MAIN BUILDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
@@ -810,14 +824,14 @@ input[type="text"]:focus { border-color: var(--text-mid); }
 
       <!-- Generate -->
       <button class="generate-btn" id="gen-btn" onclick="generateMessage()">
-        Generate Message â†’
+        Refine message →
       </button>
 
     </div><!-- /controls -->
 
     <!-- PREVIEW -->
     <div class="preview-col">
-      <span class="preview-label">Postcard Preview â€” click to flip</span>
+      <span class="preview-label">Your draft is ready — click to flip</span>
 
       <div class="card-scene" id="card-scene" onclick="flipCard()">
         <div class="card-flip" id="card-flip">
@@ -962,14 +976,14 @@ input[type="text"]:focus { border-color: var(--text-mid); }
             <circle cx="3" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
             <path d="M4.5 6.2L9.5 3.8M4.5 7.8L9.5 10.2" stroke="currentColor" stroke-width="1.2"/>
           </svg>
-          Share
+          Copy message
         </button>
         <button class="action-btn action-btn-secondary" onclick="downloadPostcard()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M7 1v8M4 7l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 11h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
-          Download
+          Save postcard
         </button>
       </div>
 
@@ -1120,10 +1134,10 @@ async function generateMessage(prefix = 'main') {
 function sharePostcard(prefix = 'main') {
   const msg = document.getElementById(prefix === 'embed' ? 'embed-card-message' : 'card-message').textContent;
   if (navigator.share) {
-    navigator.share({ title: 'A postcard from Sent', text: msg, url: 'https://sentapp.net' });
+    navigator.share({ title: 'A postcard from Sent', text: msg, url: 'https://sentapp.net' }).catch(() => {});
   } else {
     navigator.clipboard.writeText(msg + '\n\nâ€” Sent via sentapp.net').then(() => {
-      showToast('Copied to clipboard âœ“');
+      showToast('Message copied.');
     });
   }
 }
@@ -1148,6 +1162,7 @@ async function downloadPostcard(prefix = 'main') {
     link.download = 'sent-postcard.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+    showToast("Saved. This one's worth sending.");
   } catch (err) {
     showToast('Download failed â€” try again.');
   }
@@ -1213,6 +1228,10 @@ function hydratePostcardBuilder(draft) {
     document.querySelector('#pc-message') ||
     document.querySelector('textarea[name="message"]') ||
     document.querySelector('#card-message');
+  const messagePreview = document.getElementById('card-message');
+  const fromLine = document.getElementById('card-from-line');
+  const shimmer = document.getElementById('msg-shimmer');
+  const scene = document.getElementById('card-scene');
 
   if (nameInput && name) {
     nameInput.value = name;
@@ -1238,13 +1257,18 @@ function hydratePostcardBuilder(draft) {
   if (messageField && message) {
     if ('value' in messageField) {
       messageField.value = message;
-    } else {
-      messageField.textContent = message;
-      messageField.classList.remove('card-message-empty');
     }
     messageField.dispatchEvent(new Event('input', { bubbles: true }));
     messageField.dispatchEvent(new Event('change', { bubbles: true }));
   }
+
+  if (messagePreview && message) {
+    messagePreview.textContent = message;
+    messagePreview.classList.remove('card-message-empty');
+    messagePreview.style.display = 'block';
+  }
+
+  if (shimmer) shimmer.style.display = 'none';
 
   if (voice) {
     const voiceButtons = document.querySelectorAll('[data-voice]');
@@ -1256,10 +1280,14 @@ function hydratePostcardBuilder(draft) {
     });
   }
 
-  const fromLine = document.getElementById('card-from-line');
   if (fromLine && name) {
     fromLine.style.display = 'block';
     fromLine.textContent = `- With love, for ${name}`;
+  }
+
+  if (message && scene && !state.main.flipped) {
+    state.main.flipped = true;
+    scene.classList.add('flipped');
   }
 
   if (typeof updatePreview === 'function') updatePreview();
