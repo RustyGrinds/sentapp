@@ -1,178 +1,686 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sent</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#06080F" />
+<title>Sent — Relationships, remembered.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
+:root {
+  --bg: #06080F;
+  --bg-2: #0C1220;
+  --bg-3: #111A2E;
+  --bg-4: #182038;
+  --surface: #1F2A46;
+  --surface-2: #263555;
+  --line: #304466;
+  --text: #DCE4F0;
+  --text-mid: #90A2BD;
+  --text-lo: #647794;
+  --accent: #D4E0EC;
+  --accent-2: #8FA7C2;
+  --success: #7FD8A7;
+  --warning: #E5B56B;
+  --danger: #E18A8A;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 16px;
+  --radius-sm: 12px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); }
+body { min-height: 100vh; }
+
+@keyframes steel-pingpong {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.steel-text {
+  background: linear-gradient(90deg,
+    #0C0D10 0%, #1C2028 12%, #4A5568 28%, #9AAABB 42%,
+    #D4E0EC 50%, #EEF4FA 54%, #C8D8E8 64%,
+    #6A7A8E 78%, #1C2028 90%, #0C0D10 100%);
+  background-size: 300% auto;
+  animation: steel-pingpong 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shell {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top center, rgba(143,167,194,.10), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,.015), transparent 25%),
+    var(--bg);
+  position: relative;
+  padding-bottom: 96px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  background: rgba(6,8,15,.9);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(48,68,102,.45);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stamp {
+  width: 34px;
+  height: 38px;
+  border: 1px solid rgba(212,224,236,.35);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-style: italic;
+  letter-spacing: -.02em;
+}
+
+.plan-pill {
+  border: 1px solid rgba(143,167,194,.28);
+  background: rgba(31,42,70,.65);
+  color: var(--text-mid);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.content {
+  padding: 22px 18px 0;
+}
+
+.hero {
+  padding: 12px 4px 20px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--text-lo);
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(34px, 7vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+
+.hero p {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #06080F;
-  color: #EEF4FA;
+  color: var(--text-mid);
+  line-height: 1.65;
+  font-size: 15px;
 }
 
-.container {
-  max-width: 480px;
-  margin: auto;
-  padding: 16px;
+.usage {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(24,32,56,.9), rgba(17,26,46,.9));
+  border: 1px solid rgba(48,68,102,.55);
+  box-shadow: var(--shadow);
 }
 
-h1 {
-  font-size: 20px;
-  margin-bottom: 12px;
+.usage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-bottom: 8px;
+}
+
+.bar {
+  height: 5px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,.06);
+}
+
+.bar > span {
+  display: block;
+  width: 33.333%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6A7A8E, #D4E0EC);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 22px 4px 12px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.muted-btn {
+  background: transparent;
+  color: var(--text-mid);
+  border: 1px solid rgba(48,68,102,.6);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .card {
-  background: #141920;
-  border: 1px solid #1F2A46;
-  border-radius: 12px;
-  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(24,32,56,.96), rgba(12,18,32,.96));
+  border: 1px solid rgba(48,68,102,.65);
+  padding: 18px;
   margin-bottom: 12px;
+  box-shadow: var(--shadow);
 }
 
-.button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #2A3A5C;
-  color: white;
-  margin-top: 8px;
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,224,236,.35), transparent);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.person {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(143,167,194,.35);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 19px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin-top: 3px;
+}
+
+.days {
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(143,167,194,.28);
+  background: rgba(255,255,255,.03);
+  white-space: nowrap;
+}
+
+.context {
+  margin: 14px 0 16px;
+  color: var(--text-mid);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.secondary {
-  background: transparent;
-  border: 1px solid #2A3A5C;
+.btn-primary {
+  flex: 1;
+  color: #eef4fa;
+  background: linear-gradient(90deg,
+    #0C0D10 0%, #1C2028 12%, #4A5568 28%, #9AAABB 42%,
+    #D4E0EC 50%, #EEF4FA 54%, #C8D8E8 64%,
+    #6A7A8E 78%, #1C2028 90%, #0C0D10 100%);
+  background-size: 300% auto;
+  animation: steel-pingpong 4s ease-in-out infinite;
+  box-shadow: inset 0 0 0 1px rgba(154,170,187,.25);
+}
+
+.btn-ghost {
+  min-width: 48px;
+  color: var(--text-mid);
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(48,68,102,.6);
 }
 
 .tabbar {
-  display: flex;
-  justify-content: space-around;
-  border-top: 1px solid #1F2A46;
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #06080F;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 492px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 8px;
+  border-radius: 20px;
+  background: rgba(12,18,32,.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(48,68,102,.7);
+  box-shadow: 0 16px 40px rgba(0,0,0,.45);
 }
 
 .tab {
-  padding: 12px;
+  border-radius: 14px;
+  padding: 10px 8px;
+  text-align: center;
   font-size: 12px;
-  color: #7A90A8;
-  cursor: pointer;
+  color: var(--text-lo);
+  font-weight: 600;
 }
 
 .tab.active {
-  color: #EEF4FA;
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border: 1px solid rgba(143,167,194,.18);
 }
 
-.modal {
+.overlay {
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #0D1117;
-  border-top: 1px solid #1F2A46;
-  padding: 16px;
+  inset: 0;
+  background: rgba(4,6,10,.66);
+  backdrop-filter: blur(10px);
   display: none;
+  align-items: flex-end;
+  z-index: 50;
 }
 
-.modal.active {
+.overlay.active { display: flex; }
+
+.sheet {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(12,18,32,.98), rgba(6,8,15,.98));
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border: 1px solid rgba(48,68,102,.7);
+  border-bottom: 0;
+  padding: 14px 18px 20px;
+  box-shadow: 0 -20px 50px rgba(0,0,0,.45);
+}
+
+.handle {
+  width: 44px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  margin: 2px auto 16px;
+}
+
+.sheet-head {
+  margin-bottom: 16px;
+}
+
+.sheet-kicker {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--text-lo);
+  margin-bottom: 8px;
+}
+
+.sheet-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.sheet-sub {
+  margin: 8px 0 0;
+  color: var(--text-mid);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.label {
   display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--text-lo);
+  margin: 0 0 8px;
+}
+
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.voice {
+  border-radius: 14px;
+  border: 1px solid rgba(48,68,102,.62);
+  background: rgba(255,255,255,.02);
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.voice.active {
+  background: rgba(143,167,194,.08);
+  border-color: rgba(143,167,194,.45);
+}
+
+.voice .emoji { font-size: 18px; margin-bottom: 6px; }
+.voice .title { font-size: 12px; font-weight: 700; color: var(--text); }
+.voice .desc { font-size: 11px; color: var(--text-lo); margin-top: 4px; line-height: 1.35; }
+
+.output {
+  border-radius: 16px;
+  border: 1px solid rgba(48,68,102,.65);
+  background: linear-gradient(180deg, rgba(17,26,46,.9), rgba(12,18,32,.9));
+  padding: 16px;
+  margin: 12px 0 16px;
+}
+
+.output-kicker {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin-bottom: 10px;
+}
+
+.output-text {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--text);
+  font-style: italic;
+  min-height: 92px;
+}
+
+.output-text.empty {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 14px;
+  color: var(--text-mid);
+}
+
+.sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sheet-actions .btn {
+  padding: 13px 14px;
+}
+
+.upgrade {
+  display: none;
+  margin-top: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(229,181,107,.32);
+  background: linear-gradient(180deg, rgba(229,181,107,.08), rgba(229,181,107,.03));
+  padding: 16px;
+}
+
+.upgrade.active { display: block; }
+
+.upgrade h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.upgrade p {
+  margin: 0 0 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.upgrade .btn-primary {
+  width: 100%;
 }
 </style>
 </head>
-
 <body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="stamp">S</div>
+        <div class="wordmark steel-text">Sent</div>
+      </div>
+      <div class="plan-pill">Free</div>
+    </div>
 
-<div class="container" id="app">
+    <main class="content">
+      <section class="hero">
+        <div class="eyebrow">Show up better</div>
+        <h1>Every moment.<br><span class="steel-text">More personal.</span></h1>
+        <p>Sent helps you write messages that actually sound like you — thoughtful, personal, and ready when the moment matters.</p>
 
-<h1>Upcoming</h1>
+        <div class="usage">
+          <div class="usage-row">
+            <span>Free plan usage</span>
+            <span><strong>1</strong> of 3 messages used</span>
+          </div>
+          <div class="bar"><span></span></div>
+        </div>
+      </section>
 
-<div id="list"></div>
+      <div class="section-head">
+        <h2>Upcoming</h2>
+        <button class="muted-btn">Add moment</button>
+      </div>
 
-</div>
+      <article class="card">
+        <div class="card-top">
+          <div class="person">
+            <div class="avatar">A</div>
+            <div>
+              <div class="name">Alex</div>
+              <div class="meta">Birthday · College roommate</div>
+            </div>
+          </div>
+          <div class="days">3 days</div>
+        </div>
+        <div class="context">Moved to Austin, started a new job, and still posting like pickleball is now a full-time religion.</div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="openComposer('Alex', 'Birthday')">Generate message</button>
+          <button class="btn btn-ghost">Edit</button>
+        </div>
+      </article>
 
-<div class="tabbar">
-<div class="tab active">Upcoming</div>
-<div class="tab">Contacts</div>
-<div class="tab">Sent</div>
-<div class="tab">Profile</div>
-</div>
+      <article class="card">
+        <div class="card-top">
+          <div class="person">
+            <div class="avatar">M</div>
+            <div>
+              <div class="name">Mom</div>
+              <div class="meta">Anniversary · Family</div>
+            </div>
+          </div>
+          <div class="days">7 days</div>
+        </div>
+        <div class="context">Big dinner this weekend. You want it to feel warm, grateful, and not like something written by a robot pretending to care.</div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="openComposer('Mom', 'Anniversary')">Generate message</button>
+          <button class="btn btn-ghost">Edit</button>
+        </div>
+      </article>
+    </main>
+  </div>
 
-<div class="modal" id="modal">
-<h1>Generate Message</h1>
+  <nav class="tabbar">
+    <div class="tab active">Upcoming</div>
+    <div class="tab">Contacts</div>
+    <div class="tab">Sent</div>
+    <div class="tab">Profile</div>
+  </nav>
 
-<select id="voice">
-<option>Warm</option>
-<option>Funny</option>
-<option>Direct</option>
-</select>
+  <div class="overlay" id="composer">
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="sheet-head">
+        <div class="sheet-kicker">Generate</div>
+        <h2 class="sheet-title">Write something that <span class="steel-text">actually lands.</span></h2>
+        <p class="sheet-sub" id="sheetSub">For Alex’s birthday. Start with the right voice, then generate and turn it into a postcard.</p>
+      </div>
 
-<button class="button" onclick="generate()">Generate</button>
+      <label class="label">Choose your voice</label>
+      <div class="voice-grid">
+        <div class="voice active">
+          <div class="emoji">🤍</div>
+          <div class="title">Warm</div>
+          <div class="desc">Thoughtful and heartfelt</div>
+        </div>
+        <div class="voice">
+          <div class="emoji">😏</div>
+          <div class="title">Funny</div>
+          <div class="desc">Playful with a wink</div>
+        </div>
+        <div class="voice">
+          <div class="emoji">🎯</div>
+          <div class="title">Direct</div>
+          <div class="desc">Short, clean, sincere</div>
+        </div>
+      </div>
 
-<div id="output"></div>
+      <button class="btn btn-primary" style="width:100%; margin-bottom:12px;" onclick="generateMessage()">Generate</button>
 
-<button class="button" onclick="postcard()">Create Postcard</button>
-<button class="button secondary" onclick="copy()">Copy</button>
+      <div class="output">
+        <div class="output-kicker">Draft</div>
+        <div class="output-text empty" id="outputText">Generate a message to see your draft here.</div>
+      </div>
 
-</div>
+      <div class="sheet-actions">
+        <button class="btn btn-primary" onclick="alert('Hook this to sent-postcard.html next.')">Create postcard</button>
+        <button class="btn btn-ghost" onclick="copyDraft()">Copy</button>
+      </div>
+
+      <div class="upgrade" id="upgradeBox">
+        <h3>Keep going with Sent+</h3>
+        <p>You’ve used your 3 free messages this month. Upgrade to unlock unlimited messages and full postcard access.</p>
+        <button class="btn btn-primary">Upgrade to Sent+</button>
+      </div>
+    </div>
+  </div>
 
 <script>
-let uses = 0;
-const limit = 3;
+let currentName = 'Alex';
+let currentOccasion = 'Birthday';
+let uses = 1;
+const freeLimit = 3;
 
-const occasions = [
-  { name: "Alex", type: "Birthday", days: 3 },
-  { name: "Mom", type: "Anniversary", days: 7 }
-];
-
-function render() {
-  const list = document.getElementById("list");
-  list.innerHTML = "";
-
-  occasions.forEach((o, i) => {
-    list.innerHTML += `
-      <div class="card">
-        <strong>${o.name}</strong><br>
-        ${o.type} — ${o.days} days
-        <button class="button" onclick="openModal(${i})">
-          Generate Message
-        </button>
-      </div>
-    `;
-  });
-}
-
-function openModal(i) {
-  if (uses >= limit) {
-    alert("Free limit reached. Upgrade to continue.");
+function openComposer(name, occasion) {
+  if (uses >= freeLimit) {
+    document.getElementById('composer').classList.add('active');
+    document.getElementById('upgradeBox').classList.add('active');
+    document.getElementById('outputText').textContent = 'Free limit reached. Upgrade to keep generating.';
+    document.getElementById('outputText').classList.remove('empty');
+    document.getElementById('sheetSub').textContent = `For ${name}'s ${occasion.toLowerCase()}.`;
     return;
   }
-  document.getElementById("modal").classList.add("active");
+  currentName = name;
+  currentOccasion = occasion;
+  document.getElementById('sheetSub').textContent = `For ${name}'s ${occasion.toLowerCase()}. Start with the right voice, then generate and turn it into a postcard.`;
+  document.getElementById('composer').classList.add('active');
+  document.getElementById('upgradeBox').classList.remove('active');
 }
 
-function generate() {
-  uses++;
-  document.getElementById("output").innerHTML =
-    "Still can't believe how far you've come this year. Proud of you. Happy birthday.";
+function generateMessage() {
+  if (uses >= freeLimit) {
+    document.getElementById('upgradeBox').classList.add('active');
+    return;
+  }
+  uses += 1;
+  const msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. You’ve had a huge year and I’m seriously proud of you. I hope today feels like a real pause to celebrate everything you’ve built — and yes, I’m still expecting a full update soon.`;
+  const out = document.getElementById('outputText');
+  out.textContent = msg;
+  out.classList.remove('empty');
 }
 
-function postcard() {
-  alert("Postcard created (hook this to builder)");
+function copyDraft() {
+  const text = document.getElementById('outputText').textContent;
+  if (!text || text.includes('Generate a message')) return;
+  navigator.clipboard.writeText(text);
 }
 
-function copy() {
-  navigator.clipboard.writeText(
-    document.getElementById("output").innerText
-  );
-  alert("Copied");
-}
-
-render();
+window.addEventListener('click', (e) => {
+  const overlay = document.getElementById('composer');
+  if (e.target === overlay) overlay.classList.remove('active');
+});
 </script>
-
 </body>
 </html>
