@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#06080F" />
-<title>Sent — Relationships, remembered.</title>
+<title>Sent â€” Relationships, remembered.</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -528,7 +528,7 @@ body { min-height: 100vh; }
       <section class="hero">
         <div class="eyebrow">Show up better</div>
         <h1>Every moment.<br><span class="steel-text">More personal.</span></h1>
-        <p>Sent helps you write messages that actually sound like you — thoughtful, personal, and ready when the moment matters.</p>
+        <p>Sent helps you write messages that actually sound like you â€” thoughtful, personal, and ready when the moment matters.</p>
 
         <div class="usage">
           <div class="usage-row">
@@ -550,7 +550,7 @@ body { min-height: 100vh; }
             <div class="avatar">A</div>
             <div>
               <div class="name">Alex</div>
-              <div class="meta">Birthday · College roommate</div>
+              <div class="meta">Birthday Â· College roommate</div>
             </div>
           </div>
           <div class="days">3 days</div>
@@ -568,7 +568,7 @@ body { min-height: 100vh; }
             <div class="avatar">M</div>
             <div>
               <div class="name">Mom</div>
-              <div class="meta">Anniversary · Family</div>
+              <div class="meta">Anniversary Â· Family</div>
             </div>
           </div>
           <div class="days">7 days</div>
@@ -595,22 +595,22 @@ body { min-height: 100vh; }
       <div class="sheet-head">
         <div class="sheet-kicker">Generate</div>
         <h2 class="sheet-title">Write something that <span class="steel-text">actually lands.</span></h2>
-        <p class="sheet-sub" id="sheetSub">For Alex’s birthday. Start with the right voice, then generate and turn it into a postcard.</p>
+        <p class="sheet-sub" id="sheetSub">For Alexâ€™s birthday. Start with the right voice, then generate and turn it into a postcard.</p>
       </div>
 
       <label class="label">Choose your voice</label>
-      <div class="voice-grid">
-        <div class="voice active">
+      <div class="voice-grid" id="voiceGrid">
+        <div class="voice active" data-voice="Warm" onclick="selectVoice(this)">
           <div class="emoji">🤍</div>
           <div class="title">Warm</div>
           <div class="desc">Thoughtful and heartfelt</div>
         </div>
-        <div class="voice">
+        <div class="voice" data-voice="Funny" onclick="selectVoice(this)">
           <div class="emoji">😏</div>
           <div class="title">Funny</div>
           <div class="desc">Playful with a wink</div>
         </div>
-        <div class="voice">
+        <div class="voice" data-voice="Direct" onclick="selectVoice(this)">
           <div class="emoji">🎯</div>
           <div class="title">Direct</div>
           <div class="desc">Short, clean, sincere</div>
@@ -625,13 +625,13 @@ body { min-height: 100vh; }
       </div>
 
       <div class="sheet-actions">
-        <button class="btn btn-primary" onclick="alert('Hook this to sent-postcard.html next.')">Create postcard</button>
+        <button class="btn btn-primary" onclick="goToPostcard()">Create postcard</button>
         <button class="btn btn-ghost" onclick="copyDraft()">Copy</button>
       </div>
 
       <div class="upgrade" id="upgradeBox">
         <h3>Keep going with Sent+</h3>
-        <p>You’ve used your 3 free messages this month. Upgrade to unlock unlimited messages and full postcard access.</p>
+        <p>Youâ€™ve used your 3 free messages this month. Upgrade to unlock unlimited messages and full postcard access.</p>
         <button class="btn btn-primary">Upgrade to Sent+</button>
       </div>
     </div>
@@ -640,23 +640,37 @@ body { min-height: 100vh; }
 <script>
 let currentName = 'Alex';
 let currentOccasion = 'Birthday';
+let currentVoice = 'Warm';
+let currentDraft = '';
 let uses = 1;
 const freeLimit = 3;
 
+function selectVoice(el) {
+  document.querySelectorAll('#voiceGrid .voice').forEach(v => v.classList.remove('active'));
+  el.classList.add('active');
+  currentVoice = el.dataset.voice || 'Warm';
+}
+
 function openComposer(name, occasion) {
-  if (uses >= freeLimit) {
-    document.getElementById('composer').classList.add('active');
-    document.getElementById('upgradeBox').classList.add('active');
-    document.getElementById('outputText').textContent = 'Free limit reached. Upgrade to keep generating.';
-    document.getElementById('outputText').classList.remove('empty');
-    document.getElementById('sheetSub').textContent = `For ${name}'s ${occasion.toLowerCase()}.`;
-    return;
-  }
   currentName = name;
   currentOccasion = occasion;
-  document.getElementById('sheetSub').textContent = `For ${name}'s ${occasion.toLowerCase()}. Start with the right voice, then generate and turn it into a postcard.`;
-  document.getElementById('composer').classList.add('active');
+
+  const out = document.getElementById('outputText');
+  const sub = document.getElementById('sheetSub');
+
+  sub.textContent = `For ${name}'s ${occasion.toLowerCase()}. Start with the right voice, then generate and turn it into a postcard.`;
+
+  out.textContent = 'Generate a message to see your draft here.';
+  out.classList.add('empty');
+
   document.getElementById('upgradeBox').classList.remove('active');
+  document.getElementById('composer').classList.add('active');
+
+  if (uses >= freeLimit) {
+    out.textContent = 'Free limit reached. Upgrade to keep generating.';
+    out.classList.remove('empty');
+    document.getElementById('upgradeBox').classList.add('active');
+  }
 }
 
 function generateMessage() {
@@ -664,11 +678,51 @@ function generateMessage() {
     document.getElementById('upgradeBox').classList.add('active');
     return;
   }
+
   uses += 1;
-  const msg = `${currentName} — happy ${currentOccasion.toLowerCase()}. You’ve had a huge year and I’m seriously proud of you. I hope today feels like a real pause to celebrate everything you’ve built — and yes, I’m still expecting a full update soon.`;
+
+  let msg = '';
+
+  if (currentVoice === 'Funny') {
+    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. Huge year, elite momentum, and still somehow no Nobel Prize for surviving all of it. Proud of you. Hope today is ridiculously good.`;
+  } else if (currentVoice === 'Direct') {
+    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. You've had a big year and I'm proud of you. Hope you take a real moment to enjoy it today.`;
+  } else {
+    msg = `${currentName} - happy ${currentOccasion.toLowerCase()}. You've had a huge year and I'm seriously proud of you. I hope today feels like a real pause to celebrate everything you've built.`;
+  }
+
+  currentDraft = msg;
+
   const out = document.getElementById('outputText');
   out.textContent = msg;
   out.classList.remove('empty');
+
+  updateUsageUI();
+}
+
+function updateUsageUI() {
+  const usedText = document.querySelector('.usage-row strong');
+  const usedWrap = document.querySelector('.usage-row span:last-child');
+  const bar = document.querySelector('.bar > span');
+
+  if (usedText) usedText.textContent = Math.min(uses, freeLimit);
+  if (usedWrap) usedWrap.innerHTML = `<strong>${Math.min(uses, freeLimit)}</strong> of ${freeLimit} messages used`;
+
+  const pct = Math.min((uses / freeLimit) * 100, 100);
+  if (bar) bar.style.width = pct + '%';
+}
+
+function goToPostcard() {
+  if (!currentDraft) return;
+
+  const params = new URLSearchParams({
+    name: currentName,
+    occasion: currentOccasion,
+    message: currentDraft,
+    voice: currentVoice
+  });
+
+  window.location.href = `sent-postcard.html?${params.toString()}`;
 }
 
 function copyDraft() {
@@ -676,6 +730,8 @@ function copyDraft() {
   if (!text || text.includes('Generate a message')) return;
   navigator.clipboard.writeText(text);
 }
+
+updateUsageUI();
 
 window.addEventListener('click', (e) => {
   const overlay = document.getElementById('composer');
