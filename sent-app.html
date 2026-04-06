@@ -715,14 +715,26 @@ function updateUsageUI() {
 function goToPostcard() {
   if (!currentDraft) return;
 
-  const params = new URLSearchParams({
+  const payload = {
     name: currentName,
     occasion: currentOccasion,
     message: currentDraft,
-    voice: currentVoice
-  });
+    voice: currentVoice,
+    timestamp: Date.now()
+  };
 
-  window.location.href = `sent-postcard.html?${params.toString()}`;
+  try {
+    sessionStorage.setItem('sent_postcard_draft', JSON.stringify(payload));
+    window.location.href = 'sent-postcard.html';
+  } catch (err) {
+    const params = new URLSearchParams({
+      name: currentName,
+      occasion: currentOccasion,
+      message: currentDraft,
+      voice: currentVoice
+    });
+    window.location.href = `sent-postcard.html?${params.toString()}`;
+  }
 }
 
 function copyDraft() {

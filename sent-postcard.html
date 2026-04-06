@@ -1157,13 +1157,45 @@ async function downloadPostcard(prefix = 'main') {
 setupPhotoUpload('main');
 setupArchetypes('main');
 
-function preloadPostcardFromQuery() {
-  const params = new URLSearchParams(window.location.search);
+function getPostcardDraft() {
+  let draft = null;
 
-  const name = params.get('name') || '';
-  const occasion = params.get('occasion') || '';
-  const message = params.get('message') || '';
-  const voice = params.get('voice') || '';
+  try {
+    const raw = sessionStorage.getItem('sent_postcard_draft');
+    if (raw) {
+      draft = JSON.parse(raw);
+    }
+  } catch (err) {
+    draft = null;
+  }
+
+  if (draft) return draft;
+
+  const params = new URLSearchParams(window.location.search);
+  const hasQueryData =
+    params.get('name') ||
+    params.get('occasion') ||
+    params.get('message') ||
+    params.get('voice');
+
+  if (!hasQueryData) return null;
+
+  return {
+    name: params.get('name') || '',
+    occasion: params.get('occasion') || '',
+    message: params.get('message') || '',
+    voice: params.get('voice') || '',
+    timestamp: Date.now()
+  };
+}
+
+function hydratePostcardBuilder(draft) {
+  if (!draft) return;
+
+  const name = draft.name || '';
+  const occasion = draft.occasion || '';
+  const message = draft.message || '';
+  const voice = draft.voice || '';
 
   const nameInput =
     document.querySelector('#recipient-name') ||
@@ -1192,10 +1224,10 @@ function preloadPostcardFromQuery() {
     const normalized = occasion.toLowerCase();
 
     Array.from(occasionSelect.options).forEach(opt => {
-      if (
-        opt.value.toLowerCase() === normalized ||
-        opt.textContent.toLowerCase().includes(normalized)
-      ) {
+      const value = (opt.value || '').toLowerCase();
+      const text = (opt.textContent || '').toLowerCase();
+
+      if (value === normalized || text.includes(normalized)) {
         occasionSelect.value = opt.value;
       }
     });
@@ -1234,7 +1266,20 @@ function preloadPostcardFromQuery() {
   if (typeof renderPostcard === 'function') renderPostcard();
 }
 
-window.addEventListener('DOMContentLoaded', preloadPostcardFromQuery);
+function preloadPostcardDraft() {
+  const draft = getPostcardDraft();
+  if (!draft) return;
+
+  hydratePostcardBuilder(draft);
+
+  try {
+    sessionStorage.removeItem('sent_postcard_draft');
+  } catch (err) {
+    // ignore
+  }
+}
+
+window.addEventListener('DOMContentLoaded', preloadPostcardDraft);
 </script>
 </body>
 </html>
